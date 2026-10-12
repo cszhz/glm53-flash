@@ -1,0 +1,269 @@
+# GLM-5.3-Flash on vllm-torchtpu
+
+本文档汇总 GLM-5.3-Flash（FP8）在 TPU v7x 上用 vllm-torchtpu 服务的拉起方法、测试脚本和压测结果。
+文中引用的脚本、工具和结果文件都在本目录（`/zzlfs/glm53flash_torchtpu/guide`）下：
+
+```
+guide/
+├── Test_Guide.md
+├── scripts/   vllm_install.sh  vllm_env.sh  vllm_serve.sh  restart_serve.sh  router.sh  gcs_prefetch.sh
+├── tools/     功能 / 性能测试、profile、对拍脚本（含 ctx200k_bench.py、dp_router.py）
+└── results/   5.1 节压测的原始数据
+```
+
+venv（`.venv`）、代码（`vllm-torchtpu/`）、日志（`logs/`）仍在项目根目录 `/zzlfs/glm53flash_torchtpu`；
+下面的命令都在项目根目录执行。
+
+---
+
+## 1. 概览
+
+| 项目     | 内容                                                         |
+| -------- | ------------------------------------------------------------ |
+| 模型     | GLM-5.3-Flash FP8（`GLM-5.3-Flash`，`model_type: glm5_next`），纯文本（视觉塔、MTP 层不加载） |
+| 硬件     | tpu7x-32 slice 中的两台：10.128.0.89（worker 2）、10.128.0.38（worker 3），每台 4 chip / 8 device |
+| 部署拓扑 | **DP2 × TP8**：每台一个独立的 TP8 实例，prefill 叠加序列并行（SP）；本机 :8080 路由按最少在途请求分发 |
+| 上游 PR  | [vllm-project/vllm-torchtpu#1859](https://github.com/vllm-project/vllm-torchtpu/pull/1859)（branch `cszhz/glm53-flash`，rebase 到 `72deb3860`；该基线的 `pyproject.toml` 钉的是 libtpu 0.0.50，本指南统一用 0.0.47，换法见第 2 节） |
+| 软件     | vLLM 0.29.0（源码构建）、torch-tpu release 2026.9.22、**libtpu 0.0.47**、jax 0.11.2、transformers 5.17.0 |
+
+**200K 上下文核心结果（DP2，8 chip）**：c1 TTFT **7.46 s**、TPOT **6.14 ms**；饱和吞吐 **~6800 tok/s/chip**
+（同硬件 sglang-jax 最终版：c1 TTFT 7.41 s、TPOT 12.5 ms、~3700 tok/s/chip）。
+
+---
+
+## 2. 环境安装
+
+```bash
+cd /zzlfs/glm53flash_torchtpu
+bash guide/scripts/vllm_install.sh   # 建 .venv：vLLM 0.29.0 源码构建 + torch-tpu + libtpu；transformers 单独抬到 5.17.0
+```
+
+- venv 在 NFS 上（`/zzlfs/glm53flash_torchtpu/.venv`），两台机器共用，无需各自安装。
+- `guide/scripts/vllm_env.sh` 负责公共环境：把本机从 4 机 slice 降级成独立单机 slice（`TPU_HOST_BOUNDS=1,1,1`、
+  `TPU_SKIP_MDS_QUERY=1` 等）、插件白名单、sparse MLA 的 TensorCore cache 布局、inductor 缓存目录。
+  同目录的 `vllm_serve.sh` 会自动 source 它。
+- **libtpu 用 0.0.47**（本文所有结果都在 0.0.47 上测得）。服务用的 `vllm-torchtpu/`（`glm53-port`，基线 `28aa22a9b`）
+  本身钉的就是 0.0.47。如果从 PR 分支（`cszhz/glm53-flash`，钉 0.0.50）安装，装完后换回：
+  ```bash
+  .venv/bin/pip install "libtpu==0.0.47" "tpu-sync-torch==0.0.1.dev20261002213151"
+  ```
+  （`guide/scripts/vllm_install.sh` 最后一步已经做了这件事。）确认：服务日志里有 `Setting libtpu version to: 0.0.47`。原因见第 7 节第 4 条。
+
+---
+
+## 3. 拉起服务
+
+### 3.1 单机（一个 TP8 实例）
+
+```bash
+cd /zzlfs/glm53flash_torchtpu
+# 200K 上下文配置（压测用的就是这个）
+MAX_MODEL_LEN=204800 KV_BYTES=34359738368 bash guide/scripts/restart_serve.sh <tag>
+# 日志：logs/<tag>.log；端口 8000；冷启动约 35 分钟（权重 prefetch + 各 token 桶编译）
+curl -s localhost:8000/health          # 200 即就绪
+```
+
+- `guide/scripts/restart_serve.sh`：先 SIGINT 停掉旧服务（停不下就杀进程组），清 `/dev/shm/torchinductor`，再后台起同目录的 `vllm_serve.sh`。
+  **不要连续快速调用两次**，两个实例会抢芯片，报 `PjRtClient is not initialized`。
+- 远程机器：`ssh 10.128.0.38 'MAX_MODEL_LEN=204800 KV_BYTES=34359738368 bash /zzlfs/glm53flash_torchtpu/guide/scripts/restart_serve.sh <tag>'`
+- 用其它代码目录（例如开发 worktree）：加 `SRC=/path/to/worktree`。
+- 启动过程中**不要修改正在使用的源码**：worker 是分批 import 的，新旧文件混用会导致启动失败。
+
+### 3.2 两机 DP2 + 路由
+
+```bash
+# 两台各起一个实例（见 3.1），都健康后：
+bash guide/scripts/router.sh http://127.0.0.1:8000 http://10.128.0.38:8000
+curl -s localhost:8080/router/stats    # 各后端在途/已处理请求数
+```
+
+对外地址：`http://10.128.0.89:8080`（OpenAI 兼容接口，模型名 `GLM-5.3-Flash`）。
+
+快速自检：
+
+```bash
+curl -s localhost:8080/v1/chat/completions -H 'Content-Type: application/json' \
+  -d '{"model":"GLM-5.3-Flash","messages":[{"role":"user","content":"爱因斯坦出生在哪里？"}],"max_tokens":1024,"temperature":0}'
+```
+
+### 3.3 `guide/scripts/vllm_serve.sh` 主要参数（环境变量覆盖）
+
+| 变量                     | 默认                           | 说明                                                         |
+| ------------------------ | ------------------------------ | ------------------------------------------------------------ |
+| `MAX_MODEL_LEN`          | 8192                           | 200K 用 204800                                               |
+| `KV_BYTES`               | 8 GiB                          | 每 device KV 预算；200K 用 32 GiB（每副本可并发 ~10 条 200K） |
+| `MAX_NUM_SEQS`           | 8                              | 每副本最大并发                                               |
+| `MAX_NUM_BATCHED_TOKENS` | 8192                           | 每步 token 预算（prefill chunk）                             |
+| `BLOCK_SIZE`             | 256                            | KV 页大小                                                    |
+| `COMPILE_SIZES`          | `1,4,8,128,...,8192`           | 编译的 token 桶                                              |
+| `SCHEDULER_CLS`          | `SharedPrefillBudgetScheduler` | 每步 prefill 预算平分给在 prefill 的请求，避免并发时 TPOT 被长 prefill 拖垮 |
+| `KV_CACHE_DTYPE`         | fp8                            | sparse MLA kernel 只支持 fp8                                 |
+| `MOE_EP`                 | 0                              | 1 = MoE 走 EP8（prefill +~8%，decode 140 -> 98 tok/s，默认关） |
+
+固定参数：`--no-enable-prefix-caching`、`--async-scheduling`、`--attention-backend CUSTOM`。
+
+### 3.4 性能开关（都已在 `guide/scripts/vllm_serve.sh` 默认打开）
+
+| 变量                                    | 默认 | 作用                                                         | 关掉时                       |
+| --------------------------------------- | ---- | ------------------------------------------------------------ | ---------------------------- |
+| `TPU_SPARSE_MLA_TOKEN_SHARD_MIN_TOKENS` | 128  | 每步 >= 128 token 时 sparse MLA / indexer 按 token 切给 8 张卡 | 0                            |
+| `GLM53_SP_MIN_TOKENS`                   | 128  | prefill 序列并行：残差流按 token 切，mHC/norm 只算 1/8，all-reduce 换成 reduce-scatter + all-gather | 0                            |
+| `GLM53_SP_ALL_HEADS`                    | 1    | SP 下 DSA 层用 replicated q_b/o_proj 给本卡 token 算全部 64 头（每卡 +~1 GB）。200K TTFT -11%，但单流 decode 139 -> 128 tok/s | 0（decode 为主的负载建议关） |
+| `TPU_MHC_GATES_PALLAS`                  | 1    | mHC gates 用 Pallas kernel                                   | 0                            |
+| `GLM53_INDEXER_V1`                      | 0    | 1 = 用 XLA 参考版 indexer（A/B 精度用）                      |                              |
+| `GLM53_DENSE_DSA`                       | 0    | 1 = DSA 层退回稠密 MLA（A/B 用，<2048 token 时与稀疏等价）   |                              |
+
+### 3.5 并行方式
+
+- **机器间**：DP2，两台互不通信。
+- **机器内**：TP8。KDA（34 层线性注意力）按 head 切；MoE（288 专家）按专家中间维度切（TP，不是 EP）。
+- **prefill（>= 128 token）**：叠加 SP。残差流 / mHC / norm 按 token 切；KDA、MoE 输入 all-gather、输出 reduce-scatter；
+  11 个 DSA（sparse MLA）层每卡给本卡 token 算全部头，只 all-gather 768 维的 KV/indexer 行；indexer 只给本卡 token 打分。
+- **decode**：KDA / MoE 走 TP（每层 all-reduce），DSA 层每卡全 token 全头（无通信）。
+- MLA latent KV cache 每卡一份完整的；KDA 递推状态按 head 切。
+
+---
+
+## 4. 测试脚本
+
+脚本都在 `guide/tools/`，用 `.venv/bin/python` 运行；`--url` 指向单个实例（:8000）或路由（:8080）。
+
+### 4.1 功能 / 精度
+
+| 脚本             | 用途                                            | 示例                                                         |
+| ---------------- | ----------------------------------------------- | ------------------------------------------------------------ |
+| `needle_test.py` | 大海捞针：在 N 条记录里埋一条访问码，问模型     | `--filler 600`（7.6K token）；`--filler 8100 --depth 0.1/0.55/0.9`（~190K） |
+| `logprob_ab.py`  | 下一个 token 的 top-5 logprob A/B，比较两个配置 | `--url ... --dump ab/x.json`；`--compare ab/a.json ab/b.json` |
+| `gsm8k_eval.py`  | GSM8K 零样本 chat、greedy                       | `--limit 600 --out evals/x.json`                             |
+
+### 4.2 性能
+
+| 脚本                                 | 用途                                                         | 示例                                  |
+| ------------------------------------ | ------------------------------------------------------------ | ------------------------------------- |
+| `ctx200k_bench.py`                   | **200K 进 / 128 出压测**，并发梯度 1/2/4/8/12/16，指标口径与 GPU 基线逐字一致，输出 JSON + TSV | 见下                                  |
+| `ctx200k_true_tput.py`               | 从 ctx200k JSON 算真实吞吐（总 token / 墙钟时间）            | `ctx200k_true_tput.py results/x.json` |
+| `ttft_bench.py`                      | 单流：不同 prompt 长度的 TTFT 和 decode tok/s                | `--fillers 3,20,60,120,300,1200`      |
+| `conc_bench.py`                      | 中等长度（~7.6K）并发压测                                    |                                       |
+
+200K 压测命令：
+
+```bash
+cd /zzlfs/glm53flash_torchtpu
+ts=$(date +%Y%m%d-%H%M%S)
+.venv/bin/python guide/tools/ctx200k_bench.py --base http://127.0.0.1:8080 \
+  --model GLM-5.3-Flash --chips 8 --warmup --out results/ctx200k-vllm-dp2-$ts.json
+#   单机：--base http://127.0.0.1:8000 --chips 4；只跑部分并发：--ladder 1,2,4
+.venv/bin/python guide/tools/ctx200k_true_tput.py results/ctx200k-vllm-dp2-$ts.json
+```
+
+注意：TSV 的 Framework / Topo 两列是从 `/get_server_info` 推的，对本服务会误标成 sglang-jax，发表前要手工改
+（例如 `guide/results/ctx200k-vllm-dp2-spmla-20261012-065404-labeled.tsv`）。
+
+### 4.3 Profile
+
+服务启动时加 `--profiler-config '{"profiler":"torch","torch_profiler_dir":"<dir>","torch_profiler_with_stack":true,"torch_profiler_use_gzip":true}'`，然后：
+
+| 脚本                                                         | 用途                                                |
+| ------------------------------------------------------------ | --------------------------------------------------- |
+| `prof_prefill.py --url ... --prefix p100k --filler 4400 --delay 4.0` | 抓长 prompt 末尾（~100K 处）的几个 prefill 步       |
+| `prof_decode.py --url ... --prefix dec --filler 120 --steps 20` | 抓 decode 步                                        |
+| `prof_window.py <trace.gz> --index N`                        | 单个 XLA module（一步）内按来源 / op 统计 self time |
+| `prof_summary.py <trace.gz> --steps N [--shapes copy]`       | 每步 op 汇总，可按 HLO 签名拆分（查布局转换 copy）  |
+| `prof_diff.py <trace_a.gz> <trace_b.gz>`                     | 两个 trace 中单步内各 op 的每次调用耗时对比（定位回退）  |
+
+### 4.4 单卡 / 多卡对拍（需要空闲 TPU）
+
+| 脚本                                         | 内容                                                         |
+| -------------------------------------------- | ------------------------------------------------------------ |
+| `test_mla_token_shard.py`                    | sparse MLA 按 token 切片 vs 整批（逐位比较）+ 单卡耗时       |
+| `test_mla_heads.py`                          | sparse MLA kernel 8 头 vs 64 头逐头一致                      |
+| `test_mla_token_shard_mesh.py`               | 8 device mesh 纯 JAX：token 切分算子、本卡 token 算子 vs 单卡参考（含 all-to-all） |
+| `test_indexer_token_shard.py`                | indexer 按 token 切片选择 vs 整批（含 decode + prefill 混排） |
+| `test_indexer_v2.py` / `bench_indexer_v2.py` | v1 vs v3 indexer 对拍 / 单层耗时                             |
+| `bench_moe_permute.py`                       | MoE 分发 / 合并：XLA gather vs SparseCore kernel             |
+| `repro_sc_gather_offload.py`                 | 纯 JAX 复现 libtpu 0.0.50 的 SparseCore gather 回退（见第 7 节第 4 条） |
+
+---
+
+## 5. 结果
+
+### 5.1 200K 进 / 128 出，DP2 × TP8 + SP（8 chip，最新版本）
+
+数据：`guide/results/ctx200k-vllm-dp2-spmla-20261012-065404.*`，45/45 请求成功。上面 6 行是同硬件的 sglang-jax 对照。
+
+| Model             | Framework     | Topo                      | Context Length | Requests | Concurrency | Input/Output | TTFT p50 (ms) | TTFT p90 (ms) | TPOT p50 (ms/tok) | TPOT p90 (ms/tok) | Extend tput p50 (tok/s) | Decode tput p50 (tok/s) | tok/s/chip | E2E tput p50 (tok/s) | E2E tput p90 (tok/s) | E2E latency p50 (s) | E2E latency p90 (s) |
+| :---------------- | :------------ | :------------------------ | :------------- | -------: | ----------: | :----------- | ------------: | ------------: | ----------------: | ----------------: | ----------------------: | ----------------------: | ---------: | -------------------: | -------------------: | ------------------: | ------------------: |
+| GLM-5.3-Flash-FP8 | sglang-jax    | 8×TPUv7x TP16/EP16 DP1+SP | 200K           |        3 |           1 | 199699/128   |          7410 |          7506 |             12.52 |             12.52 |                   26951 |                    79.9 |     2771.9 |                22175 |                22205 |                9.01 |                9.11 |
+| GLM-5.3-Flash-FP8 | sglang-jax    | 8×TPUv7x TP16/EP16 DP1+SP | 200K           |        2 |           2 | 199700/128   |         13979 |         13981 |             14.72 |             14.72 |                   14286 |                      68 |     3149.4 |                12598 |                12599 |               15.86 |               15.86 |
+| GLM-5.3-Flash-FP8 | sglang-jax    | 8×TPUv7x TP16/EP16 DP1+SP | 200K           |        4 |           4 | 199700/128   |         27564 |         27569 |             18.96 |             18.96 |                    7245 |                    52.7 |     3331.6 |                 6663 |                 6665 |               29.99 |                  30 |
+| GLM-5.3-Flash-FP8 | sglang-jax    | 8×TPUv7x TP16/EP16 DP1+SP | 200K           |        8 |           8 | 199700/128   |         53906 |         53918 |             14.95 |             14.96 |                    3705 |                    66.9 |     3579.8 |                 3580 |                 3581 |               55.82 |               55.83 |
+| GLM-5.3-Flash-FP8 | sglang-jax    | 8×TPUv7x TP16/EP16 DP1+SP | 200K           |       12 |          12 | 199700/128   |         80298 |         80315 |             15.61 |             15.62 |                    2487 |                      64 |     3642.2 |                 2428 |                 2429 |                82.3 |               82.31 |
+| GLM-5.3-Flash-FP8 | sglang-jax    | 8×TPUv7x TP16/EP16 DP1+SP | 200K           |       16 |          16 | 199700/128   |        106169 |        106193 |             16.19 |             16.21 |                    1881 |                    61.8 |     3692.3 |                 1846 |                 1847 |              108.24 |              108.27 |
+| GLM-5.3-Flash-FP8 | vllm-torchtpu | 8×TPUv7x DP2×TP8+SP       | 200K           |        3 |           1 | 199700/128   |          7455 |          7460 |              6.14 |              6.15 |                   26788 |                   162.8 |     3031.0 |                24248 |                24323 |                8.24 |                8.25 |
+| GLM-5.3-Flash-FP8 | vllm-torchtpu | 8×TPUv7x DP2×TP8+SP       | 200K           |        2 |           2 | 199700/128   |          7739 |          7981 |              6.58 |              6.85 |                   25843 |                   152.3 |     5830.8 |                23323 |                24072 |                8.58 |                8.86 |
+| GLM-5.3-Flash-FP8 | vllm-torchtpu | 8×TPUv7x DP2×TP8+SP       | 200K           |        4 |           4 | 199700/128   |         14192 |         14224 |              7.11 |              7.12 |                   14071 |                   140.7 |     6616.0 |                13232 |                13260 |               15.10 |               15.13 |
+| GLM-5.3-Flash-FP8 | vllm-torchtpu | 8×TPUv7x DP2×TP8+SP       | 200K           |        8 |           8 | 199699/128   |         28247 |         28335 |              7.47 |              7.48 |                    7070 |                   133.8 |     6843.1 |                 6843 |                 6854 |               29.20 |               29.29 |
+| GLM-5.3-Flash-FP8 | vllm-torchtpu | 8×TPUv7x DP2×TP8+SP       | 200K           |       12 |          12 | 199700/128   |         44713 |         44809 |              9.46 |             18.64 |                    4466 |                   105.7 |     6526.6 |                 4351 |                 4361 |               45.93 |               46.00 |
+| GLM-5.3-Flash-FP8 | vllm-torchtpu | 8×TPUv7x DP2×TP8+SP       | 200K           |       16 |          16 | 199700/128   |         57849 |         57997 |              8.66 |             27.90 |                    3452 |                   115.5 |     6779.9 |                 3390 |                 3397 |               58.95 |               59.11 |
+
+按「总 token / 墙钟时间」算的真实吞吐（tok/s/chip）：c1 3032、c2 5590、c4 6594、c8 6816、c12 6510、c16 6755。
+
+### 5.2 优化过程（200K）
+
+| 版本                      | 主要改动                                                     | 100K 处 8K chunk | 单机 c1 TTFT | DP2 饱和真实 tok/s/chip |
+| ------------------------- | ------------------------------------------------------------ | ---------------: | -----------: | ----------------------: |
+| v3                        | 起点（indexer v2/v3、调度器、member 每请求状态）             |           504 ms |       16.1 s |                   ~3150 |
+| + token 切分              | sparse MLA 和 indexer 按 token 切给 8 卡（每卡 1/8 token × 64 头） |           376 ms |       9.74 s |                   ~5100 |
+| + SP                      | 残差流按 token 切，mHC 52 -> 5 ms，通信 62 -> 40 ms          |          ~295 ms |       8.28 s |                   ~6050 |
+| + 全头 DSA / 跳过 rope 写 | DSA 层免掉 all-to-all 和 reduce-scatter；GLM 恒 0 的 rope cache 不再每步写 |   未单独 profile |   **7.39 s** |               **~6800** |
+
+### 5.3 单机单流（`ttft_bench.py`，.38，最新版本）
+
+| prompt tok | TTFT s | decode tok/s |
+| ---------: | -----: | -----------: |
+|      1,208 |  0.094 |          124 |
+|      5,878 |  0.286 |          128 |
+|     23,478 |  1.029 |          128 |
+
+`GLM53_SP_ALL_HEADS=0` 时：5,878 tok TTFT 0.330 s、23,478 tok 1.167 s，decode ~139 tok/s。
+
+### 5.4 精度
+
+| 配置               | GSM8K 600 | needle                             |
+| ------------------ | --------: | ---------------------------------- |
+| TP 基线（v3）      |    94.83% | —                                  |
+| MoE EP             |    95.50% | —                                  |
+| + token 切分       |    95.00% | 2.6K / 7.6K / 190K（3 个深度）全中 |
+| + SP               |    95.67% | 全中                               |
+| + 全头 DSA（当前） |    95.17% | 全中                               |
+
+标准误约 0.9%，各版本之间无显著差异。新算子在单卡和 8 device mesh 上与参考实现逐位相同。
+logprob A/B：token 切分只在 512–2048 桶有数值级差异（max 1.0）；SP 之后全桶有差异（max ~2），
+推测是 reduce-scatter 替换 all-reduce 改变了 bf16 求和顺序（每次 forward 90 次规约），GSM8K / needle 无退化。
+
+---
+
+## 6. 指标定义（`ctx200k_bench.py`，与 GPU 基线脚本逐字一致）
+
+- **TTFT**：第一个非空 content 分片到达的时间。
+- **gen** = e2e − TTFT；**TPOT** = gen / completion_tokens；**Decode tput** = completion_tokens / gen（与 TPOT 互为倒数）。
+- **Extend tput** = prompt_tokens / TTFT；**E2E tput** = (prompt + completion) / e2e。
+- **tok/s/chip** = p50(单请求 E2E tput) × 并发 / 芯片数。请求排队时会虚高，真实吞吐用 `ctx200k_true_tput.py`。
+- 百分位为线性插值；每条 prompt 带唯一 nonce（冷前缀）；c1 发 3 条，其余档 n = 并发。
+
+---
+
+## 7. 已知问题与注意事项
+
+1. **decode 取舍**：`GLM53_SP_ALL_HEADS=1` 让 decode 也读完整的 q_b/o_proj（为了让 decode 图和 prefill 图读同一组权重，
+   runner 要求两份 trace 输入签名一致），单流 decode 慢 ~8%。decode 为主时设 0。
+   
+2. **高并发 TPOT p90**：每副本最多 8 条并发，c12/c16 时部分请求的 decode 会陪着别的请求的 8K prefill chunk 跑，TPOT p90 升到 19–28 ms。
+
+3. **冷启动 ~35 分钟**：主要是 9 个 token 桶的编译（SP 让 >= 128 的桶多一次 trace）。
+
+4. **不要用 libtpu 0.0.50**：它的 SparseCore gather 下放比 0.0.47 慢（单个 SparseCore 慢 43%），MoE 分发/合并的
+   gather 每层慢 28–41%，200K prefill 整体慢 ~3%（c1 TTFT 7.39 -> 7.64 s，饱和吞吐 6806 -> 6587 tok/s/chip）。
+   没有 libtpu flag 能绕过。复现：`guide/tools/repro_sc_gather_offload.py`（0.0.47 0.588 ms vs 0.0.50 0.740 ms）。
+
+   
