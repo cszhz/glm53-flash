@@ -37,7 +37,7 @@ echo "=== 开始安装 $(date +%H:%M:%S)"
 # 5.16 才进 transformers。我们不用 omni，单独抬到旧环境验证过的 5.17.0。
 "$VENV/bin/pip" install -q "transformers==5.17.0"
 # libtpu 统一用 0.0.47：0.0.50 的 SparseCore gather 下放慢（MoE 分发/合并 gather 每层 +28–41%，200K prefill
-# 慢 ~3%），见 guide/Test_Guide.md 第 7 节。从钉 0.0.50 的 checkout（如 PR 分支）安装时这一步把它换回来。
+# 慢 ~3%），见 guide/Readme.md 第 7 节。从钉 0.0.50 的 checkout（如 PR 分支）安装时这一步把它换回来。
 "$VENV/bin/pip" install -q "libtpu==0.0.47" "tpu-sync-torch==0.0.1.dev20261002213151"
 "$VENV/bin/python" -c "import importlib.metadata as m; print('=== libtpu', m.version('libtpu'))"
 echo "=== 安装完成 $(date +%H:%M:%S)"
