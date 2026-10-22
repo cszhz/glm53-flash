@@ -1,0 +1,4 @@
+Model	Framework	Topo	Context Length	Requests	Concurrency	Input/Output	TTFT p50 (ms)	TTFT p90 (ms)	TPOT p50 (ms/tok)	TPOT p90 (ms/tok)	Extend tput p50 (tok/s)	Decode tput p50 (tok/s)	tok/s/chip	E2E tput p50 (tok/s)	E2E tput p90 (tok/s)	E2E latency p50 (s)	E2E latency p90 (s)
+GLM-5.3-Flash-FP8	sglang-jax	4×TPUv7x TP0/EP0	200K	3	1	199700/128	7542	7569	6.76	6.79	26477	148.0	5938.2	23753	23924	8.41	8.43
+GLM-5.3-Flash-FP8	sglang-jax	4×TPUv7x TP0/EP0	200K	2	2	199701/128	14717	14733	7.88	7.91	13569	127.0	6353.8	12708	12716	15.73	15.74
+GLM-5.3-Flash-FP8	sglang-jax	4×TPUv7x TP0/EP0	200K	4	4	199700/128	29478	29487	7.85	7.86	6775	127.4	6555.1	6555	6574	30.48	30.49

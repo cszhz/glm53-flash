@@ -7,8 +7,9 @@
 guide/
 ├── Readme.md
 ├── scripts/   vllm_install.sh  vllm_env.sh  vllm_serve.sh  restart_serve.sh  router.sh  gcs_prefetch.sh
-├── tools/     功能 / 性能测试、profile、对拍脚本（含 ctx200k_bench.py、dp_router.py）
-└── results/   5.1 节压测的原始数据
+├── tools/     功能 / 性能测试、profile、对拍脚本（含 ctx200k_bench.py、dp_router.py、prefix_hit_ab.py）
+├── patches/   vllm-torchtpu 上 prefix cache 的改动（3.6 节）
+└── results/   5.1 节、3.6 节压测和精度的原始数据
 ```
 
 venv（`.venv`）、代码（`vllm-torchtpu/`）、日志（`logs/`）仍在项目根目录 `/zzlfs/glm53flash_torchtpu`；
@@ -23,6 +24,8 @@ venv（`.venv`）、代码（`vllm-torchtpu/`）、日志（`logs/`）仍在项�
 | 模型     | GLM-5.3-Flash FP8（`GLM-5.3-Flash`，`model_type: glm5_next`），纯文本（视觉塔、MTP 层不加载） |
 | 硬件     | tpu7x-32 slice 中的两台：10.128.0.89（worker 2）、10.128.0.38（worker 3），每台 4 chip / 8 device |
 | 部署拓扑 | **DP2 × TP8**：每台一个独立的 TP8 实例，prefill 叠加序列并行（SP）；本机 :8080 路由按最少在途请求分发 |
+| 代码     | `vllm-torchtpu/` 的 `glm53-port` 分支，`7a41a69f2`（= 上游 PR 的内容 + prefix cache，见 3.6 节；patch 在 `guide/patches/`） |
+| Prefix cache | 支持：`TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1 --enable-prefix-caching`，命中粒度 2048 token，见 3.6 节 |
 | 上游 PR  | [vllm-project/vllm-torchtpu#1859](https://github.com/vllm-project/vllm-torchtpu/pull/1859)（branch `cszhz/glm53-flash`，rebase 到 `72deb3860`；该基线的 `pyproject.toml` 钉的是 libtpu 0.0.50，本指南统一用 0.0.47，换法见第 2 节） |
 | 软件     | vLLM 0.29.0（源码构建）、torch-tpu release 2026.9.22、**libtpu 0.0.47**、jax 0.11.2、transformers 5.17.0 |
 
@@ -74,8 +77,13 @@ curl -s localhost:8000/health          # 200 即就绪
 ```bash
 # 两台各起一个实例（见 3.1），都健康后：
 bash guide/scripts/router.sh http://127.0.0.1:8000 http://10.128.0.38:8000
-curl -s localhost:8080/router/stats    # 各后端在途/已处理请求数
+curl -s localhost:8080/router/stats    # 各后端在途/已处理请求数；routing: 粘性命中/溢出/无键请求数
 ```
+
+路由（`guide/tools/dp_router.py`）按**前缀粘性**分发：两台各有自己的 prefix cache，同一会话的每一轮都要落到同一台。
+粘性键是 chat 请求的 system 消息 + 第一条 user 消息（completions 取 prompt 开头，或请求头 `X-Session-Id`），
+用 rendezvous hashing 选机器；目标那台的在途请求比最空的一台多出 `--spill`（默认 4）以上时溢出到最空的一台；
+没有键的请求（GET 等）选在途最少的。没有健康检查：一台挂掉，分到它的请求会失败。
 
 对外地址：`http://10.128.0.89:8080`（OpenAI 兼容接口，模型名 `GLM-5.3-Flash`）。
 
@@ -123,6 +131,60 @@ curl -s localhost:8080/v1/chat/completions -H 'Content-Type: application/json' \
 - MLA latent KV cache 每卡一份完整的；KDA 递推状态按 head 切。
 
 ---
+
+### 3.6 Prefix cache（unified KV pool）
+
+```bash
+# 两台都这样起（vllm_serve.sh 里写死的 --no-enable-prefix-caching 会被后面的参数覆盖）
+TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1 MODEL=/home/zzl_google_com/models/GLM-5.3-Flash \
+MAX_MODEL_LEN=204800 KV_BYTES=34359738368 bash guide/scripts/restart_serve.sh <tag> \
+  --enable-prefix-caching --reasoning-parser glm45 --tool-call-parser glm47 --enable-auto-tool-choice
+```
+
+**为什么要改代码**：混合模型（34 层 KDA + 11 层 sparse MLA）开 prefix cache，KDA 的递归状态必须存在调度器管理的
+block 里（`mamba_cache_mode=align`），TPU 上就是 unified KV pool。原生的 unified pool 给每层同一块 attention 形状的
+tensor，GLM-5.3 的 sparse MLA（`(nope, rope)` 两块）和 DSA indexer 的 pool-key cache 都接不上。
+
+**做法**（`guide/patches/0001-*.patch`，主要在 `glm5_next/unified_pool.py`）：每个 pool 区域分配 GLM-5.3 原生的三块 cache，
+一个 block 正好一页：
+
+| 区域里的 tensor | 每 token | 谁用 |
+| --- | --- | --- |
+| nope `(blocks, bs, 4, 128)` uint8 | 512 B | sparse MLA；KDA 状态（fp32 ssm 1024 行 + bf16 conv 64 行）；indexer 的 member 状态（前 4 行） |
+| rope `(blocks, bs/4, 4, 128)` uint8 | 128 B | sparse MLA |
+| pool key `(blocks, bs/16, 4, 256)` uint8 | 64 B | DSA indexer；并进 MLA 组共用它的 block 表（单独成组会让显存翻倍） |
+
+- sparse MLA / indexer 的 kernel 一行没改。block 大小取能装下一层 KDA 状态的最小 2 的幂：1088 行 → **2048**。
+- KDA 走 Kimi 的 pooled op（新增 `pool_tokens_per_row=1`）；member 状态用 `pool_adapters.gather_region/scatter_region` 读写。
+  用 XLA gather/scatter 会让 uint8 pool 整块转布局（每层每步 2.3 GB，decode 慢 5 倍），单测
+  `guide/tools/test_indexer_pooled_member.py` 会检查编译结果里没有整块 pool 的 copy。
+- 不设 `TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1` 时走原来的 per-layer cache，行为不变。
+
+**验证**（.184，200K / TP8；`guide/tools/prefix_hit_ab.py`）：
+
+| 测试 | 结果 |
+| --- | --- |
+| 同一 prompt 发两次（2045~82043 token，含 2048 边界 ±1、±3） | 命中数 = ⌊(n−1)/2048⌋×2048，输出与重算**逐位一致**（logprob 差 0） |
+| 共享前缀：P+S2 命中 P+S1 缓存的 P（P 到 123K） | 与清空缓存后重算逐位一致 |
+| 16 请求并发 × 2 轮，共享前缀 vs 不共享前缀对照 | 差异同一量级（批次噪声），没有串数据 |
+| GSM8K 600（`results/gsm8k600_prefixcache_184.json`） | 94.83%（不开 prefix cache：94.83%） |
+| 199K 前缀 + 500 新 token 的首字时间 | 冷 7.04 s → 命中 **0.21 s** |
+
+不命中时的 200K 单机压测（`results/ctx200k-vllm-1host-prefixcache2-20261022-102117.*`，对比 10-12 的 per-layer 基线）：
+
+| 并发 | TTFT p50 | TPOT p50 | tok/s/chip（总 token / 墙钟） |
+| --- | --- | --- | --- |
+| 1 | 7.39 → 7.54 s | 6.23 → 6.76 ms | 6086 → 5946 |
+| 2 | 14.19 → 14.72 s | 6.99 → 7.88 ms | 6615 → 6344 |
+| 4 | 28.45 → 29.48 s | 6.96 → 7.85 ms | 6806 → 6549 |
+
+decode 还慢 8–13%，原因未查。
+
+**客户端（agent）注意**：
+- 对话历史只追加，不改前面的内容（system prompt 里不要放时间、计数等每轮变化的内容）；末尾不满 2048 的部分每轮重算。
+- 同一会话的 system 消息和第一条 user 消息保持不变，或每个会话带固定的 `X-Session-Id` 请求头，否则路由可能换机器、不命中。
+- 思考内容在 `reasoning_content`；工具调用按 OpenAI 格式（`tools` / `tool_calls` / `role: tool`）。
+- 每台最多 8 条并发；prompt + `max_tokens` ≤ 204800。
 
 ## 4. 测试脚本
 
@@ -265,5 +327,9 @@ logprob A/B：token 切分只在 512–2048 桶有数值级差异（max 1.0）�
 4. **不要用 libtpu 0.0.50**：它的 SparseCore gather 下放比 0.0.47 慢（单个 SparseCore 慢 43%），MoE 分发/合并的
    gather 每层慢 28–41%，200K prefill 整体慢 ~3%（c1 TTFT 7.39 -> 7.64 s，饱和吞吐 6806 -> 6587 tok/s/chip）。
    没有 libtpu flag 能绕过。复现：`guide/tools/repro_sc_gather_offload.py`（0.0.47 0.588 ms vs 0.0.50 0.740 ms）。
+
+5. **Prefix cache（3.6 节）**：不命中时 decode 比 per-layer 布局慢 8–13%（未查）；命中粒度 2048 token；
+   pooled KDA 不支持投机解码。prefix cache 的改动还没进 PR #1859：PR 分支钉的 vLLM 是 `8039d3cb`，
+   和 `.venv` 的 vLLM 0.29.0 不兼容，没法在现有环境验证。
 
    
