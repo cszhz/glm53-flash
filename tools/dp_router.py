@@ -7,11 +7,15 @@ Each replica has its own prefix cache, so the turns of one conversation (an
 agent resends its whole history every turn) must keep landing on the same
 replica. A request is keyed by what stays fixed across a conversation's turns
 -- the system messages plus the first user message for chat, the head of the
-prompt for completions, or an ``X-Session-Id`` header -- and the key picks a
-replica by rendezvous hashing. If that replica has more than ``--spill``
-requests in flight beyond the least-loaded one, the request goes to the
-least-loaded replica instead (fewest in flight, ties to the lowest index);
-requests without a key (GETs, bodies that are not JSON) always do. Whole
+prompt for completions, or an ``X-Session-Id`` header. A key seen before goes
+back to the replica that served it last; a new key goes to the least-loaded
+replica (fewest in flight, ties to the lowest index) and is remembered there,
+so new conversations -- and one-shot requests with unique prompts -- balance
+like plain least-outstanding routing. If the remembered replica has more than
+``--spill`` requests in flight beyond the least-loaded one, the request goes
+to the least-loaded replica instead and the key moves with it. Requests
+without a key (GETs, bodies that are not JSON) always go to the least-loaded
+replica. The table keeps the ``--max-sessions`` most recently used keys. Whole
 prompts are not used as the key: that would change every turn, and a long
 system prompt shared by every task would send every task to one replica.
 
@@ -22,6 +26,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+from collections import OrderedDict
 
 import aiohttp
 from aiohttp import web
@@ -35,11 +40,15 @@ ap.add_argument("--backend", action="append", required=True)
 ap.add_argument("--spill", type=int, default=4,
                 help="in-flight excess over the least-loaded replica at which "
                      "a keyed request leaves its affine replica")
+ap.add_argument("--max-sessions", type=int, default=200000,
+                help="keys remembered (least recently used dropped first)")
 a = ap.parse_args()
 
 inflight = {b: 0 for b in a.backend}
 served = {b: 0 for b in a.backend}
-routed = {"affine": 0, "spilled": 0, "unkeyed": 0}
+routed = {"affine": 0, "new": 0, "spilled": 0, "unkeyed": 0}
+# blake2b(key) -> backend, most recently used last.
+sessions: OrderedDict[bytes, str] = OrderedDict()
 lock = asyncio.Lock()
 
 COMPLETION_KEY_CHARS = 32768
@@ -83,24 +92,28 @@ def affinity_key(request: web.Request, body: bytes) -> str | None:
     return None
 
 
-def _rendezvous(key: str) -> str:
-    return max(a.backend, key=lambda b: hashlib.blake2b(
-        f"{b}|{key}".encode(), digest_size=8).digest())
-
-
 async def pick(key: str | None) -> str:
+    digest = (None if key is None else
+              hashlib.blake2b(key.encode(), digest_size=16).digest())
     async with lock:
         least = min(a.backend, key=lambda x: (inflight[x], a.backend.index(x)))
-        if key is None:
+        if digest is None:
             b = least
             routed["unkeyed"] += 1
         else:
-            b = _rendezvous(key)
-            if inflight[b] - inflight[least] > a.spill:
+            b = sessions.get(digest)
+            if b is None:
+                b = least
+                routed["new"] += 1
+            elif inflight[b] - inflight[least] > a.spill:
                 b = least
                 routed["spilled"] += 1
             else:
                 routed["affine"] += 1
+            sessions[digest] = b
+            sessions.move_to_end(digest)
+            while len(sessions) > a.max_sessions:
+                sessions.popitem(last=False)
         inflight[b] += 1
         served[b] += 1
         return b
@@ -128,7 +141,7 @@ async def proxy(request: web.Request) -> web.StreamResponse:
 
 async def stats(_: web.Request) -> web.Response:
     out = {b: {"inflight": inflight[b], "served": served[b]} for b in a.backend}
-    out["routing"] = dict(routed)
+    out["routing"] = dict(routed, sessions=len(sessions))
     return web.json_response(out)
 
 

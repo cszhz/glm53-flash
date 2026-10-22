@@ -24,7 +24,7 @@ venv（`.venv`）、代码（`vllm-torchtpu/`）、日志（`logs/`）仍在项�
 | 模型     | GLM-5.3-Flash FP8（`GLM-5.3-Flash`，`model_type: glm5_next`），纯文本（视觉塔、MTP 层不加载） |
 | 硬件     | tpu7x-32 slice 中的两台：10.128.0.89（worker 2）、10.128.0.38（worker 3），每台 4 chip / 8 device |
 | 部署拓扑 | **DP2 × TP8**：每台一个独立的 TP8 实例，prefill 叠加序列并行（SP）；本机 :8080 路由按最少在途请求分发 |
-| 代码     | `vllm-torchtpu/` 的 `glm53-port` 分支，`7a41a69f2`（= 上游 PR 的内容 + prefix cache，见 3.6 节；patch 在 `guide/patches/`） |
+| 代码     | `vllm-torchtpu/` 的 `glm53-port` 分支，`4283e235e`（= 上游 PR 的内容 + prefix cache + 调度器修正，见 3.6 节；两个 patch 在 `guide/patches/`） |
 | Prefix cache | 支持：`TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1 --enable-prefix-caching`，命中粒度 2048 token，见 3.6 节 |
 | 上游 PR  | [vllm-project/vllm-torchtpu#1859](https://github.com/vllm-project/vllm-torchtpu/pull/1859)（branch `cszhz/glm53-flash`，rebase 到 `72deb3860`；该基线的 `pyproject.toml` 钉的是 libtpu 0.0.50，本指南统一用 0.0.47，换法见第 2 节） |
 | 软件     | vLLM 0.29.0（源码构建）、torch-tpu release 2026.9.22、**libtpu 0.0.47**、jax 0.11.2、transformers 5.17.0 |
@@ -81,9 +81,10 @@ curl -s localhost:8080/router/stats    # 各后端在途/已处理请求数；ro
 ```
 
 路由（`guide/tools/dp_router.py`）按**前缀粘性**分发：两台各有自己的 prefix cache，同一会话的每一轮都要落到同一台。
-粘性键是 chat 请求的 system 消息 + 第一条 user 消息（completions 取 prompt 开头，或请求头 `X-Session-Id`），
-用 rendezvous hashing 选机器；目标那台的在途请求比最空的一台多出 `--spill`（默认 4）以上时溢出到最空的一台；
-没有键的请求（GET 等）选在途最少的。没有健康检查：一台挂掉，分到它的请求会失败。
+粘性键是 chat 请求的 system 消息 + 第一条 user 消息（completions 取 prompt 开头，或请求头 `X-Session-Id`）。
+新会话分给在途最少的一台并记住（最近 20 万个会话，LRU），之后同一会话回到记住的那台；记住的那台比最空的一台
+多出 `--spill`（默认 4）个在途请求时，溢出到最空的一台并改记那台。没有键的请求（GET 等）选在途最少的。
+所以一次性的、prompt 各不相同的请求（比如压测）和原来的"最少在途"分发一样均衡。没有健康检查：一台挂掉，分到它的请求会失败。
 
 对外地址：`http://10.128.0.89:8080`（OpenAI 兼容接口，模型名 `GLM-5.3-Flash`）。
 
@@ -179,6 +180,23 @@ tensor，GLM-5.3 的 sparse MLA（`(nope, rope)` 两块）和 DSA indexer 的 po
 | 4 | 28.45 → 29.48 s | 6.96 → 7.85 ms | 6806 → 6549 |
 
 decode 还慢 8–13%，原因未查。
+
+两机 DP2 的 200K 压测（不命中；`results/ctx200k-vllm-dp2-*-20261022-*`，tok/s/chip 为总 token / 墙钟）：
+
+| 并发 | TTFT p50（per-layer / prefix cache / + 调度器修正） | TPOT p90 ms | tok/s/chip |
+| --- | --- | --- | --- |
+| 1 | 7.40 / 7.48 / 7.53 s | 6.23 / 6.76 / 6.72 | 3041 / 2985 / 2972 |
+| 2 | 7.48 / 7.55 / 8.02 s | 6.29 / 6.84 / 7.29 | 5972 / 5876 / 5270 |
+| 4 | 14.17 / 14.75 / 14.60 s | 7.09 / 7.87 / 7.92 | 6617 / 6324 / 6382 |
+| 8 | 28.27 / 32.78 / 29.33 s | 7.51 / 8.02 / 7.91 | 6821 / 5366 / 6564 |
+| 12 | 44.73 / 63.59 / 45.63 s | 18.81 / 81.43 / 30.53 | 6502 / 4597 / 6382 |
+| 16 | 57.87 / 59.93 / 59.11 s | 27.89 / 30.05 / 27.39 | 6766 / 6518 / 6620 |
+
+- **调度器修正**（第二个 patch）：align 模式下 prefill chunk 要落在 block 边界，block 变成 2048 后，
+  `SharedPrefillBudgetScheduler` 原来"预算平分再对齐到 block"的做法在每台 3、5、6 条并发时用不满 8192 的预算
+  （6 条时只用 6144），c8/c12 掉 21–29%。改成按请求注水：每条请求的上限 = 剩余预算 ÷ 剩余请求数，
+  对齐截掉的部分留给后面的请求。不开 prefix cache 时行为不变。
+- 修正后的 c2 只有 2 个样本，落到 .184 的那条是它重启后的第一个 200K 请求（c1 的 3 条都在 .183），慢了 1 s。
 
 **客户端（agent）注意**：
 - 对话历史只追加，不改前面的内容（system prompt 里不要放时间、计数等每轮变化的内容）；末尾不满 2048 的部分每轮重算。
@@ -328,8 +346,9 @@ logprob A/B：token 切分只在 512–2048 桶有数值级差异（max 1.0）�
    gather 每层慢 28–41%，200K prefill 整体慢 ~3%（c1 TTFT 7.39 -> 7.64 s，饱和吞吐 6806 -> 6587 tok/s/chip）。
    没有 libtpu flag 能绕过。复现：`guide/tools/repro_sc_gather_offload.py`（0.0.47 0.588 ms vs 0.0.50 0.740 ms）。
 
-5. **Prefix cache（3.6 节）**：不命中时 decode 比 per-layer 布局慢 8–13%（未查）；命中粒度 2048 token；
-   pooled KDA 不支持投机解码。prefix cache 的改动还没进 PR #1859：PR 分支钉的 vLLM 是 `8039d3cb`，
+5. **Prefix cache（3.6 节）**：不命中时 decode 比 per-layer 布局慢 8–13%（未查），200K 吞吐低 2–4%；命中粒度 2048 token；
+   pooled KDA 不支持投机解码；`chat_template_kwargs: {"enable_thinking": false}` 关不掉思考（思考会进 `content`）。
+   prefix cache 的改动还没进 PR #1859：PR 分支钉的 vLLM 是 `8039d3cb`，
    和 `.venv` 的 vLLM 0.29.0 不兼容，没法在现有环境验证。
 
    

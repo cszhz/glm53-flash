@@ -1,7 +1,7 @@
 From 7a41a69f285bba6be80874e6ed3ede14894b39fc Mon Sep 17 00:00:00 2001
 From: zzl <zzl@google.com>
 Date: Thu, 22 Oct 2026 10:27:13 +0000
-Subject: [PATCH] [Model] glm5_next: prefix caching on the unified KV pool
+Subject: [PATCH 1/2] [Model] glm5_next: prefix caching on the unified KV pool
 
 Prefix caching on a hybrid model needs the recurrent state in scheduler
 blocks (mamba_cache_mode=align), i.e. the unified pool. Each pool region is
