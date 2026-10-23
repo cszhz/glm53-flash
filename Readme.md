@@ -8,7 +8,7 @@ guide/
 ├── Readme.md
 ├── scripts/   vllm_install.sh  vllm_env.sh  vllm_serve.sh  restart_serve.sh  router.sh  gcs_prefetch.sh
 ├── tools/     功能 / 性能测试、profile、对拍脚本（含 ctx200k_bench.py、dp_router.py、prefix_hit_ab.py）
-├── patches/   vllm-torchtpu 上 prefix cache 的改动（3.6 节）
+├── patches/   vllm-torchtpu 上的改动：prefix cache（0001–0002，3.6 节）、MTP 投机解码（0003–0005，3.7 节）
 └── results/   5.1 节、3.6 节压测和精度的原始数据
 ```
 
@@ -21,11 +21,12 @@ venv（`.venv`）、代码（`vllm-torchtpu/`）、日志（`logs/`）仍在项�
 
 | 项目     | 内容                                                         |
 | -------- | ------------------------------------------------------------ |
-| 模型     | GLM-5.3-Flash FP8（`GLM-5.3-Flash`，`model_type: glm5_next`），纯文本（视觉塔、MTP 层不加载） |
+| 模型     | GLM-5.3-Flash FP8（`GLM-5.3-Flash`，`model_type: glm5_next`），纯文本（视觉塔不加载；MTP 层可选加载做投机解码，见 3.7 节） |
 | 硬件     | tpu7x-32 slice 中的两台：10.128.0.89（worker 2）、10.128.0.38（worker 3），每台 4 chip / 8 device |
 | 部署拓扑 | **DP2 × TP8**：每台一个独立的 TP8 实例，prefill 叠加序列并行（SP）；本机 :8080 路由按最少在途请求分发 |
-| 代码     | `vllm-torchtpu/` 的 `glm53-port` 分支，`4283e235e`（= 上游 PR 的内容 + prefix cache + 调度器修正，见 3.6 节；两个 patch 在 `guide/patches/`） |
+| 代码     | `vllm-torchtpu/` 的 `glm53-port` 分支，`19f6a3239`（= 上游 PR 的内容 + prefix cache + 调度器修正 + MTP 投机解码，见 3.6、3.7 节；五个 patch 在 `guide/patches/`） |
 | Prefix cache | 支持：`TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1 --enable-prefix-caching`，命中粒度 2048 token，见 3.6 节 |
+| 投机解码 | MTP（`--speculative-config '{"method":"mtp","num_speculative_tokens":3}'`），需要 unified pool；单流 decode 1.8–2.3×，见 3.7 节 |
 | 上游 PR  | [vllm-project/vllm-torchtpu#1859](https://github.com/vllm-project/vllm-torchtpu/pull/1859)（branch `cszhz/glm53-flash`，rebase 到 `72deb3860`；该基线的 `pyproject.toml` 钉的是 libtpu 0.0.50，本指南统一用 0.0.47，换法见第 2 节） |
 | 软件     | vLLM 0.29.0（源码构建）、torch-tpu release 2026.9.22、**libtpu 0.0.47**、jax 0.11.2、transformers 5.17.0 |
 
@@ -204,6 +205,65 @@ decode 还慢 8–13%，原因未查。
 - 思考内容在 `reasoning_content`；工具调用按 OpenAI 格式（`tools` / `tool_calls` / `role: tool`）。
 - 每台最多 8 条并发；prompt + `max_tokens` ≤ 204800。
 
+### 3.7 MTP 投机解码
+
+```bash
+# 在 3.6 的命令上加 spec 参数；SPEC_WARMUP=0 和更长的 RPC 超时见下面的"注意"
+SPEC_WARMUP=0 VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS=1800 \
+TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1 MODEL=/home/zzl_google_com/models/GLM-5.3-Flash \
+MAX_MODEL_LEN=204800 KV_BYTES=34359738368 bash guide/scripts/restart_serve.sh <tag> \
+  --enable-prefix-caching --reasoning-parser glm45 --tool-call-parser glm47 --enable-auto-tool-choice \
+  --speculative-config '{"method":"mtp","num_speculative_tokens":3}'
+# 健康后先发一个请求预热：第一个请求要编译草稿模型（K=1 约 1.5 分钟，K=3 约 9 分钟）
+curl -s localhost:8000/v1/completions -H 'Content-Type: application/json' \
+  -d '{"model":"GLM-5.3-Flash","prompt":"hi","max_tokens":4}'
+```
+
+`num_speculative_tokens`（K）是每步草稿模型猜的 token 数；目标模型一次验证 K+1 个位置，猜对几个就多出几个。
+
+**做法**（`guide/patches/0003`–`0005`；0003、0004 是上游的 #1711、#1811，pooled KDA 的逐位置状态检查点）：
+- `glm5_next/mtp.py`：checkpoint 第 45 层就是 MTP 层。`enorm`/`hnorm` 后拼接 `[embed, hidden]` 过 `eh_proj`，再过一层
+  sparse MLA + MoE，最后 `shared_head.norm`；embed 和 lm_head 与主模型共用。
+- indexer 的 member 状态（未凑满一组 4 个的 token）改成 `kpool + K` 行的环：一次验证可能凑满一组，组里的成员最远
+  来自 K 个位置之前，而被拒的草稿写的行不能覆盖它们。环从读偏移选中的检查点 block 读，写回窗口里每个检查点 block。
+- 草稿模型对所有 token 桶只 trace 一次，所以：草稿里的 MLA 不走全头 SP 路径（会把 trace 特化到 token 数）；
+  草稿不在 1 个 token 上编译或调用（size-1 的 guard 会把其他桶特化掉），最小补到 2。
+- 调度器：一条 decode 占 `1 + K` 个 token 的预算。
+
+**验证**（TP8；16K 上下文和 200K 线上配置）：
+
+| 测试 | 不开投机 | K=1 | K=3 |
+| --- | ---: | ---: | ---: |
+| GSM8K 600（`results/gsm8k600_*.json`） | 95.33% | 94.83% | 94.83% |
+| 长上下文精确检索 210 题（`longctx_recall.py`，3K–13K token） | 197 | — | 200 |
+| 草稿接受率（GSM8K） | — | 0.92 | 0.74 |
+
+- 输出和不开投机的不逐位一致：草稿/验证改变了 batch 形状，bf16 数值随之变化。合成 prompt 下一 token 分布很平，
+  首个 token 会因此换成别的候选；不开投机的两种配置（unified vs per-layer）之间也有同样幅度的差异。判断对错看任务精度。
+- KDA 窗口（`test_kda_spec_window.py`，K=1/3）、spec 与非 spec 的 prefill（`test_kda_spec_vs_nospec.py`）、
+  member 环（`test_indexer_spec_ring.py`，环只留 kpool 行时报错）单测通过。
+
+**速度**（200K 线上配置，单机 TP8，4 chip；结果在 `results/`）：
+
+| 场景 | 不开投机 | K=3 |
+| --- | ---: | ---: |
+| 单流 decode，prompt 300 / 4000 / 32000（`decode_speed.py`） | 117 / 117 / 118 tok/s | 264 / 210 / 226 tok/s |
+| 2 万进 / 700 出，每卡输出 tok/s，c1 / c2 / c4 / c8（`conc-20k-mtp-20261023.txt`） | 28.6 / 53.8 / 98.6 / 157.9 | 62.4 / 102.7 / 122.7 / 172.4 |
+| 200K 进 / 128 出，TPOT p50 ms，c1 / c2 / c4 / c8（`ctx200k-1host-*-20261023-*`） | 6.83 / 7.87 / 7.95 / 10.0 | 2.73 / 3.65 / 7.38 / 11.9 |
+| 200K 进 / 128 出，TTFT p50 s，c1 | 7.49 | 7.86 |
+
+- **并发越高收益越小**：K=3 每条请求每步验证 4 个 token。c1–c2 时 decode 卡在读权重，多算几个 token 几乎不花时间；
+  c4 以上 16/32 个 token 被补到 128 的编译桶（线上桶是 1,4,8,128,…），验证的计算量也随并发涨，收益基本抵消，
+  200K c8 反而慢。补 16/32/64 的桶、或并发高时改 K=1 是下一步要测的。
+- prefill 多跑一遍草稿，TTFT 慢 5–10%；200K 压测（99.9% 是 prefill）总吞吐低 2–9%。
+
+**注意**：
+- `SPEC_WARMUP=0`：spec 的预热编译会撞上 size-1 的 guard 失败，先关掉，改为首个请求时编译；因此要把
+  `VLLM_EXECUTE_MODEL_TIMEOUT_SECONDS` 调到 1800，否则首个请求编译草稿超过默认 ~300 s 的 RPC 超时。
+- 只支持 unified pool（`TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1`）；per-layer 布局下 indexer 的 member 状态没有检查点。
+- ngram 投机要加 `--no-async-scheduling`。
+- 流式压测要按 `usage.completion_tokens` 计 token：spec 下一个 SSE 事件可能带多个 token（`conc_bench.py` 已改）。
+
 ## 4. 测试脚本
 
 脚本都在 `guide/tools/`，用 `.venv/bin/python` 运行；`--url` 指向单个实例（:8000）或路由（:8080）。
@@ -215,6 +275,10 @@ decode 还慢 8–13%，原因未查。
 | `needle_test.py` | 大海捞针：在 N 条记录里埋一条访问码，问模型     | `--filler 600`（7.6K token）；`--filler 8100 --depth 0.1/0.55/0.9`（~190K） |
 | `logprob_ab.py`  | 下一个 token 的 top-5 logprob A/B，比较两个配置 | `--url ... --dump ab/x.json`；`--compare ab/a.json ab/b.json` |
 | `gsm8k_eval.py`  | GSM8K 零样本 chat、greedy                       | `--limit 600 --out evals/x.json`                             |
+| `longctx_recall.py` | 长上下文精确检索（3K–13K token），多台同题比准确率 | `--url ref=http://a:8000 --url mtp=http://b:8000 --n 150` |
+| `spec_ab.py`     | 同一 greedy 请求打 spec / 非 spec 两台，比 token、接受率 | `--spec http://b:8000 --ref http://a:8000 --lengths 300,4000` |
+| `first_token_check.py` / `spec_tf_check.py` | A 生成的 token 落在参考 top-5 的哪里（首 token / 逐位置） | `--a http://b:8000 --ref http://a:8000` |
+| `test_kda_spec_*.py` / `test_indexer_spec_ring.py` | MTP 用到的 KDA 窗口、member 环单测（需要空闲 TPU） | `K=3 python ...`、`RING=7 python ...` |
 
 ### 4.2 性能
 
@@ -223,7 +287,8 @@ decode 还慢 8–13%，原因未查。
 | `ctx200k_bench.py`                   | **200K 进 / 128 出压测**，并发梯度 1/2/4/8/12/16，指标口径与 GPU 基线逐字一致，输出 JSON + TSV | 见下                                  |
 | `ctx200k_true_tput.py`               | 从 ctx200k JSON 算真实吞吐（总 token / 墙钟时间）            | `ctx200k_true_tput.py results/x.json` |
 | `ttft_bench.py`                      | 单流：不同 prompt 长度的 TTFT 和 decode tok/s                | `--fillers 3,20,60,120,300,1200`      |
-| `conc_bench.py`                      | 中等长度（~7.6K）并发压测                                    |                                       |
+| `conc_bench.py`                      | 并发压测（`--filler 340` ≈ 7.6K、`900` ≈ 2 万 token），按 usage 计 token |  `--filler 900 --out 700 --conc 1,2,4,8` |
+| `decode_speed.py`                    | 单流 decode tok/s（不流式、无 logprobs，256 与 1 token 的时间差） | `--url ref=http://a:8000 --url mtp=http://b:8000` |
 
 200K 压测命令：
 
@@ -346,9 +411,11 @@ logprob A/B：token 切分只在 512–2048 桶有数值级差异（max 1.0）�
    gather 每层慢 28–41%，200K prefill 整体慢 ~3%（c1 TTFT 7.39 -> 7.64 s，饱和吞吐 6806 -> 6587 tok/s/chip）。
    没有 libtpu flag 能绕过。复现：`guide/tools/repro_sc_gather_offload.py`（0.0.47 0.588 ms vs 0.0.50 0.740 ms）。
 
-5. **Prefix cache（3.6 节）**：不命中时 decode 比 per-layer 布局慢 8–13%（未查），200K 吞吐低 2–4%；命中粒度 2048 token；
-   pooled KDA 不支持投机解码；`chat_template_kwargs: {"enable_thinking": false}` 关不掉思考（思考会进 `content`）。
-   prefix cache 的改动还没进 PR #1859：PR 分支钉的 vLLM 是 `8039d3cb`，
-   和 `.venv` 的 vLLM 0.29.0 不兼容，没法在现有环境验证。
+5. **Prefix cache（3.6 节）**：不命中时 decode 比 per-layer 布局慢 8–13%（未查），200K 吞吐低 2–4%；命中粒度 2048 token；`chat_template_kwargs: {"enable_thinking": false}` 关不掉思考（思考会进 `content`）。
+   prefix cache、调度器和 MTP 的改动已推到 PR #1859 的分支，但 PR 分支钉的 vLLM 是 `8039d3cb`，
+   和 `.venv` 的 vLLM 0.29.0 不兼容，只在 `glm53-port`（vLLM 0.29.0）上验证过。
 
    
+
+6. **MTP（3.7 节）**：首个请求编译草稿（K=3 约 9 分钟），上线前先预热；c4 以上收益很小，200K c8 比不开慢；
+   vLLM 的按 batch 选 K（`num_speculative_tokens_per_batch_size`）插件还不支持。

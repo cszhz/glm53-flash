@@ -1,0 +1,4809 @@
+{
+ "url": "http://10.128.0.184:8000",
+ "limit": 600,
+ "seed": 0,
+ "accuracy": 0.9483333333333334,
+ "mean_completion_tokens": 55.901666666666664,
+ "results": [
+  {
+   "i": 1,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Blue: 2 bolts, white: half of 2 = 1 bolt. Total = 2 + 1 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 5,
+   "ref": "64",
+   "pred": "64",
+   "ok": true,
+   "completion_tokens": 67,
+   "text": "8 full price =40, 8 at 3 =24, total 64.</think>Every second glass costs 60% of $5 = $3. With 16 glasses: 8 at $5 = $40, and 8 at $3 = $24. Total = $64.\n\nAnswer: 64"
+  },
+  {
+   "i": 11,
+   "ref": "694",
+   "pred": "694",
+   "ok": true,
+   "completion_tokens": 66,
+   "text": "3\u00d768=204, 2\u00d780=160, 6\u00d755=330 \u2192 694</think>3\u00d768 = 204, 2\u00d780 = 160, 6\u00d755 = 330. Total: 204+160+330 = 694.\n\nAnswer: 694"
+  },
+  {
+   "i": 12,
+   "ref": "13",
+   "pred": "12",
+   "ok": false,
+   "completion_tokens": 83,
+   "text": "Annual profit: 7*1.5 - 3 = 7.5. 90/7.5 = 12.</think>Each year Carlos earns 7 \u00d7 $1.5 = $10.50, minus $3 in costs = $7.50 profit per year. To recover $90: 90 \u00f7 7.5 = 12 years.\n\nAnswer: 12"
+  },
+  {
+   "i": 13,
+   "ref": "18",
+   "pred": "18",
+   "ok": true,
+   "completion_tokens": 147,
+   "text": "x - x/3 - 2 = 2x/3 - 2; half left sold, remaining = (2x/3-2)/2 =5 \u2192 2x/3-2=10 \u2192 x=18.</think>Let x be the starting amount. After green house: x \u2212 x/3 = 2x/3. After red house: 2x/3 \u2212 2. She sells half of that at the orange house, leaving half: (2x/3 \u2212 2)/2 = 5, so 2x/3 \u2212 2 = 10, giving 2x/3 = 12, x = 18.\n\nAnswer: 18"
+  },
+  {
+   "i": 14,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 77,
+   "text": "20% contemporary \u2192 16 remain; 25% of 16 = 4 jazz; 16-4=12 hip-hop \u2192 60%.</think>20% take contemporary, leaving 80%. Jazz: 25% of 80% = 20%. Hip-hop: 100% \u2212 20% \u2212 20% = 60%.\n\nAnswer: 60"
+  },
+  {
+   "i": 16,
+   "ref": "230",
+   "pred": "170",
+   "ok": false,
+   "completion_tokens": 78,
+   "text": "Straight-line distance: \u221a(80\u00b2+150\u00b2)=170.</think>Each train travels 80 miles west, then 150 miles north. The straight-line distance between start and end points is \u221a(80\u00b2 + 150\u00b2) = \u221a(6400 + 22500) = \u221a28900 = 170 miles.\n\nAnswer: 170"
+  },
+  {
+   "i": 17,
+   "ref": "57500",
+   "pred": "57500",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "</think>Teacher: 20 \u00d7 35 = $700/week; Coach: 30 \u00d7 15 = $450/week. Total $1150/week \u00d7 50 weeks = $57,500.\n\nAnswer: 57500"
+  },
+  {
+   "i": 19,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "Remaining 6 miles, total time allowed 3h, used 2h \u2192 1h \u2192 6 mph.</think>Total time allowed: 12/4 = 3 hours. She's used 2 hours, so 1 hour remains for 6 miles.\n\nAnswer: 6"
+  },
+  {
+   "i": 22,
+   "ref": "7",
+   "pred": "7",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>3\u00d71 + 2\u00d72 = 3 + 4 = 7\n\nAnswer: 7"
+  },
+  {
+   "i": 23,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 19,
+   "text": "</think>4 hours \u00d7 2 cm/hour = 8 cm.\n\nAnswer: 8"
+  },
+  {
+   "i": 24,
+   "ref": "26",
+   "pred": "26",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>19.50 is 75% of the original price, so original = 19.50 / 0.75 = 26.\n\nAnswer: 26"
+  },
+  {
+   "i": 26,
+   "ref": "243",
+   "pred": "243",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "</think>3\u00d716.50 + 3\u00d722.50 + 3\u00d742 = 49.50 + 67.50 + 126 = 243\n\nAnswer: 243"
+  },
+  {
+   "i": 32,
+   "ref": "35",
+   "pred": "35",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>10 dogs \u00d7 0.5 hours = 5 hours per day. Per week: 5 \u00d7 7 = 35 hours.\n\nAnswer: 35"
+  },
+  {
+   "i": 35,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Second 20 minutes: 4 \u00d7 1.25 = 5 points. Total: 4 + 5 = 9.\n\nAnswer: 9"
+  },
+  {
+   "i": 37,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 87,
+   "text": "13\u00d715=195; games cost 160, +5 =165, so he sold 11 sets, 2 left.</think>He sold 13\u00d715 = $195 worth if all sold. Games cost 8\u00d720 = $160, plus $5 left = $165 earned, so he sold 165/15 = 11 sets, keeping 13\u221211 = 2.\n\nAnswer: 2"
+  },
+  {
+   "i": 50,
+   "ref": "294",
+   "pred": "294",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "252/12=21 dozen/day \u00d72=$42/day \u00d77=$294.</think>252 eggs/day \u00f7 12 = 21 dozen/day. At $2/dozen: 21 \u00d7 2 = $42/day. Per week: 42 \u00d7 7 = $294.\n\nAnswer: 294"
+  },
+  {
+   "i": 51,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Distance: 10 mph \u00d7 3 hours = 30 miles. Return time: 30 \u00f7 6 = 5 hours.\n\nAnswer: 5"
+  },
+  {
+   "i": 52,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "</think>30 comics \u00d7 1/4 = 7.5 pounds. Remaining: 15 \u2212 7.5 = 7.5 pounds. Toys: 7.5 \u00f7 0.5 = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 53,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 66,
+   "text": "Thursday: 360+160=520; Friday: 480; diff 40.</think>Thursday: 6\u00d760 + 4\u00d740 = 360 + 160 = $520. Friday: 12\u00d740 = $480. Difference: 520 \u2212 480 = 40.\n\nAnswer: 40"
+  },
+  {
+   "i": 55,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "</think>Jean has 30 \u2212 2 = 28 lollipops left. With 2 per bag: 28 \u00f7 2 = 14 bags.\n\nAnswer: 14"
+  },
+  {
+   "i": 57,
+   "ref": "83",
+   "pred": "83",
+   "ok": true,
+   "completion_tokens": 51,
+   "text": "(5000-3755)/15 = 1245/15 = 83.</think>5000 \u2212 3755 = 1245 pounds available for boxes.\n1245 \u00f7 15 = 83.\n\nAnswer: 83"
+  },
+  {
+   "i": 58,
+   "ref": "57",
+   "pred": "57",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "40*1.25=50, +3+4=57.</think>40 \u00d7 1.25 = 50, plus $3 delivery and $4 tip = 57.\n\nAnswer: 57"
+  },
+  {
+   "i": 59,
+   "ref": "187",
+   "pred": "187",
+   "ok": true,
+   "completion_tokens": 21,
+   "text": "</think>6 \u00d7 20 = 120, plus 67 = 187.\n\nAnswer: 187"
+  },
+  {
+   "i": 60,
+   "ref": "17",
+   "pred": "17",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "25 - 1 - 5 - 2 = 17</think>Total = 25. Bad = 1, unripe = 20% of 25 = 5, sour = 2. Good = 25 \u2212 1 \u2212 5 \u2212 2 = 17.\n\nAnswer: 17"
+  },
+  {
+   "i": 66,
+   "ref": "48",
+   "pred": "48",
+   "ok": true,
+   "completion_tokens": 66,
+   "text": "4 schools \u00d7 (2 teams \u00d7 5 players + 2 coaches) = 4\u00d712=48</think>Each school sends 2 teams \u00d7 5 players = 10 players, plus 2 coaches = 12 people. With 4 schools: 4 \u00d7 12 = 48.\n\nAnswer: 48"
+  },
+  {
+   "i": 68,
+   "ref": "36",
+   "pred": "36",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "120+60=180, /5=36</think>Boys = 2 \u00d7 60 = 120, total students = 180. Teachers = 180 \u00f7 5 = 36.\n\nAnswer: 36"
+  },
+  {
+   "i": 69,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Bailey receives 5 \u00d7 8 = $40 over 8 weeks. Starting amount = 100 \u2212 40 = $60.\n\nAnswer: 60"
+  },
+  {
+   "i": 70,
+   "ref": "7425",
+   "pred": "7425",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "5\u00d75+8=33 classes \u00d715\u00d715=7425.</think>Classes: 5\u00d75 + 8 = 33 classes per week.\nStudents: 33 \u00d7 15 = 495 students.\nMoney: 495 \u00d7 $15 = $7,425.\n\nAnswer: 7425"
+  },
+  {
+   "i": 71,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 16,
+   "text": "</think>20 + 2\u00d720 = 60\n\nAnswer: 60"
+  },
+  {
+   "i": 73,
+   "ref": "255",
+   "pred": "255",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "150\u00d75=750, \u00d71.02=765, /3=255.</think>Total cost: 5 \u00d7 $150 = $750\nWith 2% interest: $750 \u00d7 1.02 = $765\nMonthly payment: $765 \u00f7 3 = $255\n\nAnswer: 255"
+  },
+  {
+   "i": 75,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 47,
+   "text": "16,32,64,128 avg=60</think>Levels from top: 16, 32, 64, 128. Sum = 240, average = 240/4 = 60.\n\nAnswer: 60"
+  },
+  {
+   "i": 76,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 65,
+   "text": "180 + 185\u00d72 = 550; 550/110 = 5.</think>First 180 days: 180 cups. Remaining 185 days: 185 \u00d7 2 = 370 cups. Total = 550 cups. 550 \u00f7 110 = 5 bags.\n\nAnswer: 5"
+  },
+  {
+   "i": 81,
+   "ref": "17",
+   "pred": "17",
+   "ok": true,
+   "completion_tokens": 45,
+   "text": "10+21+23=54; 54-9-28=17</think>10 + 21 + 23 = 54; 54 \u2212 9 \u2212 28 = 17\n\nAnswer: 17"
+  },
+  {
+   "i": 84,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 89,
+   "text": "Draws possible? Classic: wins = losses + 8, wins+losses=22 \u2192 wins 15, losses 7. Answer 15.</think>Let wins = W, losses = L. W + L = 22 and W = L + 8.\nSo L + 8 + L = 22 \u2192 2L = 14 \u2192 L = 7, W = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 87,
+   "ref": "9360",
+   "pred": "9360",
+   "ok": true,
+   "completion_tokens": 121,
+   "text": "600\u00d712=7200; +10% per year for 3 years: 7200\u00d71.3=9360.</think>Sylvie's initial annual salary: $600 \u00d7 12 = $7,200.\n\nEach year after 5 years, she gets a 10% raise of the initial salary: 10% of $7,200 = $720 per year.\n\nAfter 3 more years: $7,200 + 3 \u00d7 $720 = $7,200 + $2,160 = $9,360.\n\nAnswer: 9360"
+  },
+  {
+   "i": 88,
+   "ref": "8000",
+   "pred": "8000",
+   "ok": true,
+   "completion_tokens": 54,
+   "text": "H + 10H = 88000 \u2192 H = 8000.</think>Harald sold H copies; Marilyn sold 10H. So 11H = 88,000, giving H = 8,000.\n\nAnswer: 8000"
+  },
+  {
+   "i": 90,
+   "ref": "225",
+   "pred": "225",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Adults: 20 \u00d7 10 = 200 lbs. Children eat 5 lbs each: 5 \u00d7 5 = 25 lbs. Total: 225.\n\nAnswer: 225"
+  },
+  {
+   "i": 91,
+   "ref": "28",
+   "pred": "28",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>Cindy: 4, Marcia: 6, Jan: 18. Total = 4+6+18 = 28.\n\nAnswer: 28"
+  },
+  {
+   "i": 94,
+   "ref": "348",
+   "pred": "348",
+   "ok": true,
+   "completion_tokens": 81,
+   "text": "Dogs 60, cats 120, dogs+cats=180, rabbits=168, total 348.</think>Dogs = 60, cats = 2\u00d760 = 120. Dogs + cats = 180, so rabbits = 180 \u2212 12 = 168. Total = 60 + 120 + 168 = 348.\n\nAnswer: 348"
+  },
+  {
+   "i": 96,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>James slept 9 \u00d7 2/3 = 6 hours. Harry slept 9 \u2212 6 = 3 more hours.\n\nAnswer: 3"
+  },
+  {
+   "i": 97,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>32 ounces of sauce requires 64 ounces of tomatoes = 4 cans \u00d7 3 tomatoes = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 98,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "30 - 20 - 5 = 5.</think>Cars that drove through = 30 \u2212 5 (exit) \u2212 20 (last 15 min) = 5.\n\nAnswer: 5"
+  },
+  {
+   "i": 99,
+   "ref": "58",
+   "pred": "58",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Mary has 2 \u00d7 40 = 80 plants, plus 18 = 98. She gives away 40, leaving 98 \u2212 40 = 58.\n\nAnswer: 58"
+  },
+  {
+   "i": 104,
+   "ref": "500",
+   "pred": "500",
+   "ok": true,
+   "completion_tokens": 62,
+   "text": "1000, quarter=250, remaining 750, third=250, left 500.</think>1000 \u00f7 4 = 250 placed, leaving 750. Mom places 750 \u00f7 3 = 250, leaving 750 \u2212 250 = 500.\n\nAnswer: 500"
+  },
+  {
+   "i": 106,
+   "ref": "72",
+   "pred": "72",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "Inner: 3\u00d72\u00d72=12 each, \u00d73=36.</think>Inner dimensions: (5\u22122)\u00d7(6\u22122)\u00d7(4\u22122) = 3\u00d74\u00d72 = 24 cubic inches per box. Three boxes: 24\u00d73 = 72.\n\nAnswer: 72"
+  },
+  {
+   "i": 108,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "(2x+15-5=110 \u2192 2x=100 \u2192 x=50)</think>Let x = last year's cookies. He meant to bake 2x, actually baked 2x+15, dropped 5: 2x+15\u22125=110 \u2192 2x=100 \u2192 x=50.\n\nAnswer: 50"
+  },
+  {
+   "i": 109,
+   "ref": "28",
+   "pred": "28",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "</think>10 gallons \u00d7 $3.00 = $30.00. Cashback: 10 \u00d7 $0.20 = $2.00. Total: $30 \u2212 $2 = $28.\n\nAnswer: 28"
+  },
+  {
+   "i": 110,
+   "ref": "45",
+   "pred": "45",
+   "ok": true,
+   "completion_tokens": 63,
+   "text": "Beatrice 48, Marcell 42, total 90, average 45.</think>Beatrice: 2 \u00d7 24 = 48; Marcell: 3 \u00d7 14 = 42. Total = 90, average = 90/2 = 45.\n\nAnswer: 45"
+  },
+  {
+   "i": 112,
+   "ref": "24",
+   "pred": "24",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>4 teachers \u00d7 2 lessons = 8 lessons; 8 \u00d7 3 = 24.\n\nAnswer: 24"
+  },
+  {
+   "i": 114,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "1800/50=36.</think>Brittany's phone: 1800 \u00f7 6 = 300. Ducks: 300 \u00f7 50 = 6.\n\nAnswer: 6"
+  },
+  {
+   "i": 119,
+   "ref": "95200",
+   "pred": "99076.92",
+   "ok": false,
+   "completion_tokens": 219,
+   "text": "Adrien 40000, +40% \u2192 56000. Lylah: 40000/1.3 \u2248 30769.23, increased simultaneously... presumably same 40%? Lylah four years later = 30769.23\u00d71.4 = 43076.92. Total \u2248 99076.92. Hmm likely intended answer 99076.92? Common answer: $99,076.92.</think>Adrien four years ago: $40,000. Four years later: 40,000 \u00d7 1.4 = $56,000.\n\nLylah four years ago: 40,000 / 1.3 \u2248 $30,769.23. With the same 40% increase: 30,769.23 \u00d7 1.4 \u2248 $43,076.92.\n\nTotal: 56,000 + 43,076.92 = $99,076.92\n\nAnswer: 99076.92"
+  },
+  {
+   "i": 120,
+   "ref": "240",
+   "pred": "240",
+   "ok": true,
+   "completion_tokens": 53,
+   "text": "2\u00d730=60/week \u00d74=240.</think>Miguel uses 2 pads \u00d7 30 sheets = 60 sheets per week. In a month (4 weeks): 60 \u00d7 4 = 240 sheets.\n\nAnswer: 240"
+  },
+  {
+   "i": 122,
+   "ref": "48",
+   "pred": "48",
+   "ok": true,
+   "completion_tokens": 62,
+   "text": "8 + 6+6 + 7+7+7+7 = 48</think>Monday: 8. Tue/Wed: 6 each. Thu\u2013Sun: 7 each \u00d74 = 28. Total: 8+12+28 = 48.\n\nAnswer: 48"
+  },
+  {
+   "i": 123,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 54,
+   "text": "30 + 20 = 50</think>First 3 hours: 10 \u00d7 3 = 30 miles. Remaining 4 hours: 5 \u00d7 4 = 20 miles. Total: 30 + 20 = 50.\n\nAnswer: 50"
+  },
+  {
+   "i": 129,
+   "ref": "10000",
+   "pred": "10000",
+   "ok": true,
+   "completion_tokens": 102,
+   "text": "500\u00d724/60=200 hours. Revenue 200\u00d7200=40000, cost 200\u00d7150=30000, profit 10000.</think>Total time: 500 \u00d7 24 min = 12,000 min = 200 hours.\nRevenue: 200 \u00d7 $200 = $40,000. Cost: 200 \u00d7 $150 = $30,000.\nProfit: $40,000 \u2212 $30,000 = $10,000.\n\nAnswer: 10000"
+  },
+  {
+   "i": 131,
+   "ref": "940",
+   "pred": "940",
+   "ok": true,
+   "completion_tokens": 37,
+   "text": "</think>May: $500. June: 500 \u2212 60 = $440. Total: 500 + 440 = 940.\n\nAnswer: 940"
+  },
+  {
+   "i": 134,
+   "ref": "720",
+   "pred": "720",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>4 washes/month \u00d7 $15 = $60/month. $60 \u00d7 12 = $720.\n\nAnswer: 720"
+  },
+  {
+   "i": 136,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 47,
+   "text": "27/3=9, 2/3 of 9 = 6.</think>27 \u00f7 3 = 9 Scottish unicorns; 2/3 of 9 = 6 female.\n\nAnswer: 6"
+  },
+  {
+   "i": 137,
+   "ref": "29",
+   "pred": "29",
+   "ok": true,
+   "completion_tokens": 97,
+   "text": "2(7.50+1.50+1)=20; +20%=24; +5=29.</think>Subtotal: 2(7.50) + 2(1.50) + 2(1.00) = 15 + 3 + 2 = $20\nDelivery fee: 20% of 20 = $4 \u2192 $24\nPlus tip: 24 + 5 = $29\n\nAnswer: 29"
+  },
+  {
+   "i": 138,
+   "ref": "105",
+   "pred": "21",
+   "ok": false,
+   "completion_tokens": 100,
+   "text": "75/5=15h needed, 8 given \u2192 7 incomplete; 100/5=20h, 6 given \u2192 14; total 21.</think>First test: needs 75/5 = 15 hours, but only 8 available \u2192 7 questions incomplete.\nSecond test: needs 100/5 = 20 hours, but only 6 available \u2192 14 questions incomplete.\nTotal: 7 + 14 = 21.\n\nAnswer: 21"
+  },
+  {
+   "i": 139,
+   "ref": "70",
+   "pred": "70",
+   "ok": true,
+   "completion_tokens": 23,
+   "text": "</think>4 \u00d7 12 + 22 = 48 + 22 = 70\n\nAnswer: 70"
+  },
+  {
+   "i": 140,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 22,
+   "text": "</think>4 semi-automatic out of 20 \u2192 4/20 = 20%.\n\nAnswer: 20"
+  },
+  {
+   "i": 142,
+   "ref": "140",
+   "pred": "140",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Jordan plays 2 hours/day \u00d7 7 days = 14 hours per week. At $10/hour: 14 \u00d7 10 = $140.\n\nAnswer: 140"
+  },
+  {
+   "i": 148,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 22,
+   "text": "</think>12 + 10 = 22, plus 8 change = 30.\n\nAnswer: 30"
+  },
+  {
+   "i": 156,
+   "ref": "1400",
+   "pred": "1400",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Total per month: 200 + 400 + 100 = 700. For 2 months: 700 \u00d7 2 = 1400.\n\nAnswer: 1400"
+  },
+  {
+   "i": 157,
+   "ref": "80",
+   "pred": "80",
+   "ok": true,
+   "completion_tokens": 93,
+   "text": "Blake: 15\u00d7200=3000. Kelly: 200 + 34\u00d780 = 200+2720=2920. Diff 80.</think>Blake: 15 \u00d7 200 = 3000 yards.\nKelly: 200 + 34 \u00d7 80 = 200 + 2720 = 2920 yards.\nDifference: 3000 \u2212 2920 = 80.\n\nAnswer: 80"
+  },
+  {
+   "i": 158,
+   "ref": "34",
+   "pred": "34",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "</think>4 pens: 4 \u00d7 $1.5 = $6\n2 notebooks: 2 \u00d7 $4 = $8\nBond paper: $20\n\nTotal: 6 + 8 + 20 = $34\n\nAnswer: 34"
+  },
+  {
+   "i": 162,
+   "ref": "92",
+   "pred": "92",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "20% of 20 = 4 per 2 months; 36/2=18 periods; 20+72=92.</think>Each 2 months, price rises by 20% of $20 = $4. Over 36 months there are 18 increases: 18 \u00d7 $4 = $72. Final price: $20 + $72 = $92.\n\nAnswer: 92"
+  },
+  {
+   "i": 163,
+   "ref": "50",
+   "pred": "59",
+   "ok": false,
+   "completion_tokens": 78,
+   "text": "Doll = 3\u00d75 + 4 = 19. Total = 25 + 15 + 19 = 59.</think>Doll = 3 \u00d7 $5 + $4 = $19. Total = 5\u00d7$5 + 3\u00d7$5 + $19 = $25 + $15 + $19 = $59.\n\nAnswer: 59"
+  },
+  {
+   "i": 169,
+   "ref": "120",
+   "pred": "120",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "5\u00d720+2\u00d710=120</think>Weekdays: 5 \u00d7 20 = 100 miles. Weekends: 2 \u00d7 10 = 20 miles. Total: 100 + 20 = 120.\n\nAnswer: 120"
+  },
+  {
+   "i": 171,
+   "ref": "1210",
+   "pred": "1210",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "80*8=640, 90*6=540, 30 \u2192 1210</think>640 + 540 + 30 = 1210\n\nAnswer: 1210"
+  },
+  {
+   "i": 172,
+   "ref": "51",
+   "pred": "51",
+   "ok": true,
+   "completion_tokens": 84,
+   "text": "Sally Four = 8, Granny Red = 16, Sally Two = 19, total = 8+8+16+19=51</think>Sally Four = Sally Thirtytwo = 8. Granny Red = 2\u00d78 = 16. Sally Two = 16+3 = 19. Total = 8+8+16+19 = 51.\n\nAnswer: 51"
+  },
+  {
+   "i": 173,
+   "ref": "18000",
+   "pred": "18000",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "</think>Total minimum: 300+200+500 = 1000. 50% more: 1500/month. Yearly: 1500\u00d712 = 18000.\n\nAnswer: 18000"
+  },
+  {
+   "i": 174,
+   "ref": "95",
+   "pred": "95",
+   "ok": true,
+   "completion_tokens": 54,
+   "text": "90+5=95s \u00d760=5700s=95 min.</think>Each potato: 90 + 5 = 95 seconds. Total: 95 \u00d7 60 = 5700 seconds = 95 minutes.\n\nAnswer: 95"
+  },
+  {
+   "i": 175,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 94,
+   "text": "Profit per gallon: revenue 10, cost 5, profit 5. 25/5=5 gallons. Lemons: 5\u00d73=15.</think>Each gallon: revenue = 20 \u00d7 $0.50 = $10; cost = $3 + $2 = $5; profit = $5 per gallon. $25 profit \u2192 5 gallons. Lemons: 5 \u00d7 $3 = $15.\n\nAnswer: 15"
+  },
+  {
+   "i": 176,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "240-80=160 Chinese; 160-60=100.</think>Chinese: 240 \u2212 80 = 160. Girls: 160 \u2212 60 = 100.\n\nAnswer: 100"
+  },
+  {
+   "i": 177,
+   "ref": "350",
+   "pred": "350",
+   "ok": true,
+   "completion_tokens": 144,
+   "text": "6000: rent 1500, fuel 2000, remaining 2500, half to charity 1250, minus 200+700=900 \u2192 350.</think>Salary: $6000\n- Rent: 6000 \u00d7 1/4 = 1500\n- Fuel: 6000 \u00d7 1/3 = 2000\n- Remaining: 6000 \u2212 1500 \u2212 2000 = 2500\n- Charity: half of 2500 = 1250, leaving 1250\n- Daughter + wife: 200 + 700 = 900\n- Left: 1250 \u2212 900 = 350\n\nAnswer: 350"
+  },
+  {
+   "i": 178,
+   "ref": "122",
+   "pred": "122",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>Bo: 40, Monic: 36, Rani: 46. Total = 40+36+46 = 122.\n\nAnswer: 122"
+  },
+  {
+   "i": 179,
+   "ref": "130",
+   "pred": "130",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>5 + 8 = 13 hours; 13 \u00d7 $10 = $130.\n\nAnswer: 130"
+  },
+  {
+   "i": 180,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 20,
+   "text": "</think>Loser got 1/4 of 80 = 20.\n\nAnswer: 20"
+  },
+  {
+   "i": 181,
+   "ref": "160",
+   "pred": "160",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>White carnations: 200/5 = 40. Red roses: 4\u00d740 = 160.\n\nAnswer: 160"
+  },
+  {
+   "i": 184,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 92,
+   "text": "P(>3)=1/2. P(two evens)=1/4. Difference 25%.</think>P(roll > 3) = 3/6 = 1/2. P(two evens in a row) = (1/2)(1/2) = 1/4. Difference: 1/2 \u2212 1/4 = 1/4 = 25%.\n\nAnswer: 25"
+  },
+  {
+   "i": 185,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>Jenna picked 20 \u00f7 2 = 10 apples. Together: 20 + 10 = 30.\n\nAnswer: 30"
+  },
+  {
+   "i": 189,
+   "ref": "34",
+   "pred": "34",
+   "ok": true,
+   "completion_tokens": 94,
+   "text": "20.25 + 15.75 + 66 = 102; /3 = 34.</think>Tickets: $20.25. Food: $20.25 \u2212 $4.50 = $15.75. Rides: 2 \u00d7 $33 = $66. Total: 20.25 + 15.75 + 66 = $102. Split evenly: 102 \u00f7 3 = $34.\n\nAnswer: 34"
+  },
+  {
+   "i": 190,
+   "ref": "360",
+   "pred": "360",
+   "ok": true,
+   "completion_tokens": 22,
+   "text": "</think>3 hours = 180 minutes. 180 \u00d7 2 = 360.\n\nAnswer: 360"
+  },
+  {
+   "i": 192,
+   "ref": "91",
+   "pred": "91",
+   "ok": true,
+   "completion_tokens": 62,
+   "text": "50+10*10-2*10=130; 30% die \u2192 91.</think>Tom gains 8 trees per year: 50 + 8\u00d710 = 130. Then 30% die: 130 \u00d7 0.7 = 91.\n\nAnswer: 91"
+  },
+  {
+   "i": 197,
+   "ref": "6277",
+   "pred": "6277",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "23786-8417-9092=6277</think>23786 \u2212 8417 \u2212 9092 = 6277\n\nAnswer: 6277"
+  },
+  {
+   "i": 198,
+   "ref": "320",
+   "pred": "320",
+   "ok": true,
+   "completion_tokens": 78,
+   "text": "20 + 60 + 40 + 200 = 320</think>Initial: 20. Month 1: 3\u00d720 = 60. Month 2: 60\u221220 = 40. Month 3: 2\u00d7(60+40) = 200. Total: 20+60+40+200 = 320.\n\nAnswer: 320"
+  },
+  {
+   "i": 201,
+   "ref": "114200",
+   "pred": "114000",
+   "ok": false,
+   "completion_tokens": 96,
+   "text": "2000\u00d752=104000, raise 5% = 5000, so 104000+5000+5000=114000.</think>Weekly salary: 2000 \u00d7 52 = 104,000. Raise: 5% of 104,000 = 5,000. Plus $5,000 award: 104,000 + 5,000 + 5,000 = 114,000.\n\nAnswer: 114000"
+  },
+  {
+   "i": 203,
+   "ref": "31",
+   "pred": "31",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "7\u00d72=14, 3\u00d73=9, +8 = 31</think>Sandwiches: 7 \u00d7 2 = 14. Omelets: 3 \u00d7 3 = 9. Mac: 8. Total: 14 + 9 + 8 = 31.\n\nAnswer: 31"
+  },
+  {
+   "i": 204,
+   "ref": "98",
+   "pred": "98",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "</think>22 + 10 = 32; blue: 6\u00d79 = 54; red: 2\u00d76 = 12. Total: 32 + 54 + 12 = 98.\n\nAnswer: 98"
+  },
+  {
+   "i": 208,
+   "ref": "76",
+   "pred": "76",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>Monday: 4, Tuesday: 12, Wednesday: 60. Total: 4+12+60=76.\n\nAnswer: 76"
+  },
+  {
+   "i": 210,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "</think>Total needed: 30 + 2\u00d720 = $70.\nShe has: 10 + 4\u00d75 = $30. Needs $40 more.\n40 \u00f7 4 = 10 times.\n\nAnswer: 10"
+  },
+  {
+   "i": 214,
+   "ref": "8",
+   "pred": "24",
+   "ok": false,
+   "completion_tokens": 93,
+   "text": "4 min ago: B=2S. Now: B-16=4(S-16) \u2192 2S-16=4S-64 \u2192 S=24.</think>4 minutes ago: Big = 2S. Now: Big \u2212 16 = 4(S \u2212 16), so 2S \u2212 16 = 4S \u2212 64 \u2192 2S = 48 \u2192 S = 24.\n\nAnswer: 24"
+  },
+  {
+   "i": 215,
+   "ref": "44",
+   "pred": "44",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>Total cost: 320 + 32 = 352. Hours: 352 \u00f7 8 = 44.\n\nAnswer: 44"
+  },
+  {
+   "i": 216,
+   "ref": "220",
+   "pred": "220",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "2000*1.1=2200; 165*12=1980; balance 220.</think>Total owed: $2000 \u00d7 1.10 = $2200.\nPayments: $165 \u00d7 12 = $1980.\nRemaining: $2200 \u2212 $1980 = $220.\n\nAnswer: 220"
+  },
+  {
+   "i": 217,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>Roses: 4. Dahlias: 4 + 7 = 11. Total: 4 + 11 = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 218,
+   "ref": "45",
+   "pred": "45",
+   "ok": true,
+   "completion_tokens": 77,
+   "text": "Harriet 21, Adrian 63, Zack 42, sum 126, avg 42, +3 = 45.</think>Harriet = 21, Adrian = 63, Zack = 42. Sum = 126, average now = 42. In three years, each is 3 years older, so average = 45.\n\nAnswer: 45"
+  },
+  {
+   "i": 219,
+   "ref": "54",
+   "pred": "54",
+   "ok": true,
+   "completion_tokens": 93,
+   "text": "Yuri = 34+10=44, Brianna=85. 68+44+85=197. Jojo=54.</think>Yuri: 68/2 + 10 = 44. Brianna: 68 + 17 = 85. Total of three: 68 + 44 + 85 = 197. Jojo: 251 \u2212 197 = 54.\n\nAnswer: 54"
+  },
+  {
+   "i": 220,
+   "ref": "70",
+   "pred": "70",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>3\u00d710 + 8\u00d75 = 30 + 40 = 70 minutes.\n\nAnswer: 70"
+  },
+  {
+   "i": 227,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 51,
+   "text": "</think>6.50 + 2.00 + 1.00 + 1.00 + 0.50 + 3.00 = 14.00; minus 5.00 = 9.00\n\nAnswer: 9"
+  },
+  {
+   "i": 229,
+   "ref": "21",
+   "pred": "21",
+   "ok": true,
+   "completion_tokens": 65,
+   "text": "120*30%=36, remaining 84, 3/4=63, left 21.</think>30% of 120 = 36 harvested first, leaving 84. Then 3/4 of 84 = 63 harvested, leaving 84 \u2212 63 = 21.\n\nAnswer: 21"
+  },
+  {
+   "i": 231,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>Kylie on Monday: 20 + 5 = 25. Tuesday: 2 \u00d7 25 = 50.\n\nAnswer: 50"
+  },
+  {
+   "i": 232,
+   "ref": "75",
+   "pred": "75",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>Bugs: 50/2 = 25. Total: 50 + 25 = 75.\n\nAnswer: 75"
+  },
+  {
+   "i": 233,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "36 - 12 - 12 = 12</think>One-third of 36 = 12 swim, another 12 go to the cave. 36 \u2212 12 \u2212 12 = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 234,
+   "ref": "21",
+   "pred": "21",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "6+3=9/day=63/week, /3=21.</think>Steve eats 6/day, girlfriend 3/day, total 9/day = 63/week. Each vine gives 3/week, so 63/3 = 21 vines.\n\nAnswer: 21"
+  },
+  {
+   "i": 241,
+   "ref": "6",
+   "pred": "4",
+   "ok": false,
+   "completion_tokens": 28,
+   "text": "</think>Dolly reads 2 books, Pandora reads 2 books: 2 + 2 = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 246,
+   "ref": "27000",
+   "pred": "27000",
+   "ok": true,
+   "completion_tokens": 66,
+   "text": "250*6*4*5=30000, \u00d70.9=27000.</think>Cost: 250 \u00d7 6 \u00d7 4 \u00d7 5 = 30,000. With 10% discount: 30,000 \u00d7 0.9 = 27,000.\n\nAnswer: 27000"
+  },
+  {
+   "i": 247,
+   "ref": "32",
+   "pred": "32",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>12+43+15+4+22 = 96; 96/3 = 32.\n\nAnswer: 32"
+  },
+  {
+   "i": 249,
+   "ref": "5600",
+   "pred": "5600",
+   "ok": true,
+   "completion_tokens": 88,
+   "text": "Sister: 5+13=18. Sue: 20+26=46. Diff 28 cookies \u2192 5600 calories.</think>Sister: 5 + 13 = 18 cookies. Sue: 4\u00d75 + 2\u00d713 = 20 + 26 = 46 cookies. Difference: 28 cookies \u00d7 200 = 5600 calories.\n\nAnswer: 5600"
+  },
+  {
+   "i": 250,
+   "ref": "17",
+   "pred": "17",
+   "ok": true,
+   "completion_tokens": 72,
+   "text": "Total 60, 30 girls. 15+12=27, third has 3 girls \u2192 17 boys.</think>Total students: 60, so 30 girls. Girls in first two classes: 15+12=27, so third class has 3 girls, meaning 20\u22123=17 boys.\n\nAnswer: 17"
+  },
+  {
+   "i": 251,
+   "ref": "70",
+   "pred": "70",
+   "ok": true,
+   "completion_tokens": 23,
+   "text": "</think>61 - 9 = 52; 52 + 18 = 70.\n\nAnswer: 70"
+  },
+  {
+   "i": 252,
+   "ref": "73",
+   "pred": "73",
+   "ok": true,
+   "completion_tokens": 92,
+   "text": "Night1: 10+15=25. Today: cougars 12, wolves 36 \u2192 48. Total 73.</think>Night 1: 10 wolves + 15 cougars = 25 animals.\nToday: cougars = 15 \u2212 3 = 12; wolves = 3 \u00d7 12 = 36, so 48 animals.\nTotal: 25 + 48 = 73.\n\nAnswer: 73"
+  },
+  {
+   "i": 256,
+   "ref": "45",
+   "pred": "45",
+   "ok": true,
+   "completion_tokens": 77,
+   "text": "100 pennies=$1, nickels=$2, dimes=$2, bills=$40 \u2192 45.</think>100 pennies = $1, 40 nickels = $2, 20 dimes = $2, 40 dollar bills = $40. Total: 1 + 2 + 2 + 40 = 45.\n\nAnswer: 45"
+  },
+  {
+   "i": 257,
+   "ref": "5600",
+   "pred": "5600",
+   "ok": true,
+   "completion_tokens": 92,
+   "text": "200/10=20 sections \u00d7400=8000; 70% = 5600.</think>Each 10-foot section weighs 400 lbs. The tree has 200/10 = 20 sections, so full weight = 20 \u00d7 400 = 8000 lbs. Termites ate 30%, leaving 70%: 8000 \u00d7 0.7 = 5600 lbs.\n\nAnswer: 5600"
+  },
+  {
+   "i": 259,
+   "ref": "168",
+   "pred": "168",
+   "ok": true,
+   "completion_tokens": 106,
+   "text": "Andrea apples 52, Jamal 44. Andrea bananas = half Jamal's bananas. Jamal bananas = 44+4=48, Andrea 24. Total 52+44+48+24=168.</think>Jamal's apples: 52 \u2212 8 = 44. Jamal's bananas: 44 + 4 = 48. Andrea's bananas: 48/2 = 24. Total: 52 + 44 + 48 + 24 = 168.\n\nAnswer: 168"
+  },
+  {
+   "i": 265,
+   "ref": "9500",
+   "pred": "9500",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "</think>Brokerage: 5% \u00d7 350,000 = 17,500\nTransfer: 12% \u00d7 350,000 = 42,000\nTotal: 350,000 + 17,500 + 42,000 = 409,500\nExcess: 409,500 \u2212 400,000 = 9,500\n\nAnswer: 9500"
+  },
+  {
+   "i": 269,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 21,
+   "text": "</think>16 balls \u2192 8 golf balls \u2192 half are blue \u2192 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 270,
+   "ref": "762",
+   "pred": "762",
+   "ok": true,
+   "completion_tokens": 20,
+   "text": "</think>300 + 312 + 150 = 762\n\nAnswer: 762"
+  },
+  {
+   "i": 272,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "</think>Total: 4.20 + 9.45 + 1.35 = 15.00\nChange: 20 \u2212 15 = 5\n\nAnswer: 5"
+  },
+  {
+   "i": 274,
+   "ref": "3200",
+   "pred": "3200",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>20\u00d740 = 800; 80\u00d730 = 2400; total = 3200.\n\nAnswer: 3200"
+  },
+  {
+   "i": 275,
+   "ref": "138",
+   "pred": "138",
+   "ok": true,
+   "completion_tokens": 96,
+   "text": "Song 54; scene1: 108, third = 36; scene2: 60, 4/5 = 48. Total 54+36+48=138.</think>Song: 54. Scene 1: 108 lines, 1/3 his = 36. Scene 2: 60 lines, 4/5 his = 48. Total: 54+36+48 = 138.\n\nAnswer: 138"
+  },
+  {
+   "i": 277,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 47,
+   "text": "30*3+15*10=90+150=240 min=4 hours.</think>30\u00d73 + 15\u00d710 = 90 + 150 = 240 minutes = 4 hours.\n\nAnswer: 4"
+  },
+  {
+   "i": 278,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>Each ages 10 years more, so 20 + 10 + 10 = 40.\n\nAnswer: 40"
+  },
+  {
+   "i": 279,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 88,
+   "text": "R=6S, R+9=3(S+9) \u2192 6S+9=3S+27 \u2192 S=6.</think>Ruby = 6S. In 9 years: 6S + 9 = 3(S + 9) \u2192 6S + 9 = 3S + 27 \u2192 3S = 18 \u2192 S = 6.\n\nAnswer: 6"
+  },
+  {
+   "i": 280,
+   "ref": "7",
+   "pred": "7",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>20 \u00d7 0.25 = 5.00; 4 \u00d7 0.50 = 2.00; total = 7.00\n\nAnswer: 7"
+  },
+  {
+   "i": 281,
+   "ref": "2450",
+   "pred": "2450",
+   "ok": true,
+   "completion_tokens": 87,
+   "text": "Cobra 70, mamba 35. 40\u00b770+60\u00b735=2800+2100=4900, half=2450.</think>Cobra = 70 spots, so mamba = 35 spots.\nTotal = 40\u00d770 + 60\u00d735 = 2800 + 2100 = 4900. Half = 2450.\n\nAnswer: 2450"
+  },
+  {
+   "i": 282,
+   "ref": "195",
+   "pred": "195",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "12+3+24=39 \u2192 13 pizzas \u2192 195.</think>People: 12 + 3 + 24 = 39. Pizzas: 39/3 = 13. Cost: 13 \u00d7 15 = 195.\n\nAnswer: 195"
+  },
+  {
+   "i": 284,
+   "ref": "360",
+   "pred": "240",
+   "ok": false,
+   "completion_tokens": 30,
+   "text": "</think>First week: 20+40+60=120. Second week doubles: 120. Total: 240.\n\nAnswer: 240"
+  },
+  {
+   "i": 287,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 45,
+   "text": "76-24-12=40, /5=8</think>24 + 12 = 36; 76 \u2212 36 = 40; 40 \u00f7 5 = 8.\n\nAnswer: 8"
+  },
+  {
+   "i": 288,
+   "ref": "3",
+   "pred": "4",
+   "ok": false,
+   "completion_tokens": 64,
+   "text": "80\u00d775=6000; 6000/2000=3.</think>Each truck carries 2000 \u00f7 75 = 26.67, so 26 stones per truck. 80 \u00f7 26 = 3.08, so 4 trucks are needed.\n\nAnswer: 4"
+  },
+  {
+   "i": 289,
+   "ref": "16",
+   "pred": "16",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>Fast car: 60 mph, slow car: 30 mph. Time = 480/30 = 16 hours.\n\nAnswer: 16"
+  },
+  {
+   "i": 290,
+   "ref": "390",
+   "pred": "390",
+   "ok": true,
+   "completion_tokens": 54,
+   "text": "22+17=39, \u00d710=390.</think>Ali has 22, Izzy has 22 \u2212 5 = 17. Together: 39. Total medals = 39 \u00d7 10 = 390.\n\nAnswer: 390"
+  },
+  {
+   "i": 292,
+   "ref": "75",
+   "pred": "75",
+   "ok": true,
+   "completion_tokens": 94,
+   "text": "3 hours - 0.5 = 2.5h = 150 min \u2192 15\u00d75 = 75.</think>Susan works from 8 a.m. to 11 a.m. = 3 hours, minus 0.5 hour pause = 2.5 hours = 150 minutes. She earns $5 per 10 minutes, so 150/10 = 15 intervals \u00d7 $5 = $75.\n\nAnswer: 75"
+  },
+  {
+   "i": 294,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 45,
+   "text": "8+4=12, 15-12=3</think>The oldest washes 8, the youngest is 4, so 12 washed. 15 \u2212 12 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 295,
+   "ref": "370",
+   "pred": "370",
+   "ok": true,
+   "completion_tokens": 65,
+   "text": "Day1: 170. Day2: 120+40+40=200. Total 370.</think>Day 1: 100 + 50 + 20 = 170\nDay 2: 120 + 40 + 40 = 200\nTotal: 370\n\nAnswer: 370"
+  },
+  {
+   "i": 297,
+   "ref": "55",
+   "pred": "55",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "20+15+12+18=65; 120-65=55.</think>Sam sold 20 + 15 + 12 + 18 = 65 crates. Target is 120, so he was short by 120 \u2212 65 = 55 crates.\n\nAnswer: 55"
+  },
+  {
+   "i": 302,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>Annika spent half of $50 = $25 on food, plus $10 on rides, totaling $35. Remaining: $50 \u2212 $35 = $15.\n\nAnswer: 15"
+  },
+  {
+   "i": 304,
+   "ref": "3200",
+   "pred": "3200",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "April = 4 weeks: 10*10*5=500/week +300=800 \u2192 3200.</think>Weekly: 10 hrs \u00d7 $10 \u00d7 5 days = $500, plus $300 bonus = $800/week. April has 4 weeks: 4 \u00d7 $800 = $3200.\n\nAnswer: 3200"
+  },
+  {
+   "i": 305,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>20 \u00d7 80% = 16 wins, so 20 \u2212 16 = 4 losses.\n\nAnswer: 4"
+  },
+  {
+   "i": 308,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "2\u00d72 + 4\u00d70.5 = 4+2=6</think>Ice cream savings: $2 per tub \u00d7 2 = $4. Milk savings: $0.5 \u00d7 4 = $2. Total = $6.\n\nAnswer: 6"
+  },
+  {
+   "i": 311,
+   "ref": "91",
+   "pred": "91",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "3*3+2*2=13/day, \u00d77=91.</think>Daily: 3\u00d73 + 2\u00d72 = 9 + 4 = 13 eggs. Weekly: 13 \u00d7 7 = 91.\n\nAnswer: 91"
+  },
+  {
+   "i": 313,
+   "ref": "120000",
+   "pred": "120000",
+   "ok": true,
+   "completion_tokens": 85,
+   "text": "Cera 46, six years ago 40, Noah 20, now 26. Population six years ago = 20\u00d73000=60000, now 120000.</think>Six years ago: Cera was 40, Noah was 20. Population then = 20 \u00d7 3000 = 60,000. Now it's double: 120,000.\n\nAnswer: 120000"
+  },
+  {
+   "i": 317,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "120 cubic feet \u2192 $12</think>Volume = 6 \u00d7 4 \u00d7 5 = 120 cubic feet. Cost = 120 \u00d7 $0.10 = $12.\n\nAnswer: 12"
+  },
+  {
+   "i": 318,
+   "ref": "123",
+   "pred": "123",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Girls: 3\u00d730=90, nongendered: 30/10=3. Total: 30+90+3=123.\n\nAnswer: 123"
+  },
+  {
+   "i": 319,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>Ratio 1:3, wires = 45, so poles = 45/3 = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 320,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 93,
+   "text": "Total 40, 10 left, 25-22=3 men left, so 7 women left, 15-7=8 women remain.</think>Total = 40 people; 1/4 left = 10 people. Men who left: 25 \u2212 22 = 3, so women who left: 10 \u2212 3 = 7. Women remaining: 15 \u2212 7 = 8.\n\nAnswer: 8"
+  },
+  {
+   "i": 321,
+   "ref": "1",
+   "pred": "1",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>Magazine = $4 \u00f7 2 = $2. Pen = $2 \u2212 $1 = $1.\n\nAnswer: 1"
+  },
+  {
+   "i": 326,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 56,
+   "text": "20 -8 +7 -5 = 14.</think>Working backwards: 20 people at third stop. Before second stop: 20 \u2212 8 + 7 = 19. Before first stop: 19 \u2212 5 = 14.\n\nAnswer: 14"
+  },
+  {
+   "i": 328,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "40 points \u00d73 min =120 min=2 hours.</think>The phone needs 100% \u2212 60% = 40 percentage points. At 1 point per 3 minutes: 40 \u00d7 3 = 120 minutes = 2 hours.\n\nAnswer: 2"
+  },
+  {
+   "i": 333,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 73,
+   "text": "</think>Furniture United: 1350 + 6\u00d7350 = 1350 + 2100 = 3450\nCozy Homes: 1100 + 9\u00d7250 = 1100 + 2250 = 3350\nDifference: 3450 \u2212 3350 = 100\n\nAnswer: 100"
+  },
+  {
+   "i": 335,
+   "ref": "310",
+   "pred": "310",
+   "ok": true,
+   "completion_tokens": 21,
+   "text": "</think>8 \u00d7 30 = 240, plus 70 = 310.\n\nAnswer: 310"
+  },
+  {
+   "i": 337,
+   "ref": "1",
+   "pred": "1",
+   "ok": true,
+   "completion_tokens": 60,
+   "text": "Thomas=6, John=3, 3-2=1.</think>Thomas ate 3 \u00d7 2 = 6 hot dogs. John ate 6 \u00f7 2 = 3. John ate 3 \u2212 2 = 1 more than Luke.\n\nAnswer: 1"
+  },
+  {
+   "i": 341,
+   "ref": "260",
+   "pred": "260",
+   "ok": true,
+   "completion_tokens": 105,
+   "text": "Frog=50, snake=60, bird=30, beetle=50, toad=50. Sum=240+20=260.</think>Frog = 50, beetle = 50, toad = 50, snake = 50 + 10 = 60, bird = 50 \u2212 20 = 30.\nAnimals total: 50+50+50+60+30 = 240. Plus container: 240 + 20 = 260.\n\nAnswer: 260"
+  },
+  {
+   "i": 344,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "</think>Juice Box B = 4 + 5 = 9 dollars. Juice Box C = 4 + 7 = 11 dollars. Difference: 11 \u2212 9 = 2.\n\nAnswer: 2"
+  },
+  {
+   "i": 347,
+   "ref": "36",
+   "pred": "36",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>2 shirts cost $60. With 40% discount, he pays 60% of $60 = $36.\n\nAnswer: 36"
+  },
+  {
+   "i": 350,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 79,
+   "text": "1+3+0.5+1.5+2=8</think>Yoga: 1 hr; cooking: 3 hrs; cheese-tasting: 0.5 hr; museum: 1.5 hrs; errands: 2 hrs. Total: 1+3+0.5+1.5+2 = 8.\n\nAnswer: 8"
+  },
+  {
+   "i": 355,
+   "ref": "34",
+   "pred": "34",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "6+11=17, twice = 34.</think>Shortest: 6 ft. Second: 6+5 = 11 ft. Combined: 17 ft. Tallest: 2\u00d717 = 34.\n\nAnswer: 34"
+  },
+  {
+   "i": 357,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 89,
+   "text": "Per person: 5+5+20=30. 90/30=3 people total \u2192 2 friends.</think>Each person costs: mini-golf $5 + tokens $5 + go-karts 2\u00d7$10 = $20, total $30 per person.\n\n$90 \u00f7 $30 = 3 people total, so Morgan can invite 3 \u2212 1 = 2 friends.\n\nAnswer: 2"
+  },
+  {
+   "i": 359,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "40 gumballs = $2, so change = $4, spent $6 on candy \u2192 4 pounds.</think>Gumballs: 40 \u00d7 $0.05 = $2, which is half his change, so change = $4. Candy cost = $10 \u2212 $4 = $6, and $6 \u00f7 $1.50 = 4 pounds.\n\nAnswer: 4"
+  },
+  {
+   "i": 362,
+   "ref": "23",
+   "pred": "23",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>Collie bed: (8+2)/2 = 5 pounds. 4\u00d72 + 3\u00d75 = 8 + 15 = 23.\n\nAnswer: 23"
+  },
+  {
+   "i": 363,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 58,
+   "text": "210/70=3, 240/80=3, total 6.</think>Outbound: 210 miles \u00f7 70 mph = 3 hours. Return: 240 \u00f7 80 = 3 hours. Total = 6 hours.\n\nAnswer: 6"
+  },
+  {
+   "i": 364,
+   "ref": "49",
+   "pred": "49",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "Boys: 96-43=53; present: 53-4=49.</think>Boys: 96 \u2212 43 = 53. Present Friday: 53 \u2212 4 = 49.\n\nAnswer: 49"
+  },
+  {
+   "i": 366,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 23,
+   "text": "</think>15 + 18 = 33; 42 \u2212 33 = 9.\n\nAnswer: 9"
+  },
+  {
+   "i": 368,
+   "ref": "18",
+   "pred": "10",
+   "ok": false,
+   "completion_tokens": 50,
+   "text": "Erin now 24, before 24-14=10.</think>Erin now has 3 \u00d7 8 = 24 points. Before scoring 14, she had 24 \u2212 14 = 10.\n\nAnswer: 10"
+  },
+  {
+   "i": 371,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "14+28+14-6=50.</think>Friday: 14, Saturday: 28, Sunday: 14, minus 6 returns = 50.\n\nAnswer: 50"
+  },
+  {
+   "i": 372,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Tuesday: 1, Thursday: 2, Saturday: 2\u00d71 = 2. Total = 1+2+2 = 5.\n\nAnswer: 5"
+  },
+  {
+   "i": 375,
+   "ref": "48",
+   "pred": "48",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>12 - 6 = 6 rolls left; 6 \u00d7 8 = 48 pieces.\n\nAnswer: 48"
+  },
+  {
+   "i": 379,
+   "ref": "21",
+   "pred": "21",
+   "ok": true,
+   "completion_tokens": 23,
+   "text": "</think>23 + 42 = 65; 65 \u2212 44 = 21.\n\nAnswer: 21"
+  },
+  {
+   "i": 383,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 60,
+   "text": "</think>Total cups: 3 \u00d7 12 = 36. Revenue: $36. Profit: 36 \u2212 18 = $18. Hours: 36 \u00f7 4 = 9. Profit per hour: 18 \u00f7 9 = $2.\n\nAnswer: 2"
+  },
+  {
+   "i": 399,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>Alice = Beth + 7, Beth = Erica + 5, so Alice = Erica + 12. Difference = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 400,
+   "ref": "48",
+   "pred": "48",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>2 glasses \u00d7 8 ounces = 16 ounces; 16 \u00d7 3 = 48 calories.\n\nAnswer: 48"
+  },
+  {
+   "i": 402,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "</think>Quadruple: 12 cups flour \u2192 6 bags; 4 cups milk \u2192 2 bottles. Difference: 6 \u2212 2 = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 405,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>20 people \u00f7 4 = 5 sandwiches. Each sandwich costs $7 + $3 = $10. Total: 5 \u00d7 $10 = $50.\n\nAnswer: 50"
+  },
+  {
+   "i": 409,
+   "ref": "168000",
+   "pred": "168000",
+   "ok": true,
+   "completion_tokens": 119,
+   "text": "May: 40\u00d715\u00d740\u00d74 weeks? \"40-hour workweek\" \u2014 assume 4 weeks per month. May: 40\u00d715\u00d740\u00d74=96000. June: 30 employees \u00d715\u00d740\u00d74=72000. Total 168000.</think>May: 40 employees \u00d7 $15 \u00d7 40 hrs \u00d7 4 weeks = $96,000.\nJune: 30 employees \u00d7 $15 \u00d7 40 hrs \u00d7 4 weeks = $72,000.\nTotal = $168,000.\n\nAnswer: 168000"
+  },
+  {
+   "i": 410,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "</think>Taffy: $3 + $1.50 = $4.50. Shells: $1.50. Magnets: 4 \u00d7 $0.25 = $1. Total: $7. Left: $10 \u2212 $7 = $3.\n\nAnswer: 3"
+  },
+  {
+   "i": 411,
+   "ref": "1110",
+   "pred": "1110",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>400 + 800 = 1200; 20% off \u2192 960; plus 150 = 1110.\n\nAnswer: 1110"
+  },
+  {
+   "i": 413,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 53,
+   "text": "99% not explode \u2192 1% explode = 500. 5% of dangerous candles have defect \u2192 25.</think>1% of 50,000 = 500 explode. 5% of 500 = 25.\n\nAnswer: 25"
+  },
+  {
+   "i": 414,
+   "ref": "56",
+   "pred": "56",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>Each blouse: $20 \u00d7 0.70 = $14. Total: 4 \u00d7 $14 = $56.\n\nAnswer: 56"
+  },
+  {
+   "i": 419,
+   "ref": "3000",
+   "pred": "3000",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "</think>Comb is at 10,000 \u2212 4,000 = 6,000 feet. Oliver climbs 6,000 \u2212 3,000 = 3,000 feet.\n\nAnswer: 3000"
+  },
+  {
+   "i": 420,
+   "ref": "17000",
+   "pred": "17000",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "</think>First bank: $4000. Second bank: 2 \u00d7 4000 = $8000. Total: 5000 + 4000 + 8000 = 17000.\n\nAnswer: 17000"
+  },
+  {
+   "i": 422,
+   "ref": "284",
+   "pred": "284",
+   "ok": true,
+   "completion_tokens": 72,
+   "text": "6\u00d78=48, 8\u00d712=96, remaining 24-14=10 months \u00d714=140. Total 284.</think>6\u00d78=48; 8\u00d712=96; remaining 10 months \u00d714=140. Total: 48+96+140=284.\n\nAnswer: 284"
+  },
+  {
+   "i": 423,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 198,
+   "text": "Tattered sale $28, jogger $22, total $50. Savings $6 total, jogger saved $2, tattered $4. Original jogger = 22+2=24, tattered = 28+4=32. Jogger originally cost 8 less... question asks \"how much more do jogger jeans originally cost than tattered\" \u2014 answer 8? Actually tattered cost more. Hmm, maybe answer 8.</think>- Tattered jeans sale price: $28; jogger jeans: $28 \u2212 $6 = $22. Total paid: $50.\n- Total savings: $6. Jogger savings: $6 \u00d7 1/3 = $2; tattered savings: $4.\n- Original prices: jogger = $22 + $2 = $24; tattered = $28 + $4 = $32.\n- Difference: $32 \u2212 $24 = $8.\n\nAnswer: 8"
+  },
+  {
+   "i": 428,
+   "ref": "26",
+   "pred": "26",
+   "ok": true,
+   "completion_tokens": 103,
+   "text": "36+18=54 hotdogs; 40 guests need 80; shortfall 26... but question: guests without second hotdog: 54-40=14 got seconds, so 26 didn't.</think>He made 36 + 18 = 54 hotdogs. All 40 guests got a first hotdog, leaving 54 \u2212 40 = 14 extra for seconds. So 40 \u2212 14 = 26 guests didn't get a second hotdog.\n\nAnswer: 26"
+  },
+  {
+   "i": 434,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 95,
+   "text": "5 dollars, 1% left = 5 cents spent 495. Chips 120, remaining 375 = 5 candy bars.</think>George spent 99% of $5 = $4.95 = 495 cents. Chips: 3 \u00d7 40 = 120 cents. Remaining: 495 \u2212 120 = 375 cents. Candy bars: 375 \u00f7 75 = 5.\n\nAnswer: 5"
+  },
+  {
+   "i": 435,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>25 \u2212 5 = 20, shared among 4 friends: 20 \u00f7 4 = 5.\n\nAnswer: 5"
+  },
+  {
+   "i": 438,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Onions: 4 lb \u00d7 $2 = $8; stock: 2 \u00d7 $2 = $4. Total $12 \u00f7 6 = $2.\n\nAnswer: 2"
+  },
+  {
+   "i": 439,
+   "ref": "17",
+   "pred": "17",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "</think>Wayne's drive: 4 min. Bernadette's drive: 4\u00d74 = 16 min. She must leave 16 \u2212 4 = 12 min earlier to arrive at the same time, plus 5 min earlier arrival = 17 min.\n\nAnswer: 17"
+  },
+  {
+   "i": 442,
+   "ref": "49",
+   "pred": "49",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "40+15-6=49</think>40 + 3\u00d75 \u2212 6 = 49\n\nAnswer: 49"
+  },
+  {
+   "i": 443,
+   "ref": "59",
+   "pred": "39",
+   "ok": false,
+   "completion_tokens": 106,
+   "text": "Jon total 150. James swim 36, bike 85, run r. Jon won by 10: 150 = 36+85+r-10 \u2192 r=39.</think>Jon's total: 40 + 80 + 50 = 150 minutes.\nJames: swim = 36 (10% faster), bike = 85, run = r.\nJon won by 10: 150 = 36 + 85 + r \u2212 10 \u2192 r = 39.\n\nAnswer: 39"
+  },
+  {
+   "i": 444,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 58,
+   "text": "C=75, B=80, A=20.</think>Movie C = 1.25 hours = 75 minutes. Movie B = 75 + 5 = 80 minutes. Movie A = 80 \u00f7 4 = 20 minutes.\n\nAnswer: 20"
+  },
+  {
+   "i": 445,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "</think>Distance: 32 \u00d7 0.5 = 16 miles \u2192 8 bales \u2192 $24. He has $30, so change = $6.\n\nAnswer: 6"
+  },
+  {
+   "i": 446,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 86,
+   "text": "4 dozen=48+2=50 eggs, 50/5=10 glasses, 10/5=2 trays.</think>4 dozen = 48 eggs, plus 2 loose = 50 eggs. Each glass needs 5 eggs, so 50 \u00f7 5 = 10 glasses. Each tray holds 5 glasses, so 10 \u00f7 5 = 2 trays.\n\nAnswer: 2"
+  },
+  {
+   "i": 449,
+   "ref": "112",
+   "pred": "112",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>6\u00d78 = 48, 4\u00d716 = 64, total = 112.\n\nAnswer: 112"
+  },
+  {
+   "i": 450,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 60,
+   "text": "12 + p + 3 = 21 \u2192 p = 6.</think>Regular path cost = super ticket cost \u2212 savings = 20 + 1 \u2212 2 = 19. So 12 + p + 3 = 19 \u2192 p = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 453,
+   "ref": "6400",
+   "pred": "6400",
+   "ok": true,
+   "completion_tokens": 51,
+   "text": "</think>Jenna has 8\u22123 = 5 sapphires and 2 rubies.\n5\u00d7800 + 2\u00d71200 = 4000 + 2400 = 6400.\n\nAnswer: 6400"
+  },
+  {
+   "i": 458,
+   "ref": "35",
+   "pred": "35",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "7/20=35%</think>Total puppies: 8 + 12 = 20. Spotted: 3 + 4 = 7. Percentage: 7/20 = 35%.\n\nAnswer: 35"
+  },
+  {
+   "i": 460,
+   "ref": "84",
+   "pred": "84",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "3\u00b72+5\u00b73=21; \u00d74=84</think>Weekly: 3 cans \u00d7 2\u00a2 + 5 bottles \u00d7 3\u00a2 = 6 + 15 = 21\u00a2. Four weeks: 21 \u00d7 4 = 84\u00a2.\n\nAnswer: 84"
+  },
+  {
+   "i": 461,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "Toni 16, Shondra 9.</think>Frederick: 10. Toni: 10 \u00d7 1.6 = 16. Shondra: 16 \u2212 7 = 9.\n\nAnswer: 9"
+  },
+  {
+   "i": 463,
+   "ref": "18",
+   "pred": "18",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>Tip = 15 \u00d7 1/5 = 3. Total = 15 + 3 = 18.\n\nAnswer: 18"
+  },
+  {
+   "i": 465,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>6\u00d725=150, 5\u00d740=200, total 350. 350\u221250=300. 300\u00f710=30.\n\nAnswer: 30"
+  },
+  {
+   "i": 467,
+   "ref": "1200",
+   "pred": "1200",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "2+1+4+8=15; \u00d780=1200</think>Per room: 2 sheets + 1 comforter + 4 pillow cases + 8 towels = 15 pieces.\n80 rooms \u00d7 15 = 1200.\n\nAnswer: 1200"
+  },
+  {
+   "i": 468,
+   "ref": "120",
+   "pred": "120",
+   "ok": true,
+   "completion_tokens": 84,
+   "text": "200 + 10 + 30 + 60 = 300; -180 = 120.</think>Starting: 200 shoes.\n- Monday: +5 pairs = +10 shoes \u2192 210\n- Wednesday: +15 pairs = +30 shoes \u2192 240\n- Friday: +30 pairs = +60 shoes \u2192 300\n- Saturday: \u2212180 shoes \u2192 120\n\nAnswer: 120"
+  },
+  {
+   "i": 470,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Paper: 3\u00d72\u22121 = $5. Total: 2+5 = $7. Change: 10\u22127 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 472,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 51,
+   "text": "5-2=3, \u00d72=6.</think>Cookies = carrot sticks / 2 + 2. So 5 = c/2 + 2 \u2192 c/2 = 3 \u2192 c = 6.\n\nAnswer: 6"
+  },
+  {
+   "i": 473,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 45,
+   "text": "12 inches / 120 = 10%.</think>The shark is 10 feet = 120 inches. Two 6-inch remoras = 12 inches. 12/120 = 10%.\n\nAnswer: 10"
+  },
+  {
+   "i": 474,
+   "ref": "80",
+   "pred": "80",
+   "ok": true,
+   "completion_tokens": 56,
+   "text": "1/4 = 20 \u2192 80</think>If 3/4 have desktops, then 1/4 do not. So 1/4 of the total = 20, meaning total = 20 \u00d7 4 = 80.\n\nAnswer: 80"
+  },
+  {
+   "i": 475,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>240 minutes \u00f7 (3 weeks \u00d7 4 days) = 240 \u00f7 12 = 20 minutes per day.\n\nAnswer: 20"
+  },
+  {
+   "i": 476,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>300 \u00f7 15 = 20 books total; 20 \u00f7 4 = 5 books per child.\n\nAnswer: 5"
+  },
+  {
+   "i": 479,
+   "ref": "15400",
+   "pred": "15400",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "</think>Plane tickets: 2 \u00d7 $5000 = $10,000.\nHotel: $1500 \u00d7 1.2 = $1800/day; 3 days = $5400.\nTotal: $10,000 + $5400 = $15,400.\n\nAnswer: 15400"
+  },
+  {
+   "i": 480,
+   "ref": "11",
+   "pred": "11",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Jasper: blue = 4/2 = 2, yellow = 3\u00d73 = 9. Total = 11.\n\nAnswer: 11"
+  },
+  {
+   "i": 483,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 70,
+   "text": "Luri 60, can add 40; Gabriel add 80; difference 40.</think>Gabriel: 100 \u2212 20 = 80. Luri: 3 \u00d7 20 = 60, so 100 \u2212 60 = 40. Difference: 80 \u2212 40 = 40.\n\nAnswer: 40"
+  },
+  {
+   "i": 486,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 36,
+   "text": "</think>James runs 12 \u00d7 5 = 60 miles a week. At 10 mph: 60 \u00f7 10 = 6 hours.\n\nAnswer: 6"
+  },
+  {
+   "i": 487,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 58,
+   "text": "4\u00d75\u00d72=40/day \u00d75=200 \u21924 bags.</think>4 horses \u00d7 5 lbs \u00d7 2 meals = 40 lbs/day. Over 5 days: 200 lbs. 200 \u00f7 50 = 4 bags.\n\nAnswer: 4"
+  },
+  {
+   "i": 494,
+   "ref": "21",
+   "pred": "15.67",
+   "ok": false,
+   "completion_tokens": 105,
+   "text": "Bottom 64, top 60: 64+64+60=188\" = 15.67 ft? 188/12 = 15.666... Hmm, likely answer 15.67 or 15 2/3.</think>The pyramid has 3 levels: bottom girls are 64\", top girl is 60\". Height = 64 + 64 + 60 = 188 inches = 188/12 \u2248 15.67 feet.\n\nAnswer: 15.67"
+  },
+  {
+   "i": 496,
+   "ref": "38",
+   "pred": "38",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "In 4 years Angela = 42, now 38.</think>In four years, Angela will be 3 \u00d7 14 = 42. So now she is 42 \u2212 4 = 38.\n\nAnswer: 38"
+  },
+  {
+   "i": 498,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "Ashley 50, Brianne 70, total 120, /3 = 40.</think>Ashley: 5 \u00d7 10 = 50 oranges. Brianne: 50 + 20 = 70. Total: 120. Pies: 120 \u00f7 3 = 40.\n\nAnswer: 40"
+  },
+  {
+   "i": 501,
+   "ref": "273",
+   "pred": "273",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "1/4+1/2=3/4 of 364=273.</think>Mariah: 364 \u00d7 1/4 = 91 yards. Grandma: 364 \u00d7 1/2 = 182 yards. Total: 91 + 182 = 273.\n\nAnswer: 273"
+  },
+  {
+   "i": 504,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "7 - 2 - 1 = 4, two packs \u2192 2 each.</think>Total $7, grape $2, apple $1, so strawberry packs cost 7\u22122\u22121 = 4 for two packs \u2192 $2 each.\n\nAnswer: 2"
+  },
+  {
+   "i": 506,
+   "ref": "144",
+   "pred": "144",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>6 dogs \u00d7 4 legs = 24 legs, so 12 pairs of snowshoes. 12 \u00d7 $12 = $144.\n\nAnswer: 144"
+  },
+  {
+   "i": 511,
+   "ref": "110",
+   "pred": "110",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Gerald earns $30 \u00d7 7 = $210 for the week. After spending $100, he has $210 \u2212 $100 = $110 left.\n\nAnswer: 110"
+  },
+  {
+   "i": 512,
+   "ref": "120",
+   "pred": "120",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>8 \u00d7 0.25 = 2 km; 2 \u00d7 60 = 120 ml.\n\nAnswer: 120"
+  },
+  {
+   "i": 515,
+   "ref": "160",
+   "pred": "160",
+   "ok": true,
+   "completion_tokens": 68,
+   "text": "Cost 8*5*4=160, revenue 40*8=320, profit 160.</think>Cost: 8 \u00d7 5 = 40 bags \u00d7 $4 = $160.\nRevenue: 40 \u00d7 $8 = $320.\nProfit: $320 \u2212 $160 = $160.\n\nAnswer: 160"
+  },
+  {
+   "i": 516,
+   "ref": "375",
+   "pred": "375",
+   "ok": true,
+   "completion_tokens": 16,
+   "text": "</think>25 \u00d7 15 = 375\n\nAnswer: 375"
+  },
+  {
+   "i": 518,
+   "ref": "32",
+   "pred": "32",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "40+120=160; half=80; 3/5 of 80=48; remaining 32.</think>Total: 4\u00d710 + 6\u00d720 = 40 + 120 = 160.\nHalf to sister: 80 left.\nDinner: 3/5 \u00d7 80 = 48, leaving 80 \u2212 48 = 32.\n\nAnswer: 32"
+  },
+  {
+   "i": 521,
+   "ref": "39",
+   "pred": "39",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "100-12=88; Tuesday 36 \u2192 52; Wednesday 13 \u2192 39.</think>100 \u2212 12 = 88; Tuesday: 36 \u2192 52 left; Wednesday: 52/4 = 13 \u2192 39 left.\n\nAnswer: 39"
+  },
+  {
+   "i": 522,
+   "ref": "29",
+   "pred": "29",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>Tony: 6, Bobby: 5, Kathy: 10, Ricky: 8. Total = 6+5+10+8 = 29.\n\nAnswer: 29"
+  },
+  {
+   "i": 523,
+   "ref": "74",
+   "pred": "74",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "200-93-39+6=74</think>200 \u2212 93 \u2212 39 + 6 = 74\n\nAnswer: 74"
+  },
+  {
+   "i": 524,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>36/6 = 6 rows red; 24/8 = 3 rows blue; total 9.\n\nAnswer: 9"
+  },
+  {
+   "i": 526,
+   "ref": "21",
+   "pred": "504",
+   "ok": false,
+   "completion_tokens": 105,
+   "text": "12+2=14, diff 2\u00d724\u00d77? \"per hour a day\" \u2014 standard answer: 2\u00d724=48/day \u00d77=336 \u00d71.5=504.</think>The new device adds 2 kilowatts per hour. Per day: 2 \u00d7 24 = 48 kW. Per week: 48 \u00d7 7 = 336 kW. Cost: 336 \u00d7 $1.50 = $504.\n\nAnswer: 504"
+  },
+  {
+   "i": 527,
+   "ref": "48",
+   "pred": "48",
+   "ok": true,
+   "completion_tokens": 84,
+   "text": "Half house in 5 days \u2192 whole house 10 days = 240 hours for one person. 5 people: 48 hours.</think>One person paints half a house in 5 days, so a whole house takes 10 days = 10 \u00d7 24 = 240 hours of work. With 5 people working together: 240 \u00f7 5 = 48 hours.\n\nAnswer: 48"
+  },
+  {
+   "i": 529,
+   "ref": "11",
+   "pred": "11",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "</think>Tom spent $48 \u2212 $4 = $44 on headphones. With $48, he could buy 48 \u00f7 4 = 12 CDs. He bought 1 CD, so he could buy 12 \u2212 1 = 11 more.\n\nAnswer: 11"
+  },
+  {
+   "i": 534,
+   "ref": "300",
+   "pred": "300",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "Boys 60 each; girls brought 60 + 4\u00d760 = 300.</think>Each girl brought 60 + 4\u00d760 = 300 shells.\n\nAnswer: 300"
+  },
+  {
+   "i": 539,
+   "ref": "35",
+   "pred": "35",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "Split: 25 each, plus 20% of 50 = 10 \u2192 35.</think>Split the $50 bill evenly: $25 each. Then I pay an extra 20% tip on $50 = $10. Total: $25 + $10 = $35.\n\nAnswer: 35"
+  },
+  {
+   "i": 540,
+   "ref": "39",
+   "pred": "39",
+   "ok": true,
+   "completion_tokens": 84,
+   "text": "18/3=6; +5=11; +10=21; -8=13; triple=39.</think>Each boy gets $18 \u00f7 3 = $6.\n\nEldest: $6 + $5 = $11, then + $10 = $21, then \u2212 $8 = $13. Tripling: $13 \u00d7 3 = $39.\n\nAnswer: 39"
+  },
+  {
+   "i": 541,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 111,
+   "text": "First half 15 days at x, second half 15 days at 2x: 15x+30x=1125 \u2192 x=25, second half 50.</think>Let x = daily savings in the first half (15 days), so the second half (15 days) is 2x per day.\n\n15x + 15(2x) = 1125\n45x = 1125\nx = 25\n\nSecond half daily savings: 2 \u00d7 25 = 50\n\nAnswer: 50"
+  },
+  {
+   "i": 543,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "</think>Jairus: 20 \u00d7 0.8 = $16; Jenny: 20 \u00d7 0.5 = $10; difference = $6.\n\nAnswer: 6"
+  },
+  {
+   "i": 544,
+   "ref": "80",
+   "pred": "80",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Brad + Jeff = 100, Jeff = 4\u00b7Brad \u2192 5\u00b7Brad = 100, Brad = 20, Jeff = 80.\n\nAnswer: 80"
+  },
+  {
+   "i": 545,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>3 miles each way \u2192 6 miles per day. 6 \u00d7 5 = 30 miles.\n\nAnswer: 30"
+  },
+  {
+   "i": 547,
+   "ref": "81",
+   "pred": "81",
+   "ok": true,
+   "completion_tokens": 53,
+   "text": "3^4=81.</think>Each round multiplies by 3: round 1 = 3, round 2 = 9, round 3 = 27, round 4 = 3\u2074 = 81.\n\nAnswer: 81"
+  },
+  {
+   "i": 549,
+   "ref": "398",
+   "pred": "398",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "5\u00d780=400, minus 2 = 398.</think>James's set: 80 toys. Five times larger: 5 \u00d7 80 = 400. Jonathan needs 2 more, so he has 400 \u2212 2 = 398.\n\nAnswer: 398"
+  },
+  {
+   "i": 550,
+   "ref": "27",
+   "pred": "27",
+   "ok": true,
+   "completion_tokens": 58,
+   "text": "</think>5(1.50) + 2(0.25) + 12 + 10 = 7.50 + 0.50 + 22 = 30\n10% discount: 30 \u00d7 0.90 = 27\n\nAnswer: 27"
+  },
+  {
+   "i": 551,
+   "ref": "17",
+   "pred": "17",
+   "ok": true,
+   "completion_tokens": 68,
+   "text": "20+3+10=33; 50-33=17</think>Hamburgers: 5\u00d7$4=$20; fries: 10\u00d7$0.30=$3; drinks: 5\u00d7$2=$10. Total=$33. Change: $50\u2212$33=$17.\n\nAnswer: 17"
+  },
+  {
+   "i": 552,
+   "ref": "450",
+   "pred": "450",
+   "ok": true,
+   "completion_tokens": 54,
+   "text": "1000\u00d730%=300; 1500\u00d710%=150; total 450.</think>First $1000: 30% = $300. Remaining $1500: 10% = $150. Total = $450.\n\nAnswer: 450"
+  },
+  {
+   "i": 553,
+   "ref": "92",
+   "pred": "92",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>2\u00d724=48 bottles. Needs 70\u00d72=140. 140\u221248=92.\n\nAnswer: 92"
+  },
+  {
+   "i": 554,
+   "ref": "54",
+   "pred": "54",
+   "ok": true,
+   "completion_tokens": 73,
+   "text": "Warm: 2*16+2=34; diff per mile 18; \u00d73=54.</think>Warm water: 2\u00d716 + 2 = 34 minutes per mile. Difference per mile: 34 \u2212 16 = 18 minutes. For 3 miles: 18 \u00d7 3 = 54.\n\nAnswer: 54"
+  },
+  {
+   "i": 556,
+   "ref": "160",
+   "pred": "160",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>Foot-long fish sub: $40. Six-inch cold-cut combo: 3 \u00d7 $40 = $120. Total: $40 + $120 = $160.\n\nAnswer: 160"
+  },
+  {
+   "i": 557,
+   "ref": "70",
+   "pred": "70",
+   "ok": true,
+   "completion_tokens": 73,
+   "text": "7\u00d72=14, 14\u00d74=56, total 70.</think>7 two-hole buttons: 7 \u00d7 2 = 14 holes.\nRemaining: 21 \u2212 7 = 14 four-hole buttons: 14 \u00d7 4 = 56 holes.\nTotal: 14 + 56 = 70.\n\nAnswer: 70"
+  },
+  {
+   "i": 558,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>Zack: 24/2 = 12. Peter: 12/4 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 560,
+   "ref": "45",
+   "pred": "45",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>3\u00d710 + 3\u00d75 = 30 + 15 = 45\n\nAnswer: 45"
+  },
+  {
+   "i": 565,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Cody ate 12/3 = 4, Trevor ate 12/4 = 3. Left: 12 \u2212 4 \u2212 3 = 5.\n\nAnswer: 5"
+  },
+  {
+   "i": 567,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "5 + 3 + 1 = 9</think>5 + 3\u00d71 + 2\u00d70.5 = 5 + 3 + 1 = 9\n\nAnswer: 9"
+  },
+  {
+   "i": 568,
+   "ref": "175",
+   "pred": "175",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Richie: 80. Mark: 80\u221220=60. Anna: 80\u221245=35. Total: 80+60+35=175.\n\nAnswer: 175"
+  },
+  {
+   "i": 571,
+   "ref": "308",
+   "pred": "308",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>200 + 3\u00d720 + 4\u00d712 = 200 + 60 + 48 = 308\n\nAnswer: 308"
+  },
+  {
+   "i": 572,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "65 needed weekly, has 40, lacks 25/week \u2192 100/month.</think>Ford needs 20+15+30 = 65 roses per week but grows only 40, so he lacks 25 per week. Per month: 25 \u00d7 4 = 100.\n\nAnswer: 100"
+  },
+  {
+   "i": 576,
+   "ref": "11232",
+   "pred": "11232",
+   "ok": true,
+   "completion_tokens": 73,
+   "text": "216 sq ft \u00d7 (12+2+4+34=52) = 11232.</think>Area = 18 \u00d7 12 = 216 sq ft.\nCost per sq ft = 12 + 2 + 4 + 34 = $52.\nTotal = 216 \u00d7 52 = $11,232.\n\nAnswer: 11232"
+  },
+  {
+   "i": 580,
+   "ref": "500",
+   "pred": "500",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "468/450 = 1.04, so set 520/1.04 = 500.</think>The oven runs 468/450 = 1.04, i.e., 4% hot. So set it to 520/1.04 = 500.\n\nAnswer: 500"
+  },
+  {
+   "i": 581,
+   "ref": "215",
+   "pred": "215",
+   "ok": true,
+   "completion_tokens": 14,
+   "text": "</think>90 + 125 = 215\n\nAnswer: 215"
+  },
+  {
+   "i": 584,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 73,
+   "text": "2 boxes = 180 contacts = 90 pairs. Cost 200\u00d70.9=180. Per pair = 2.</think>2 boxes = 180 contacts = 90 pairs. Cost: 2 \u00d7 $100 \u00d7 0.90 = $180. Per pair: $180 \u00f7 90 = $2.\n\nAnswer: 2"
+  },
+  {
+   "i": 586,
+   "ref": "800",
+   "pred": "800",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Calories: 2\u00d7500 + 1\u00d7600 = 1600. Water: 1600/200 \u00d7 100 = 800 ml.\n\nAnswer: 800"
+  },
+  {
+   "i": 588,
+   "ref": "52",
+   "pred": "52",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>47 + 52 + 57 = 156; 156/3 = 52.\n\nAnswer: 52"
+  },
+  {
+   "i": 590,
+   "ref": "319",
+   "pred": "318",
+   "ok": false,
+   "completion_tokens": 91,
+   "text": "100 + 200 + 10 + 8 = 318, plus Alex? Typically answer 318... include Alex? Known answer: 318.</think>Alex invites 100 people, each bringing 2 friends: 100 + 200 = 300. She calls 10 friends: 300 + 10 = 310. Eight bring spouses: 310 + 8 = 318.\n\nAnswer: 318"
+  },
+  {
+   "i": 591,
+   "ref": "220",
+   "pred": "220",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "</think>Affenpinscher: 10. Dachshund: 20. Papillon: 5. Mastiff: 44 \u00d7 5 = 220.\n\nAnswer: 220"
+  },
+  {
+   "i": 592,
+   "ref": "1",
+   "pred": "1",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>Amazon: 16+4=20. eBay: 13+8=21. Difference: 21\u221220=1.\n\nAnswer: 1"
+  },
+  {
+   "i": 593,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "4\u21928\u219216\u219232: 3 days.</think>The beanstalk grows: 4 \u2192 8 \u2192 16 \u2192 32 feet. It exceeds 20 feet on day 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 595,
+   "ref": "13",
+   "pred": "13",
+   "ok": true,
+   "completion_tokens": 88,
+   "text": "2x = x+5 \u2192 x=5, now 10, in 3 years 13.</think>Let Jerry's age 5 years ago be x. Now he is x + 5, and twice his age 5 years ago: 2x = x + 5, so x = 5. Jerry is now 10, so in 3 years he'll be 13.\n\nAnswer: 13"
+  },
+  {
+   "i": 601,
+   "ref": "104",
+   "pred": "104",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "5 + 12 + 24 + 48 + 15 = 104</think>5 (birthday) + 12 + 24 + 48 (monthly purchases) + 15 (Christmas) = 104\n\nAnswer: 104"
+  },
+  {
+   "i": 602,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>Rate = 1200/3 = 400 mph. Time = 2000/400 = 5 hours.\n\nAnswer: 5"
+  },
+  {
+   "i": 603,
+   "ref": "1800",
+   "pred": "1800",
+   "ok": true,
+   "completion_tokens": 76,
+   "text": "Ruiz: 60/hr. Marissa: 90/hr. Total 150\u00d712=1800.</think>Ruiz: 120/2 = 60 lbs/hour. Marissa: 3/4 \u00d7 120 = 90 lbs/hour. Together: 150 lbs/hour \u00d7 12 = 1800.\n\nAnswer: 1800"
+  },
+  {
+   "i": 604,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "</think>Monday: $8, Tuesday: $16, Wednesday: $64. Total spent: 8+16+64 = 88. Left: 100\u221288 = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 605,
+   "ref": "42",
+   "pred": "42",
+   "ok": true,
+   "completion_tokens": 78,
+   "text": "15*4*0.5=30; 10*2*0.6=12; total 42.</think>4 hours: 15 \u00d7 4 \u00d7 0.50 = $30. Next 2 hours: 10 \u00d7 2 \u00d7 0.60 = $12. Total: 30 + 12 = 42.\n\nAnswer: 42"
+  },
+  {
+   "i": 606,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "</think>Rotations per month: 400/2 \u00d7 725 = 145,000. Months: 10,440,000 / 145,000 = 72 months = 6 years.\n\nAnswer: 6"
+  },
+  {
+   "i": 608,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "</think>Total: $25 + $35 = $60. With 30% off: $60 \u00d7 0.70 = $42. Joe has $50 \u2212 $42 = $8 left.\n\nAnswer: 8"
+  },
+  {
+   "i": 609,
+   "ref": "7",
+   "pred": "7",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>4 dozen/day \u00d7 7 days = 28 dozen. 28 \u00d7 1/4 = 7 pounds.\n\nAnswer: 7"
+  },
+  {
+   "i": 611,
+   "ref": "1450000",
+   "pred": "6850000",
+   "ok": false,
+   "completion_tokens": 84,
+   "text": "First 5 months: 100k. Remaining 45 months at 150k = 6.75M. Total 6.85M.</think>First 5 months: $100,000. Research takes 50 months, so 45 extra months at $150,000 each = $6,750,000. Total = $6,850,000.\n\nAnswer: 6850000"
+  },
+  {
+   "i": 613,
+   "ref": "93000",
+   "pred": "93000",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "</think>March has 31 days. Posts per day: 1000 \u00d7 3 = 3000. Total: 3000 \u00d7 31 = 93,000.\n\nAnswer: 93000"
+  },
+  {
+   "i": 615,
+   "ref": "33",
+   "pred": "33",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "10+5+6+10+2=33</think>10 + 2(2.50) + 3(2.00) + 20(0.50) + 2 = 10 + 5 + 6 + 10 + 2 = 33\n\nAnswer: 33"
+  },
+  {
+   "i": 618,
+   "ref": "36",
+   "pred": "36",
+   "ok": true,
+   "completion_tokens": 77,
+   "text": "72 seats; admins 18; remaining 54; parents 18; students 36.</think>Total seats: 4 \u00d7 18 = 72.\nAdministrators: 72 \u00f7 4 = 18, leaving 54.\nParents: 54 \u00f7 3 = 18.\nStudents: 54 \u2212 18 = 36.\n\nAnswer: 36"
+  },
+  {
+   "i": 620,
+   "ref": "1509",
+   "pred": "1509",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>1000\u2212356 = 644; 1000\u2212135 = 865; 644+865 = 1509\n\nAnswer: 1509"
+  },
+  {
+   "i": 623,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "16-12=4, +4=8</think>Charmaine is now 16 \u2212 12 = 4 years old. In 4 years she will be 4 + 4 = 8.\n\nAnswer: 8"
+  },
+  {
+   "i": 625,
+   "ref": "160",
+   "pred": "160",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>10 \u00d7 20 = 200 flowers; 4/5 \u00d7 200 = 160.\n\nAnswer: 160"
+  },
+  {
+   "i": 627,
+   "ref": "54",
+   "pred": "54",
+   "ok": true,
+   "completion_tokens": 78,
+   "text": "3 days \u00d710=30; remaining 4 days \u00d76=24; total 54.</think>First 3 days: 3 \u00d7 10 = 30 cars. Remaining 4 days: 10 \u2212 4 = 6 cars each, so 4 \u00d7 6 = 24. Total: 30 + 24 = 54.\n\nAnswer: 54"
+  },
+  {
+   "i": 628,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 72,
+   "text": "40 in = 3ft4in, needs 8 more inches \u2192 4 years.</think>Adam is 40 inches tall; 4 feet = 48 inches. He needs 48 \u2212 40 = 8 more inches, and grows 2 inches per year: 8 \u00f7 2 = 4 years.\n\nAnswer: 4"
+  },
+  {
+   "i": 630,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "100\u00d725%=25, 40% men =10.</think>25 riders stay upright (25% of 100). Of these, 40% are men: 25 \u00d7 0.4 = 10.\n\nAnswer: 10"
+  },
+  {
+   "i": 633,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 22,
+   "text": "</think>Tom gains 15 mph, so 75/15 = 5 hours.\n\nAnswer: 5"
+  },
+  {
+   "i": 634,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>Darren = 17 \u2212 6 = 11. Tommy = 11 + 3 = 14.\n\nAnswer: 14"
+  },
+  {
+   "i": 640,
+   "ref": "43500",
+   "pred": "43500",
+   "ok": true,
+   "completion_tokens": 151,
+   "text": "King cab 7500, leather 2500, running boards 2000, lights 1500. Towing package cost unspecified\u2014assume 0? Total 30000+7500+2500+2000+1500=43500.</think>Base: $30,000. King cab: $7,500. Leather: 7500/3 = $2,500. Running boards: 2500 \u2212 500 = $2,000. Lights: $1,500. Towing package has no stated cost.\n\nTotal: 30,000 + 7,500 + 2,500 + 2,000 + 1,500 = 43,500\n\nAnswer: 43500"
+  },
+  {
+   "i": 643,
+   "ref": "840",
+   "pred": "840",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>(20 + 10) \u00d7 28 = 30 \u00d7 28 = 840\n\nAnswer: 840"
+  },
+  {
+   "i": 646,
+   "ref": "79",
+   "pred": "79",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "</think>Alisa: 12 \u00d7 4.5 = 54 miles. Stanley: 10 \u00d7 2.5 = 25 miles. Total: 54 + 25 = 79.\n\nAnswer: 79"
+  },
+  {
+   "i": 651,
+   "ref": "2100",
+   "pred": "2100",
+   "ok": true,
+   "completion_tokens": 88,
+   "text": "Red 400, green 800, total 1200; second month 900; total 2100.</think>Red hats: $400 = half of green, so green = $800. First month total = 400 + 800 = $1200. Second month = 3/4 \u00d7 1200 = $900. Total = 1200 + 900 = 2100.\n\nAnswer: 2100"
+  },
+  {
+   "i": 652,
+   "ref": "75",
+   "pred": "75",
+   "ok": true,
+   "completion_tokens": 62,
+   "text": "4 hours, 1 free \u2192 3 paid: 15 + 30 + 30 = 75.</think>He uses the carriage for 4 hours, gets 1 free, so pays for 3 hours: $15 + $30 + $30 = $75.\n\nAnswer: 75"
+  },
+  {
+   "i": 657,
+   "ref": "330000",
+   "pred": "330000",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "150000 + 12*(5000+10000)=330000</think>Plane: $150,000. Hangar: $5,000/month \u00d7 12 = $60,000. Fuel: $10,000/month \u00d7 12 = $120,000. Total: 150,000 + 60,000 + 120,000 = 330,000.\n\nAnswer: 330000"
+  },
+  {
+   "i": 658,
+   "ref": "120",
+   "pred": "120",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "Rice 30, pork 50, beans 40 \u2192 120.</think>Rice: 30 min. Pork: 30 + 20 = 50 min. Beans: (30 + 50)/2 = 40 min. Total: 30 + 50 + 40 = 120.\n\nAnswer: 120"
+  },
+  {
+   "i": 659,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "Difference: (1/2-1/5)*10 = 3.</think>Almonds cost $10/lb, walnuts $15/lb. The walnut amounts are equal (1/3 lb each), so they cancel. The difference is only in almonds: (1/2 \u2212 1/5) = 3/10 lb \u00d7 $10 = $3.\n\nAnswer: 3"
+  },
+  {
+   "i": 661,
+   "ref": "44",
+   "pred": "44",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "</think>The expensive coffee costs 5 \u00d7 1.2 = $6 per pound. A week's worth is 7 pounds: 7 \u00d7 6 = $42. Plus the donut: 42 + 2 = $44.\n\nAnswer: 44"
+  },
+  {
+   "i": 662,
+   "ref": "7",
+   "pred": "7",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>2\u00d72 + 8 + 1 = 13; 20 \u2212 13 = 7.\n\nAnswer: 7"
+  },
+  {
+   "i": 663,
+   "ref": "193",
+   "pred": "193",
+   "ok": true,
+   "completion_tokens": 19,
+   "text": "</think>600 \u2212 198 \u2212 209 = 193\n\nAnswer: 193"
+  },
+  {
+   "i": 665,
+   "ref": "360",
+   "pred": "360",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "</think>History teachers: 60% of 150 = 90. Math teachers: 150 \u2212 90 = 60. Sleep: 60 \u00d7 6 = 360 hours.\n\nAnswer: 360"
+  },
+  {
+   "i": 668,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>20% of 50 = 10 managers. 30% of 10 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 669,
+   "ref": "132",
+   "pred": "132",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "</think>Per muffin: 5 + 3 + 0.25 = 8.25 tablespoons.\nFor 16 muffins: 8.25 \u00d7 16 = 132.\n\nAnswer: 132"
+  },
+  {
+   "i": 670,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>Total candy: 3 + 5 + 4 = 12 pounds. Split among 3 people: 12 \u00f7 3 = 4 pounds each.\n\nAnswer: 4"
+  },
+  {
+   "i": 673,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>2x + 3 = 21 \u2192 2x = 18 \u2192 x = 9\n\nAnswer: 9"
+  },
+  {
+   "i": 674,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 60,
+   "text": "600-240=360; 360/30=12.</think>Current height: 20 feet = 240 inches. Needs to grow 600 \u2212 240 = 360 inches. At 30 inches/day: 360 \u00f7 30 = 12 days.\n\nAnswer: 12"
+  },
+  {
+   "i": 675,
+   "ref": "33",
+   "pred": "29",
+   "ok": false,
+   "completion_tokens": 114,
+   "text": "4+8=12 dogs, buy 8 toys. Twice as many more: 8 more \u2192 20 dogs, buy 8 more. 3 gone \u2192 17.</think>James starts with 4 toys for 4 dogs. Then 8 more dogs arrive (12 total), so he buys 8 more toys. Then twice as many more dogs arrive again (16 more, 32 total), so he buys 20 more toys. Finally, 3 dogs leave: 32 \u2212 3 = 29 toys needed.\n\nAnswer: 29"
+  },
+  {
+   "i": 678,
+   "ref": "120",
+   "pred": "120",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>Karen earns $20/hour \u00d7 3 hours \u00d7 2 days = $120.\n\nAnswer: 120"
+  },
+  {
+   "i": 679,
+   "ref": "576",
+   "pred": "576",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>6 potatoes \u2192 36 hash browns, so 6 hash browns per potato. 96 \u00d7 6 = 576.\n\nAnswer: 576"
+  },
+  {
+   "i": 680,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "9\u00d780=720, exceed by 20.</think>9 adults \u00d7 80 kg = 720 kg, which exceeds 700 kg by 20 kg.\n\nAnswer: 20"
+  },
+  {
+   "i": 683,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 76,
+   "text": "Turtle: 60 min/lawn \u2192 half = 30. Rabbit: 40 \u2192 half = 20. Total 50.</think>Turtle mode: 60 min for whole lawn \u2192 30 min for half. Rabbit mode: 40 min \u2192 20 min for half. Total: 30 + 20 = 50 minutes.\n\nAnswer: 50"
+  },
+  {
+   "i": 685,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>4 + 2\u00d72 + 2\u00d73 = 4 + 4 + 6 = 14\n\nAnswer: 14"
+  },
+  {
+   "i": 688,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 47,
+   "text": "</think>Total homework: 20 + 40 + 20 = 80 minutes. Time before dinner: 3 hours = 180 minutes. Nap time: 180 \u2212 80 = 100 minutes.\n\nAnswer: 100"
+  },
+  {
+   "i": 690,
+   "ref": "5760",
+   "pred": "5760",
+   "ok": true,
+   "completion_tokens": 101,
+   "text": "Rong: 20/mo, Neil 2/5 more = 28/mo, total 48/mo \u00d7120 months = 5760.</think>Rong saves 20 coins/month. Neil saves 2/5 more: 20 + (2/5 \u00d7 20) = 28 coins/month. Together: 48 coins/month. Ten years = 120 months, so 48 \u00d7 120 = 5760.\n\nAnswer: 5760"
+  },
+  {
+   "i": 692,
+   "ref": "32",
+   "pred": "32",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "</think>Banana = $1, orange = $3.\n5(1) + 12(0.5) + 7(3) = 5 + 6 + 21 = 32\n\nAnswer: 32"
+  },
+  {
+   "i": 699,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 17,
+   "text": "</think>16 pencils \u00f7 2 = 8 pairs.\n\nAnswer: 8"
+  },
+  {
+   "i": 700,
+   "ref": "135",
+   "pred": "135",
+   "ok": true,
+   "completion_tokens": 71,
+   "text": "300*40%=120 +15=135</think>The city sets off 15 \u00d7 20 = 300 fireworks. Hannah sees 40% of them: 300 \u00d7 0.40 = 120. Her backyard: 3 \u00d7 5 = 15. Total: 120 + 15 = 135.\n\nAnswer: 135"
+  },
+  {
+   "i": 702,
+   "ref": "2800",
+   "pred": "2800",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "</think>Gissela: 4,000. Gordy: 4,800. Combined: 8,800. Gary: 11,600 \u2212 8,800 = 2,800.\n\nAnswer: 2800"
+  },
+  {
+   "i": 704,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Gerald gets 3/5 of $100 = $60. After spending $10: 60 \u2212 10 = 50.\n\nAnswer: 50"
+  },
+  {
+   "i": 705,
+   "ref": "120",
+   "pred": "120",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>Turtle speed: 15/5 = 3 ft/s. In 40 seconds: 3 \u00d7 40 = 120 feet.\n\nAnswer: 120"
+  },
+  {
+   "i": 706,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>They raise $2100 in 3 hours, so $700 per hour. $6300 \u00f7 $700 = 9 hours.\n\nAnswer: 9"
+  },
+  {
+   "i": 707,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 16,
+   "text": "</think>40% \u00d7 20% = 8%\n\nAnswer: 8"
+  },
+  {
+   "i": 708,
+   "ref": "168",
+   "pred": "168",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>Alex charges $12 per day. In 2 weeks there are 14 days, so 14 \u00d7 $12 = $168.\n\nAnswer: 168"
+  },
+  {
+   "i": 709,
+   "ref": "3000",
+   "pred": "3000",
+   "ok": true,
+   "completion_tokens": 98,
+   "text": "Chocolate: 50/hr \u2192 2400. Vanilla: 12.5/hr \u2192 600. Total 3000.</think>Chocolate: 100/2 = 50 quarts/hour \u2192 50 \u00d7 48 = 2400.\nVanilla: 50/4 = 12.5 quarts/hour \u2192 12.5 \u00d7 48 = 600.\nTotal: 2400 + 600 = 3000.\n\nAnswer: 3000"
+  },
+  {
+   "i": 711,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 56,
+   "text": "$6 buys 4 scoops, get 2 free = 6 scoops.</think>Erin can buy 4 scoops ($6.00 \u00f7 $1.50), and gets 2 free, for 6 scoops total.\n\nAnswer: 6"
+  },
+  {
+   "i": 712,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "Ginger: 100-56=44, Amy: 100-42=58, diff 14.</think>Ginger eats 4\u00d714 = 56, leaving 44. Amy eats 3\u00d714 = 42, leaving 58. Difference: 58 \u2212 44 = 14.\n\nAnswer: 14"
+  },
+  {
+   "i": 713,
+   "ref": "576",
+   "pred": "576",
+   "ok": true,
+   "completion_tokens": 16,
+   "text": "</think>24 \u00d7 24 = 576\n\nAnswer: 576"
+  },
+  {
+   "i": 714,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 53,
+   "text": "</think>Picking cost: 20 + 1.5\u00d730 = 20 + 45 = $65. Store cost: 2.5\u00d730 = $75. Savings: 75 \u2212 65 = 10.\n\nAnswer: 10"
+  },
+  {
+   "i": 719,
+   "ref": "175",
+   "pred": "175",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Goldy gave away 3 + 4 = 7 sacks. Each sack is 25 kg, so 7 \u00d7 25 = 175 kg.\n\nAnswer: 175"
+  },
+  {
+   "i": 720,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>3 + 5 = 8 boxes this week. 8 \u2212 4 = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 726,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "100 = 9x+10 \u2192 x=10.</think>Topher's shoe: 8 ft 4 in = 100 inches. So 9x + 10 = 100 \u2192 9x = 90 \u2192 x = 10.\n\nAnswer: 10"
+  },
+  {
+   "i": 727,
+   "ref": "112",
+   "pred": "112",
+   "ok": true,
+   "completion_tokens": 92,
+   "text": "Students: 64\u00d74=256, quarter=64. Teachers: 32\u00d72=64, 3/4=48. Total 112.</think>Students: 64 cars \u00d7 4 windows = 256 windows; a quarter = 64.\nTeachers: 32 cars \u00d7 2 windows = 64 windows; 3/4 = 48.\nTotal: 64 + 48 = 112.\n\nAnswer: 112"
+  },
+  {
+   "i": 729,
+   "ref": "1000",
+   "pred": "1000",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "</think>5000 \u00d7 2/5 = 2000 voted by midday, leaving 3000. Then 2/3 of 3000 = 2000 voted, leaving 1000.\n\nAnswer: 1000"
+  },
+  {
+   "i": 732,
+   "ref": "87",
+   "pred": "87",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>Father: 2(15)+8 = 38. Mother: 38\u22124 = 34. Total: 15+38+34 = 87.\n\nAnswer: 87"
+  },
+  {
+   "i": 736,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 67,
+   "text": "Beck 77, Boris 100. After: Boris 90, Beck 87 \u2192 3 fewer.</think>Beck starts with 100 \u2212 23 = 77. After Boris gives 10: Boris 90, Beck 87. Difference: 90 \u2212 87 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 737,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "12+14+4=30, left 2.</think>3\u00d74 + 7\u00d72 + 8\u00d70.5 = 12 + 14 + 4 = 30. Left: 32 \u2212 30 = 2.\n\nAnswer: 2"
+  },
+  {
+   "i": 738,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 56,
+   "text": "Steven=10, Alice=16, Clara=20 \u2192 4.</think>Steven has 20/2 = 10 books. Alice has 10 + 6 = 16. Clara \u2212 Alice = 20 \u2212 16 = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 739,
+   "ref": "98",
+   "pred": "98",
+   "ok": true,
+   "completion_tokens": 59,
+   "text": "</think>Half-gallon jar: 5 \u2212 2 = $3.\n10 gallons: 10 \u00d7 5 = $50; 16 half-gallons: 16 \u00d7 3 = $48.\nTotal: 50 + 48 = 98.\n\nAnswer: 98"
+  },
+  {
+   "i": 740,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 54,
+   "text": "Music = 10, video games = 50-10-5-10=25.</think>Music = 2 \u00d7 5 = 10. Video games = 50 \u2212 10 \u2212 5 \u2212 10 = 25.\n\nAnswer: 25"
+  },
+  {
+   "i": 741,
+   "ref": "28",
+   "pred": "28",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>12 - 4 = 8, then 8 + 20 = 28.\n\nAnswer: 28"
+  },
+  {
+   "i": 742,
+   "ref": "24",
+   "pred": "24",
+   "ok": true,
+   "completion_tokens": 36,
+   "text": "</think>Each class: 40 students. Girls: 40% of 40 = 16. Boys: 40 \u2212 16 = 24.\n\nAnswer: 24"
+  },
+  {
+   "i": 743,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>2 + 3 = 5; 5 \u00d7 3 = 15; 15 \u2212 2 = 13; 13 \u2212 5 = 8.\n\nAnswer: 8"
+  },
+  {
+   "i": 744,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Total animals: 8+5+3+12 = 28. Over 7 days: 28/7 = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 745,
+   "ref": "1100",
+   "pred": "1100",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "</think>Cost: 3 \u00d7 1800 = 5400\nValue: 4000 + 1000 + 30\u00d750 = 6500\nProfit: 6500 \u2212 5400 = 1100\n\nAnswer: 1100"
+  },
+  {
+   "i": 747,
+   "ref": "350",
+   "pred": "350",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "500\u00d70.1=50/day \u00d77=350</think>He saves $0.10 per tomato: 500 \u00d7 $0.10 = $50 per day. Per week: $50 \u00d7 7 = $350.\n\nAnswer: 350"
+  },
+  {
+   "i": 750,
+   "ref": "4000",
+   "pred": "4000",
+   "ok": true,
+   "completion_tokens": 117,
+   "text": "Two months = 8 weeks = 8 weekends (2 days each) = 16 weekend days, 40 weekdays. 40\u00d760=2400, 16\u00d7100=1600, total 4000.</think>Weekdays: 8 weeks \u00d7 5 days = 40 days \u2192 40 \u00d7 60 = 2400\nWeekends: 8 weeks \u00d7 2 days = 16 days \u2192 16 \u00d7 100 = 1600\nTotal: 2400 + 1600 = 4000\n\nAnswer: 4000"
+  },
+  {
+   "i": 753,
+   "ref": "128",
+   "pred": "128",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "8*12=96 glasses, 4*12=48 plates; 96-10+48-6=128.</think>8 dozen glasses = 96, minus 10 broken = 86. 4 dozen plates = 48, minus 6 broken = 42. Total: 86 + 42 = 128.\n\nAnswer: 128"
+  },
+  {
+   "i": 754,
+   "ref": "89",
+   "pred": "89",
+   "ok": true,
+   "completion_tokens": 89,
+   "text": "Small: 27 small stickers \u2192 9 large buttons. Large: 20 \u2192 20 large buttons; 20 \u2192 60 small buttons. Total buttons: 9+20+60=89.</think>27 small stickers \u2192 9 large buttons; 20 large stickers \u2192 20 large buttons; 20 large stickers \u2192 60 small buttons. Total = 9+20+60 = 89.\n\nAnswer: 89"
+  },
+  {
+   "i": 755,
+   "ref": "7",
+   "pred": "7",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Monday: 2, Friday: 1, Saturday: 2\u00d72 = 4. Total = 2+1+4 = 7.\n\nAnswer: 7"
+  },
+  {
+   "i": 756,
+   "ref": "22",
+   "pred": "22",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "22</think>Let votes against = x, in favor = 2x. Then 2x + x = 33, so x = 11, and votes in favor = 22.\n\nAnswer: 22"
+  },
+  {
+   "i": 757,
+   "ref": "75",
+   "pred": "75",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "XS 11, S 22, M 18, L 9, XL 15 \u2192 75</think>XS: 11, S: 22, M: 18, L: 9, XL: 15. Total = 11+22+18+9+15 = 75.\n\nAnswer: 75"
+  },
+  {
+   "i": 759,
+   "ref": "60000",
+   "pred": "60000",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "300\u00d720\u00d710=60000</think>Each playlist: 300 songs \u00d7 10 hours = 3,000 hours.\n20 playlists: 3,000 \u00d7 20 = 60,000 hours.\n\nAnswer: 60000"
+  },
+  {
+   "i": 760,
+   "ref": "16",
+   "pred": "16",
+   "ok": true,
+   "completion_tokens": 68,
+   "text": "50-10=40, 60% of 40=24, rest 16.</think>20% of 50 = 10 people pick horse #2, leaving 40. 60% of 40 = 24 pick horse #7. Remaining: 40 \u2212 24 = 16.\n\nAnswer: 16"
+  },
+  {
+   "i": 763,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 106,
+   "text": "x + 2x + 4x? First = 1/2 second, third = 2\u00d7first. Let first = x, second = 2x, third = 2x \u2192 5x=250, x=50, third=100.</think>Let first house = x, second = 2x, third = 2x. Then 5x = 250, so x = 50, and the third house needs 2x = 100.\n\nAnswer: 100"
+  },
+  {
+   "i": 765,
+   "ref": "490",
+   "pred": "490",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>Pears: 200 \u00d7 1.45 = 290. Total: 200 + 290 = 490.\n\nAnswer: 490"
+  },
+  {
+   "i": 766,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>Marissa had $80 and spent $20 on the ball, leaving $60. At $5 per candy bar: 60 \u00f7 5 = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 771,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "</think>Eggplants: 20 \u00d7 $3 = $60. Remaining: $135 \u2212 $60 = $75. Corn: $75 \u00f7 25 = $3.\n\nAnswer: 3"
+  },
+  {
+   "i": 773,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 59,
+   "text": "25, then 3/5 of 25 =15, keep 10.</think>Anthony gave 25 to Brandon, leaving 25. He gave 3/5 of 25 = 15 to Charlie, keeping 25 \u2212 15 = 10.\n\nAnswer: 10"
+  },
+  {
+   "i": 774,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>150/75 = 2 hours each way, so 4 hours driving + 6 hours = 10 hours.\n\nAnswer: 10"
+  },
+  {
+   "i": 779,
+   "ref": "255",
+   "pred": "255",
+   "ok": true,
+   "completion_tokens": 124,
+   "text": "Hike speed = 50/2 -5 = 20 mph, 1.5h \u2192 30 mi. Drive 4.5h \u00d750 = 225. Total 255.</think>Hiking speed: 50/2 \u2212 5 = 20 mph. Hiking distance: 20 \u00d7 1.5 = 30 miles. Driving time: 6 \u2212 1.5 = 4.5 hours, so driving distance: 50 \u00d7 4.5 = 225 miles. Total: 225 + 30 = 255 miles.\n\nAnswer: 255"
+  },
+  {
+   "i": 780,
+   "ref": "25",
+   "pred": "-25",
+   "ok": false,
+   "completion_tokens": 54,
+   "text": "Ava: +80 +15 \u2212120 = \u221225.</think>Ava gains 8\u00d710=80, 3\u00d75=15, loses 4\u00d730=120 \u2192 80+15\u2212120 = \u221225.\n\nAnswer: -25"
+  },
+  {
+   "i": 781,
+   "ref": "17",
+   "pred": "17",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>64 \u2212 30 = 34, so each of the other two costs 34 \u00f7 2 = 17.\n\nAnswer: 17"
+  },
+  {
+   "i": 782,
+   "ref": "54",
+   "pred": "27",
+   "ok": false,
+   "completion_tokens": 84,
+   "text": "Usual: 3/day \u00d75 days =15; two days: 6\u00d72=12; total 27.</think>- Usual days: 3 rides/day \u00d7 5 days = 15\n- Other two days: 3 \u00d7 2 = 6 rides/day \u00d7 2 days = 12\n- Total: 15 + 12 = 27\n\nAnswer: 27"
+  },
+  {
+   "i": 783,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 79,
+   "text": "7+17=24, orange=2\u00d7white \u2192 white=8, so bought 8-4=4.</think>Total fish: 7 + 17 = 24. With twice as many orange as white: white = 24/3 = 8. He had 4 white, so he bought 8 \u2212 4 = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 785,
+   "ref": "155",
+   "pred": "155",
+   "ok": true,
+   "completion_tokens": 80,
+   "text": "Ten twenties = $200; 3/5 = 120. Quarters: 140\u00d70.25=35. Total 155.</think>Ten twenties = $200. She spent 3/5 \u00d7 200 = $120. Quarters: 140 \u00d7 $0.25 = $35. Total = 120 + 35 = $155.\n\nAnswer: 155"
+  },
+  {
+   "i": 786,
+   "ref": "142",
+   "pred": "142",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Tomatoes: 5 \u00d7 22 = 110. Eggplants: 8 \u00d7 4 = 32. Total: 110 + 32 = 142.\n\nAnswer: 142"
+  },
+  {
+   "i": 787,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Smart TVs: 40/4 = 10; analog: 40/8 = 5. OLED: 40 \u2212 15 = 25.\n\nAnswer: 25"
+  },
+  {
+   "i": 789,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "</think>Night temp: 45 \u2212 33 = 12 degrees. Needs 32 \u2212 12 = 20 degrees more. 20 \u00f7 5 = 4 logs.\n\nAnswer: 4"
+  },
+  {
+   "i": 790,
+   "ref": "108",
+   "pred": "108",
+   "ok": true,
+   "completion_tokens": 75,
+   "text": "90/9=10 groups; 3/5\u00b710=6 groups; 6\u00b79\u00b72=108.</think>Groups: 90 \u00f7 9 = 10. Groups bringing shells: 3/5 \u00d7 10 = 6. Seashells: 6 \u00d7 9 \u00d7 2 = 108.\n\nAnswer: 108"
+  },
+  {
+   "i": 791,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "172-47+13-38=100</think>172 \u2212 47 + 13 \u2212 38 = 100\n\nAnswer: 100"
+  },
+  {
+   "i": 792,
+   "ref": "75",
+   "pred": "75",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>10 caps/day \u00d7 $0.25 = $2.50/day; \u00d7 30 days = $75.\n\nAnswer: 75"
+  },
+  {
+   "i": 793,
+   "ref": "250",
+   "pred": "250",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Regular: 8 \u00d7 $20 = $160. Overtime: 3 \u00d7 $30 = $90. Total = $250.\n\nAnswer: 250"
+  },
+  {
+   "i": 796,
+   "ref": "2880000",
+   "pred": "1040000",
+   "ok": false,
+   "completion_tokens": 70,
+   "text": "20\u00d73=60, total 260, \u00d74000=1,040,000.</think>Each month adds 20 employees, so after 3 months: 200 + 60 = 260 employees.\nTotal salary: 260 \u00d7 $4000 = $1,040,000.\n\nAnswer: 1040000"
+  },
+  {
+   "i": 797,
+   "ref": "540",
+   "pred": "540",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>2\u00d7150 + 240 = 300 + 240 = 540\n\nAnswer: 540"
+  },
+  {
+   "i": 799,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "</think>3 loaves: 3 \u00d7 $2 = $6. 2 bagels: 2 \u00d7 $1 = $2. Difference: $6 \u2212 $2 = $4.\n\nAnswer: 4"
+  },
+  {
+   "i": 800,
+   "ref": "428",
+   "pred": "428",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "278/2=139+11=150; total 428.</think>Half of Pierson's score: 278/2 = 139. Nikita: 139 + 11 = 150. Total: 278 + 150 = 428.\n\nAnswer: 428"
+  },
+  {
+   "i": 803,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 85,
+   "text": "0.5*14=7, 2*7=14, total 21, need 9.</think>Half hour daily for 2 weeks: 0.5 \u00d7 14 = 7 hours. Then 2 hours daily for a week: 2 \u00d7 7 = 14 hours. Total = 21 hours. Remaining: 30 \u2212 21 = 9.\n\nAnswer: 9"
+  },
+  {
+   "i": 805,
+   "ref": "1170",
+   "pred": "1170",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "</think>Materials: 600 + 300 = 900. Premium: 30% of 900 = 270. Total: 900 + 270 = 1170.\n\nAnswer: 1170"
+  },
+  {
+   "i": 806,
+   "ref": "70",
+   "pred": "70",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "Fifth: 80% pass \u2192 320. Total pass 340+40+320=700/1000=70%.</think>Third: 340, fourth: 40, fifth: 80% of 400 = 320. Total passed = 700 out of 1000 = 70%.\n\nAnswer: 70"
+  },
+  {
+   "i": 808,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "10 + 4*1.5 + 16*2 = 10+6+32=48 quarts = 12 gallons.</think>Total drunk: 4\u00d71.5 + 16\u00d72 = 6 + 32 = 38 quarts. Beginning: 38 + 10 = 48 quarts = 48/4 = 12 gallons.\n\nAnswer: 12"
+  },
+  {
+   "i": 809,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "</think>Dale sold 150 but had 100, so he was 50 short. After ordering 100 more, he has 150 \u2212 100 = 50 left to sell.\n\nAnswer: 50"
+  },
+  {
+   "i": 814,
+   "ref": "11",
+   "pred": "11",
+   "ok": true,
+   "completion_tokens": 130,
+   "text": "4 hours=240 min. Jack: 240/20=12 quarters. Two friends: 40 min per quarter \u2192 6 each =12. Better: 30 min \u2192 8. Total 32 quarters = $8.</think>4 hours = 240 minutes.\n- Jack: 240/20 = 12 quarters\n- Two worse friends: 10 min per quarter \u2192 240/10 = 24 quarters\n- Better friend: 30 min per quarter \u2192 240/30 = 8 quarters\n\nTotal: 12 + 24 + 8 = 44 quarters = $11.\n\nAnswer: 11"
+  },
+  {
+   "i": 815,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 109,
+   "text": "zest=fragrance=x, salt=sugar=2x, oil=4x. Total x+x+2x+2x+4x=10 \u2192 x=1, oil=4.</think>Let zest = fragrance = x. Salt = sugar = 2x, oil = 4x.\n\nTotal: x + x + 2x + 2x + 4x = 10x = 10, so x = 1.\n\nOil = 4x = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 818,
+   "ref": "16",
+   "pred": "16",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "Joe 40, sells 8, gives 16, remains 16.</think>Joe has 2 \u00d7 20 = 40 cars. He sells 20% of 40 = 8 cars, and gives away 2 \u00d7 8 = 16 cars. Remaining: 40 \u2212 8 \u2212 16 = 16.\n\nAnswer: 16"
+  },
+  {
+   "i": 821,
+   "ref": "35",
+   "pred": "35",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>50 + 20 = 70 cars. Half gone: 70/2 = 35.\n\nAnswer: 35"
+  },
+  {
+   "i": 824,
+   "ref": "52",
+   "pred": "52",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>Cat: 8\u00d711=88; Dog: 6\u00d76=36; 88\u221236=52.\n\nAnswer: 52"
+  },
+  {
+   "i": 828,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "</think>Mulan has 40 + 100 = 140. She spends 2\u00d730 + 20 = 80. Left: 140 \u2212 80 = 60.\n\nAnswer: 60"
+  },
+  {
+   "i": 830,
+   "ref": "1128",
+   "pred": "1128",
+   "ok": true,
+   "completion_tokens": 153,
+   "text": "Videos: 18\u00d74=72 min/week \u00d74=288. Songs: 2h\u00d74=8h=480. Makeup: 15\u00d76=90 min/week \u00d74=360. Total 288+480+360=1128 min = 18.8 hours. Answer likely 1128 minutes.</think>Videos: 18 \u00d7 4 = 72 min/week \u2192 288 min/month.\nSongs: 2 hrs/week \u2192 8 hrs = 480 min/month.\nMakeup: 15 \u00d7 6 = 90 min/week \u2192 360 min/month.\nTotal: 288 + 480 + 360 = 1128 minutes.\n\nAnswer: 1128"
+  },
+  {
+   "i": 832,
+   "ref": "42",
+   "pred": "42",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "Eva 20, Anthony 30, Roy 30*1.4=42.</think>Eva has $20, so Anthony has $20 + $10 = $30. Roy has 40% more: $30 \u00d7 1.4 = $42.\n\nAnswer: 42"
+  },
+  {
+   "i": 834,
+   "ref": "80",
+   "pred": "80",
+   "ok": true,
+   "completion_tokens": 53,
+   "text": "8*(4+6)=80</think>Mason rides 8 mph \u00d7 4 hours = 32 miles, then 8 mph \u00d7 6 hours = 48 miles. Total: 32 + 48 = 80 miles.\n\nAnswer: 80"
+  },
+  {
+   "i": 835,
+   "ref": "48",
+   "pred": "12",
+   "ok": false,
+   "completion_tokens": 71,
+   "text": "18/3=6 per kangaroo; turtles half speed \u2192 12 hours each; four turtles travel together \u2192 12.</think>Each kangaroo takes 18/3 = 6 hours. Turtles travel at half speed, so each takes 12 hours. Since they travel together, it still takes 12 hours.\n\nAnswer: 12"
+  },
+  {
+   "i": 836,
+   "ref": "140",
+   "pred": "140",
+   "ok": true,
+   "completion_tokens": 59,
+   "text": "Kora 20, Rory 40, Jada 80 \u2192 140.</think>Kora: 20, Rory: 20+20=40, Jada: 2\u00d740=80. Total: 20+40+80=140.\n\nAnswer: 140"
+  },
+  {
+   "i": 838,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>3\u00d75 + 5\u00d73 = 15 + 15 = 30 slices; 30 \u2212 15 = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 840,
+   "ref": "16",
+   "pred": "16",
+   "ok": true,
+   "completion_tokens": 103,
+   "text": "1/6+2/3+1/2 = 1+4+3 /6 = 8/6 = 4/3; \u00d712 = 16.</think>Total fraction left: 1/6 + 2/3 + 1/2 = 1/6 + 4/6 + 3/6 = 8/6 = 4/3.\n\nTotal length: 4/3 \u00d7 12 = 16 millimeters.\n\nAnswer: 16"
+  },
+  {
+   "i": 842,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 14,
+   "text": "</think>80 - 70 = 10\n\nAnswer: 10"
+  },
+  {
+   "i": 844,
+   "ref": "180",
+   "pred": "180",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "Jack: 60 dishes, 30 socks. Peter: 60 socks, 30 dishes. Total 180.</think>Jack: 60 dishes, 30 socks. Peter: 60 socks, 30 dishes. Total = 60+30+60+30 = 180.\n\nAnswer: 180"
+  },
+  {
+   "i": 847,
+   "ref": "975",
+   "pred": "975",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "</think>Interest per year = 3/4 \u00d7 300 = $225. Over 3 years: 3 \u00d7 225 = $675. Total = 300 + 675 = 975.\n\nAnswer: 975"
+  },
+  {
+   "i": 851,
+   "ref": "110",
+   "pred": "110",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "2640/24=110</think>He buys 2 \u00d7 12 = 24 pairs per year. $2640 \u00f7 24 = $110 per pair.\n\nAnswer: 110"
+  },
+  {
+   "i": 852,
+   "ref": "123",
+   "pred": "123",
+   "ok": true,
+   "completion_tokens": 71,
+   "text": "3 green: 75; red: 3\u00d7(18\u22122)=48; total 123.</think>Green: 3 \u00d7 $25 = $75. Red: 3 \u00d7 ($18 \u2212 $2) = 3 \u00d7 $16 = $48. Total: $75 + $48 = $123.\n\nAnswer: 123"
+  },
+  {
+   "i": 857,
+   "ref": "14000",
+   "pred": "26000",
+   "ok": false,
+   "completion_tokens": 79,
+   "text": "4000\u21928000\u219214000, total 26000.</think>- Day 1: 4000 gallons\n- Day 2: doubles \u2192 8000 gallons\n- Day 3: 8000 + 6000 = 14000 gallons\n\nTotal: 4000 + 8000 + 14000 = 26000\n\nAnswer: 26000"
+  },
+  {
+   "i": 859,
+   "ref": "1520",
+   "pred": "1520",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "</think>Rafaela: 40 \u00d7 $20 = $800. Julieta: 10% less = $800 \u00d7 0.9 = $720. Total: $800 + $720 = $1520.\n\nAnswer: 1520"
+  },
+  {
+   "i": 860,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "12-6-3=3</think>Jennifer gave away: 3 daughters \u00d7 2 = 6 oranges, plus 3 to her son = 9 total. Remaining: 12 \u2212 9 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 862,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "</think>5 hours \u00d7 2 loaves = 10 loaves; 10 \u00d7 8 = 80 slices; 80 \u00d7 $0.50 = $40.\n\nAnswer: 40"
+  },
+  {
+   "i": 863,
+   "ref": "110",
+   "pred": "110",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>Silver = 70 \u2212 30 = 40. Total = 70 + 40 = 110.\n\nAnswer: 110"
+  },
+  {
+   "i": 865,
+   "ref": "23",
+   "pred": "23",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>Red = 12, green = 10, blue = 30. Yellow = 75 \u2212 52 = 23.\n\nAnswer: 23"
+  },
+  {
+   "i": 866,
+   "ref": "28",
+   "pred": "28",
+   "ok": true,
+   "completion_tokens": 96,
+   "text": "A + (A+25) + (A+12) = 85 \u2192 3A+37=85 \u2192 A=16, F=28.</think>Anne + Sofie + Fawn = 85. Let Anne = A, Sofie = A+25, Fawn = A+12.\n3A + 37 = 85 \u2192 A = 16, so Fawn = 16 + 12 = 28.\n\nAnswer: 28"
+  },
+  {
+   "i": 867,
+   "ref": "7",
+   "pred": "7",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>Sweet potatoes: 2 \u00d7 5 = 10 pounds. Carrots: 10 \u2212 3 = 7 pounds.\n\nAnswer: 7"
+  },
+  {
+   "i": 869,
+   "ref": "500",
+   "pred": "500",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>5 phones \u00d7 $700 = $3500. Change = $4000 \u2212 $3500 = $500.\n\nAnswer: 500"
+  },
+  {
+   "i": 870,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Madeline pays 60% of $400 = $240, so Keenan pays $160 per month. Per week: $160 \u00f7 4 = $40.\n\nAnswer: 40"
+  },
+  {
+   "i": 874,
+   "ref": "132",
+   "pred": "132",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>$33 \u00f7 3 = $11 per hour. 12 \u00d7 11 = 132.\n\nAnswer: 132"
+  },
+  {
+   "i": 875,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>52 + 28 = 80. Lost 1/4: 80 \u2212 20 = 60.\n\nAnswer: 60"
+  },
+  {
+   "i": 878,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 37,
+   "text": "</think>Boys sold 32 \u2212 14 = 18, so Micah sold 9. Julie sold 14 \u2212 9 = 5 more.\n\nAnswer: 5"
+  },
+  {
+   "i": 881,
+   "ref": "16",
+   "pred": "16",
+   "ok": true,
+   "completion_tokens": 54,
+   "text": "Present 8; 8+x=24 \u2192 x=16.</think>Melanie is now 18 \u2212 10 = 8. We need 8 + x = 3\u00b78 = 24, so x = 16.\n\nAnswer: 16"
+  },
+  {
+   "i": 882,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 95,
+   "text": "Bacon $10, chicken 6\u00d74=24, strawberries 12, apples 7\u00d72=14. Total 60, left 5.</think>Bacon: $10. Chicken: 6 \u00d7 $4 = $24. Strawberries: 3 \u00d7 $4 = $12. Apples: 7 \u00d7 $2 = $14. Total = $60, so $65 \u2212 $60 = $5.\n\nAnswer: 5"
+  },
+  {
+   "i": 883,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 37,
+   "text": "2x+15=65 \u2192 x=25</think>2x + 15 = 65 \u2192 2x = 50 \u2192 x = 25\n\nAnswer: 25"
+  },
+  {
+   "i": 885,
+   "ref": "500",
+   "pred": "500",
+   "ok": true,
+   "completion_tokens": 17,
+   "text": "</think>125 + 125 + 250 = 500\n\nAnswer: 500"
+  },
+  {
+   "i": 887,
+   "ref": "34",
+   "pred": "34",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "6 + 4 + 24 = 34</think>6 + (2/3 \u00d7 6 = 4) + (3 \u00d7 8 = 24) = 34\n\nAnswer: 34"
+  },
+  {
+   "i": 888,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>55 \u2212 5 = 50, and 50 \u00f7 5 = 10.\n\nAnswer: 10"
+  },
+  {
+   "i": 894,
+   "ref": "26",
+   "pred": "32",
+   "ok": false,
+   "completion_tokens": 110,
+   "text": "Mowing: 3+5=8 times \u00d7 $6 = 48; lemonade = 80\u221248 = 32.</think>Joe paid $6 per mow. She mowed Joe's lawn once, Kamala's 3 times, Alba's 5 times \u2014 9 mows total? No: 1+3+5 = 9... but standard answer: 8 mows \u00d7 $6 = $48, so lemonade = 80 \u2212 48 = 32.\n\nAnswer: 32"
+  },
+  {
+   "i": 896,
+   "ref": "250",
+   "pred": "250",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>10 \u00d7 3 = 30 hours; 30 \u00d7 $25 = $750; $750 \u2212 $500 = $250\n\nAnswer: 250"
+  },
+  {
+   "i": 898,
+   "ref": "110",
+   "pred": "110",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "</think>Anis rowed 50 + (1/5 \u00d7 50) = 50 + 10 = 60 miles.\n\nTotal: 50 + 60 = 110 miles.\n\nAnswer: 110"
+  },
+  {
+   "i": 900,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "Denise: 10+18=28, Daniel 13, diff 15.</think>Denise: 10 + (13+5) = 28. Daniel: 13 + 0 = 13. Difference: 28 \u2212 13 = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 903,
+   "ref": "16",
+   "pred": "26",
+   "ok": false,
+   "completion_tokens": 94,
+   "text": "20 small: 10\u00d72=20; 8 large: 8/3\u00d72.25=6. Total 26.</think>Small: 20 masks \u00f7 4 = 5 batches \u00d7 2 yards = 10 yards.\nLarge: 8 masks \u00f7 3 = 8/3 batches \u00d7 2.25 = 6 yards.\nTotal: 10 + 6 = 26 yards.\n\nAnswer: 26"
+  },
+  {
+   "i": 909,
+   "ref": "38",
+   "pred": "38",
+   "ok": true,
+   "completion_tokens": 88,
+   "text": "Duncan 8 yrs ago =52 =2\u00d7(Adam-4) \u2192 Adam=30, in 8 yrs 38.</think>Duncan 8 years ago: 60 \u2212 8 = 52. So Adam 4 years ago was 52 \u00f7 2 = 26, meaning Adam is now 30. In 8 years: 30 + 8 = 38.\n\nAnswer: 38"
+  },
+  {
+   "i": 910,
+   "ref": "700",
+   "pred": "700",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>Smith: 2\u00d7200+100 = 500. Together: 200+500 = 700.\n\nAnswer: 700"
+  },
+  {
+   "i": 916,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 83,
+   "text": "Balloons: 12 balloons = $3. Total: 11+3+14=28, each 14.</think>Total spent: cake $11 + balloons (12 \u00f7 2 \u00d7 $0.5 = $3) + ice cream (2 \u00d7 $7 = $14) = $28. Combined allowance = $28, so each got $14.\n\nAnswer: 14"
+  },
+  {
+   "i": 919,
+   "ref": "90",
+   "pred": "90",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "</think>Profit per lollipop: $0.8 \u2212 $0.5 = $0.3\nTotal lollipops: 30 \u00d7 10 = 300\nTotal profit: 300 \u00d7 $0.3 = $90\n\nAnswer: 90"
+  },
+  {
+   "i": 921,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 38,
+   "text": "</think>Abby eats 2 slices/day, Josh eats 4 slices/day, together 6 slices/day. 24 \u00f7 6 = 4 days.\n\nAnswer: 4"
+  },
+  {
+   "i": 923,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 348,
+   "text": "27/3=9 per row; remaining = 27-15=12; 6 chamomile, 6 mint per row? Wait: 12 remaining split equally chamomile/mint = 6 each total, per row 2? Hmm.\n\nInterpretation: 27 cups, 3 rows of 9. In each row equal chamomile and mint. Remaining cups = 27-15=12, so chamomile+mint = 12, 6 each total, 2 per row? But typical answer: 27-15=12, 12/2=6 per row? The known problem: answer 6? Actually original problem: \"Lana ... 27 cups, divides into 3 rows... remaining cups to brew 15 cups of cinnamon tea\" \u2014 answer: 27-15=12, 12/3=4 per row, /2=2 mint each? Hmm.\n\nLikely intended: each row 9 cups; cinnamon uses 15, remaining 12 for chamomile+mint, equal \u2192 6 each total... but \"in each row\" \u2192 6/3=2. Answer 2? But common answer to this GSM-style problem is 6? Let me think: rows of 9, each row equal chamomile and mint: 27-15=12 chamomile+mint, 6 each, per row 2 mint. Answer: 2.</think>27 \u2212 15 = 12 cups for chamomile and mint, split equally \u2192 6 each. Across 3 rows: 6 \u00f7 3 = 2 mint cups per row.\n\nAnswer: 2"
+  },
+  {
+   "i": 924,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "</think>Each trip takes 4 hours, so in 8 hours he makes 2 trips. To get 24 berries: 24 \u00f7 2 = 12 berries per trip.\n\nAnswer: 12"
+  },
+  {
+   "i": 926,
+   "ref": "1",
+   "pred": "1",
+   "ok": true,
+   "completion_tokens": 129,
+   "text": "Spent: 5\u00d710+8\u00d77+2\u00d78+4\u00d72=50+56+16+8=130. Remaining 20. Tonight: ticket 10+popcorn 8+candy 2=20 \u2192 1 movie.</think>Spent so far: 5\u00d710 + 8\u00d77 + 2\u00d78 + 4\u00d72 = 50+56+16+8 = $130. Remaining: $20. Tonight's ticket + popcorn + candy = 10+8+2 = $20, so he can see 1 movie.\n\nAnswer: 1"
+  },
+  {
+   "i": 928,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "39+78+78+48+57=300, /5=60.</think>Total: 39 + 78 + 78 + 48 + 57 = 300. Average = 300 \u00f7 5 = 60.\n\nAnswer: 60"
+  },
+  {
+   "i": 929,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>Bus: 60\u00d75=300 miles. Car: 30\u00d78=240 miles. Difference: 300\u2212240=60.\n\nAnswer: 60"
+  },
+  {
+   "i": 931,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 101,
+   "text": "Paul = John+10, Peter = Paul+John = 2John+10. Sum: 4John+20=100 \u2192 John=20, Paul=30, Peter=50.</think>Peter = Paul + John, Paul = John + 10.\nSum: (John+10) + John + (2John+10) = 100 \u2192 4John = 80 \u2192 John = 20, Paul = 30, Peter = 50.\n\nAnswer: 50"
+  },
+  {
+   "i": 932,
+   "ref": "24",
+   "pred": "24",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "</think>Maria gave 4 friends \u00d7 2 = 8 balloons, plus 1 for herself = 9. Mom gave 5 people \u00d7 3 = 15 more. Total: 9 + 15 = 24.\n\nAnswer: 24"
+  },
+  {
+   "i": 934,
+   "ref": "410",
+   "pred": "410",
+   "ok": true,
+   "completion_tokens": 62,
+   "text": "Zoey 400, Sydney 420, avg 410.</think>Zoey: 40 \u00d7 10 = 400 feet. Sydney: 35 \u00d7 12 = 420 feet. Average: (400 + 420)/2 = 410.\n\nAnswer: 410"
+  },
+  {
+   "i": 936,
+   "ref": "250",
+   "pred": "250",
+   "ok": true,
+   "completion_tokens": 79,
+   "text": "5pm\u219210am = 17 hours. 1000+5\u00d770=1350; save 1600\u22121350=250.</think>Stay: 5 pm to 10 am = 17 hours. Cost: 1000 + 5\u00d770 = 1350. Savings: 1600 \u2212 1350 = 250.\n\nAnswer: 250"
+  },
+  {
+   "i": 938,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 58,
+   "text": "</think>Earnings: 50\u00d76 = 300. Minus gas 50 \u2192 250. Minus deposit 100 \u2192 150. Minus pencils 5\u00d710=50 \u2192 100. Pens: 100/25 = 4.\n\nAnswer: 4"
+  },
+  {
+   "i": 940,
+   "ref": "280",
+   "pred": "280",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "8*7*5=280</think>8 \u00d7 7 = 56 per school; 56 \u00d7 5 = 280.\n\nAnswer: 280"
+  },
+  {
+   "i": 945,
+   "ref": "17",
+   "pred": "17",
+   "ok": true,
+   "completion_tokens": 103,
+   "text": "Swim 12 miles at 2 mph = 6h; rest 3h; 8 miles at 1 mph = 8h; total 17.</think>First leg: 60% of 20 = 12 miles at 2 mph \u2192 6 hours. Rest: half of 6 = 3 hours. Remaining: 8 miles at 1 mph \u2192 8 hours. Total: 6 + 3 + 8 = 17 hours.\n\nAnswer: 17"
+  },
+  {
+   "i": 947,
+   "ref": "13",
+   "pred": "13",
+   "ok": true,
+   "completion_tokens": 23,
+   "text": "</think>15 \u2212 7 = 8; 8 + 5 = 13.\n\nAnswer: 13"
+  },
+  {
+   "i": 948,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "</think>NYT: 6 \u00d7 $5 = $30, commission 10% = $3.\nWSJ: 10 \u00d7 $15 = $150, commission 8% = $12.\nTotal: $3 + $12 = $15.\n\nAnswer: 15"
+  },
+  {
+   "i": 949,
+   "ref": "42",
+   "pred": "42",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>Marcus = 26 \u2212 5 = 21. Leo = 2 \u00d7 21 = 42.\n\nAnswer: 42"
+  },
+  {
+   "i": 950,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 97,
+   "text": "B = A+20, B = D+10, sum 45: A + A+20 + A+10 = 45 \u2192 3A=15, A=5.</think>Let Azibo = A, Bahati = A+20, Dinar = A+10.\nA + (A+20) + (A+10) = 45 \u2192 3A + 30 = 45 \u2192 A = 5.\n\nAnswer: 5"
+  },
+  {
+   "i": 951,
+   "ref": "300",
+   "pred": "150",
+   "ok": false,
+   "completion_tokens": 21,
+   "text": "</think>1.5 inches \u00d7 100 pages/inch = 150 pages.\n\nAnswer: 150"
+  },
+  {
+   "i": 952,
+   "ref": "360",
+   "pred": "1800",
+   "ok": false,
+   "completion_tokens": 75,
+   "text": "15 hours = 900 min, 900/15=60, \u00d730=1800.</think>Vince staples 30 reports per 15 minutes, so 2 per minute. From 8:00 AM to 11:00 PM is 15 hours = 900 minutes. 900 \u00d7 2 = 1800.\n\nAnswer: 1800"
+  },
+  {
+   "i": 957,
+   "ref": "45",
+   "pred": "45",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "</think>Aliya is 3, so Shawna is 3\u00d73 = 9. Father is 5\u00d79 = 45.\n\nAnswer: 45"
+  },
+  {
+   "i": 958,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>48 is 120% of the true number, so true = 48/1.2 = 40.\n\nAnswer: 40"
+  },
+  {
+   "i": 959,
+   "ref": "7",
+   "pred": "7",
+   "ok": true,
+   "completion_tokens": 26,
+   "text": "</think>Jason = 2, Jordan = 4, Jeffrey = 1. Total = 7.\n\nAnswer: 7"
+  },
+  {
+   "i": 960,
+   "ref": "11",
+   "pred": "11",
+   "ok": true,
+   "completion_tokens": 100,
+   "text": "10+13+8-2=29; 4\u00d710=40; 40-29=11.</think>End of day 1: 10 holes. Days 2\u20133: 13 + 8 = 21, minus 2 filled in \u2192 10 + 21 \u2212 2 = 29 holes. Total needed: 4 \u00d7 10 = 40. So day 4: 40 \u2212 29 = 11.\n\nAnswer: 11"
+  },
+  {
+   "i": 961,
+   "ref": "225",
+   "pred": "225",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>Collins got 70 + 15 = 85. Total: 70 + 70 + 85 = 225.\n\nAnswer: 225"
+  },
+  {
+   "i": 962,
+   "ref": "1000",
+   "pred": "600",
+   "ok": false,
+   "completion_tokens": 30,
+   "text": "</think>Supplies: $400. Tickets cost 50% more: 400 \u00d7 1.5 = 600.\n\nAnswer: 600"
+  },
+  {
+   "i": 964,
+   "ref": "200",
+   "pred": "200",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>Episodes: 20/2 = 10. Total time: 10 \u00d7 20 = 200 minutes.\n\nAnswer: 200"
+  },
+  {
+   "i": 967,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "Brother 16, sister 25% younger than Nani: 6. Total 30.</think>Brother: 2 \u00d7 8 = 16. Sister: 8 \u2212 25% of 8 = 8 \u2212 2 = 6. Total: 8 + 16 + 6 = 30.\n\nAnswer: 30"
+  },
+  {
+   "i": 971,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "Perimeter 2(15+10)=50, \u00d72=100.</think>Perimeter = 2(15 + 10) = 50 feet. Slats = 50 \u00d7 2 = 100.\n\nAnswer: 100"
+  },
+  {
+   "i": 978,
+   "ref": "160",
+   "pred": "160",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "Red = 60, total 160.</think>Red car = 100 \u2212 40% of 100 = $60. Total = 100 + 60 = 160.\n\nAnswer: 160"
+  },
+  {
+   "i": 980,
+   "ref": "90",
+   "pred": "90",
+   "ok": true,
+   "completion_tokens": 40,
+   "text": "20+30+40=90</think>Mother: 20, sister: 30, friend: 40. Total: 20+30+40 = 90.\n\nAnswer: 90"
+  },
+  {
+   "i": 983,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>Charlie: 5\u00d75 = 25. Average: (25+5)/2 = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 985,
+   "ref": "63",
+   "pred": "63",
+   "ok": true,
+   "completion_tokens": 39,
+   "text": "</think>Edgar's brother eats 18 \u00f7 2 = 9 pretzels a day. In a week: 9 \u00d7 7 = 63.\n\nAnswer: 63"
+  },
+  {
+   "i": 988,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 57,
+   "text": "500/month \u2192 6000/year \u2192 6 pairs.</think>Jessica saves 25% of $2,000 = $500 per month, or $6,000 per year. At $1,000 per pair, she can buy 6 pairs.\n\nAnswer: 6"
+  },
+  {
+   "i": 989,
+   "ref": "45",
+   "pred": "45",
+   "ok": true,
+   "completion_tokens": 82,
+   "text": "Peel: 90/6=15 min. Saut\u00e9: 30 per 10 min \u2192 90 = 30 min. Total 45.</think>Peeling: 90 \u00f7 6 = 15 minutes. Saut\u00e9ing: 90 \u00f7 30 \u00d7 10 = 30 minutes. Total: 15 + 30 = 45 minutes.\n\nAnswer: 45"
+  },
+  {
+   "i": 991,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "Dad 30, Bill second sighting at 90, comet returns every 75 years, so first sighting at 90\u221275=15.</think>Bill saw it a second time at 3 \u00d7 30 = 90. Since the comet returns every 75 years, his first sighting was 90 \u2212 75 = 15.\n\nAnswer: 15"
+  },
+  {
+   "i": 992,
+   "ref": "52",
+   "pred": "52",
+   "ok": true,
+   "completion_tokens": 67,
+   "text": "12+12+24+4=52</think>- Electric: 12/year\n- Gas: 12/year\n- Church: 2\u00d712 = 24/year\n- Pest/lawn: 4/year\n\nTotal: 12 + 12 + 24 + 4 = 52\n\nAnswer: 52"
+  },
+  {
+   "i": 993,
+   "ref": "11",
+   "pred": "11",
+   "ok": true,
+   "completion_tokens": 78,
+   "text": "First plane: 88 flights; Greece 66; remaining 22 split: 11 France.</think>The second plane makes 44 trips, which is half of the first plane's trips, so the first plane makes 88 flights. Three-quarters go to Greece: 66. Remaining: 22, split equally between France and Germany \u2192 11 each.\n\nAnswer: 11"
+  },
+  {
+   "i": 998,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>100 \u00d7 15 = 1500 cookies. Half = 750. 750 \u00f7 15 = 50.\n\nAnswer: 50"
+  },
+  {
+   "i": 999,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 81,
+   "text": "2a+4\u00b7a/2=4a=1 \u2192 a=1/4 \u2192 25%.</think>Each kid gets x, each adult 2x: 2(2x) + 4x = 8x = 1, so x = 1/8. Each adult gets 2x = 1/4 = 25%.\n\nAnswer: 25"
+  },
+  {
+   "i": 1001,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 67,
+   "text": "Total 20+30+120+10=180 min = 3 hours \u2192 2:00 pm.</think>20 + 30 + 120 + 10 = 180 minutes = 3 hours. 5:00 pm \u2212 3 hours = 2:00 pm.\n\nAnswer: 2:00 pm"
+  },
+  {
+   "i": 1003,
+   "ref": "480",
+   "pred": "480",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "25\u00d73=75 +1.5\u00d710\u00d73=45 \u2192120/week \u00d74=480.</think>Weekly cost: rent 25\u00d73 = $75, students 1.50\u00d710\u00d73 = $45, total $120/week. Monthly (4 weeks): 120\u00d74 = 480.\n\nAnswer: 480"
+  },
+  {
+   "i": 1004,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>Peter: 64/4 = 16 per box. Martha: 56/7 = 8 per box. Difference: 16 \u2212 8 = 8.\n\nAnswer: 8"
+  },
+  {
+   "i": 1009,
+   "ref": "1875",
+   "pred": "1875",
+   "ok": true,
+   "completion_tokens": 59,
+   "text": "</think>Over 16: 1500, males = 375, females = 1125.\nUnder 16: 1500, males = 750, females = 750.\nTotal females = 1125 + 750 = 1875.\n\nAnswer: 1875"
+  },
+  {
+   "i": 1011,
+   "ref": "6000",
+   "pred": "6000",
+   "ok": true,
+   "completion_tokens": 155,
+   "text": "Wanda day1: 4500, B: 3375. Day2: W 3000, B 1125. Total 12000, remaining 6000.</think>Wanda day 1: 18000/4 = 4500. Ms. B: 3/4 \u00d7 4500 = 3375.\nDay 2: Wanda: 2/3 \u00d7 4500 = 3000. Ms. B: 1/3 \u00d7 3375 = 1125.\nTotal: 4500 + 3375 + 3000 + 1125 = 12000. Remaining: 18000 \u2212 12000 = 6000.\n\nAnswer: 6000"
+  },
+  {
+   "i": 1013,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "</think>She earns $25/hour \u00d7 40 = $1000/week. Down payment = 20% \u00d7 $10000 = $2000. Weeks = 2000/1000 = 2.\n\nAnswer: 2"
+  },
+  {
+   "i": 1014,
+   "ref": "3",
+   "pred": "3",
+   "ok": true,
+   "completion_tokens": 127,
+   "text": "3(.5)+4(.5)+2(1)+5(.75)=1.5+2+2+3.75=9.25; remaining .75 \u2192 3 plums.</think>Spent: 3(0.5)+4(0.5)+2(1)+5(0.75) = 1.5+2+2+3.75 = 9.25. Remaining: 10 \u2212 9.25 = 0.75. Plums at $0.25: 0.75/0.25 = 3.\n\nAnswer: 3"
+  },
+  {
+   "i": 1015,
+   "ref": "78",
+   "pred": "78",
+   "ok": true,
+   "completion_tokens": 62,
+   "text": "13 packs \u00d760=780, /10=78.</think>Total packs given away: 15 \u2212 2 = 13 packs \u2192 13 \u00d7 60 = 780 pieces. Split among 10 friends: 780 \u00f7 10 = 78.\n\nAnswer: 78"
+  },
+  {
+   "i": 1017,
+   "ref": "45",
+   "pred": "45",
+   "ok": true,
+   "completion_tokens": 69,
+   "text": "72/8=9 per album; 5 albums \u2192 45.</think>Each album has 72 \u00f7 8 = 9 pictures. Selfies: 3 \u00d7 9 = 27; portraits: 2 \u00d7 9 = 18. Total = 27 + 18 = 45.\n\nAnswer: 45"
+  },
+  {
+   "i": 1018,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>18 \u00f7 3 = 6 sets of 3 pages, so 6 \u00d7 10 = 60 minutes.\n\nAnswer: 60"
+  },
+  {
+   "i": 1020,
+   "ref": "22",
+   "pred": "22",
+   "ok": true,
+   "completion_tokens": 17,
+   "text": "</think>4 + 6 + 12 = 22\n\nAnswer: 22"
+  },
+  {
+   "i": 1022,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 99,
+   "text": "Small price 4, large 12. Let large = L, small = 2L: 12L + 8L = 20L = 120, L=6, small=12.</think>Small = $4, large = $12. Let large sold = L, small = 2L.\n12L + 4(2L) = 20L = 120 \u2192 L = 6, so small = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 1025,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "</think>100 \u2212 30 \u2212 30 = 40 eggs hidden minus twins' finds; excluding the 10 unfound eggs, friends found 40 \u2212 10 = 30.\n\nAnswer: 30"
+  },
+  {
+   "i": 1029,
+   "ref": "34",
+   "pred": "34",
+   "ok": true,
+   "completion_tokens": 91,
+   "text": "Red: 25-10=15, yellow 12-6=6, green 7, blue 6. Total 34.</think>Red: 25 \u2212 40% (10) = 15. Yellow: 12 \u2212 6 = 6. Blue added: 75% of 8 = 6. Total: 15 + 7 + 6 + 6 = 34.\n\nAnswer: 34"
+  },
+  {
+   "i": 1030,
+   "ref": "24",
+   "pred": "24",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "0.5\u00d70.6\u00d70.8=0.24 \u2192 24%.</think>Chance he must turn it in: substitute doesn't come (50%) \u00d7 no class extension (60%) \u00d7 no personal extension (80%) = 0.5 \u00d7 0.6 \u00d7 0.8 = 0.24.\n\nAnswer: 24"
+  },
+  {
+   "i": 1032,
+   "ref": "450",
+   "pred": "450",
+   "ok": true,
+   "completion_tokens": 22,
+   "text": "</think>Medium: 150. Small = 3 \u00d7 150 = 450.\n\nAnswer: 450"
+  },
+  {
+   "i": 1035,
+   "ref": "35",
+   "pred": "35",
+   "ok": true,
+   "completion_tokens": 80,
+   "text": "24/3=8 bottles, 7 gaps \u00d75=35.</think>The driveway is 24 feet wide with a bottle every 3 feet, so there are 24 \u00f7 3 = 8 bottles. Starting at the first bottle, he moves 7 times between bottles, taking 5 seconds each: 7 \u00d7 5 = 35 seconds.\n\nAnswer: 35"
+  },
+  {
+   "i": 1036,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>2 boxes \u00d7 40 = 80 apples; 80 \u00f7 8 = 10 packs.\n\nAnswer: 10"
+  },
+  {
+   "i": 1037,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>2\u00d711 + 3\u00d76 = 22 + 18 = 40. 50 \u2212 40 = 10.\n\nAnswer: 10"
+  },
+  {
+   "i": 1048,
+   "ref": "7400",
+   "pred": "9860.78",
+   "ok": false,
+   "completion_tokens": 67,
+   "text": "20000\u00b70.79\u00b3 = 20000\u00b70.493039 = 9860.78</think>Value = 20000 \u00d7 (0.79)\u00b3 = 20000 \u00d7 0.493039 = 9860.78\n\nAnswer: 9860.78"
+  },
+  {
+   "i": 1050,
+   "ref": "655",
+   "pred": "655",
+   "ok": true,
+   "completion_tokens": 51,
+   "text": "325\u00d74=1300; 1955\u22121300=655.</think>325 \u00d7 4 = 1300 km driven. 1955 \u2212 1300 = 655 km remaining.\n\nAnswer: 655"
+  },
+  {
+   "i": 1051,
+   "ref": "15",
+   "pred": "15",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>8 cups/day \u00d7 30 days = 240 cups. 240 \u00f7 16 = 15 gallons.\n\nAnswer: 15"
+  },
+  {
+   "i": 1052,
+   "ref": "110",
+   "pred": "110",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "120+20=140; -50+100=190; -80=110.</think>120 + 20 = 140; then \u221250 + 100 = 190; then \u221280 = 110.\n\nAnswer: 110"
+  },
+  {
+   "i": 1053,
+   "ref": "55",
+   "pred": "55",
+   "ok": true,
+   "completion_tokens": 63,
+   "text": "10+15+24+6=55</think>Tank top: $10. Shorts: $10+$5=$15. Shoes: $48/2=$24. Socks: $8\u2212$2=$6. Total: 10+15+24+6=$55.\n\nAnswer: 55"
+  },
+  {
+   "i": 1056,
+   "ref": "156",
+   "pred": "156",
+   "ok": true,
+   "completion_tokens": 41,
+   "text": "</think>4 twin beds \u00f7 2 per load = 2 loads, plus 1 king load = 3 loads per week. 3 \u00d7 52 = 156.\n\nAnswer: 156"
+  },
+  {
+   "i": 1057,
+   "ref": "24",
+   "pred": "24",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "4+2=6 per weekend, \u00d74=24.</think>Each weekend: Saturday 4 movies + Sunday 2 movies = 6 movies.\nOver 4 weeks: 6 \u00d7 4 = 24.\n\nAnswer: 24"
+  },
+  {
+   "i": 1058,
+   "ref": "250",
+   "pred": "250",
+   "ok": true,
+   "completion_tokens": 17,
+   "text": "</think>100 + 50 + 100 = 250\n\nAnswer: 250"
+  },
+  {
+   "i": 1060,
+   "ref": "31",
+   "pred": "31",
+   "ok": true,
+   "completion_tokens": 68,
+   "text": "Becky 10, Jake 7, Silvia 14 \u2192 31.</think>Becky ate 10, so Jake ate 10 \u2212 3 = 7, and Silvia ate 2 \u00d7 7 = 14. Total = 10 + 7 + 14 = 31.\n\nAnswer: 31"
+  },
+  {
+   "i": 1061,
+   "ref": "58",
+   "pred": "58",
+   "ok": true,
+   "completion_tokens": 58,
+   "text": "D + D+18=98 \u2192 D=40, B=58.</think>D + (D+18) = 98 \u2192 2D = 80 \u2192 D = 40, so Betsy = 40 + 18 = 58.\n\nAnswer: 58"
+  },
+  {
+   "i": 1062,
+   "ref": "482",
+   "pred": "482",
+   "ok": true,
+   "completion_tokens": 79,
+   "text": "200 + 150 + 120 + 12 = 482</think>Cast: $200; visit: $300 \u00d7 0.5 = $150; pills: $4 \u00d7 30 = $120; parking: $6 \u00d7 2 = $12.\n\nTotal: 200 + 150 + 120 + 12 = 482\n\nAnswer: 482"
+  },
+  {
+   "i": 1064,
+   "ref": "247",
+   "pred": "247",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "</think>Monday: 32, Tuesday: 64, Wednesday: 96, Thursday: 30, Friday: 25.\n\n32 + 64 + 96 + 30 + 25 = 247\n\nAnswer: 247"
+  },
+  {
+   "i": 1065,
+   "ref": "95",
+   "pred": "95",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>(100+100+100+80)/4 = 380/4 = 95\n\nAnswer: 95"
+  },
+  {
+   "i": 1066,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 90,
+   "text": "Glee: 20, ate 14, left 6. Football: 40, ate 32, left 8. Total 14.</think>Glee club: 20 pizzas, ate 70% \u2192 14 eaten, 6 left.\nFootball team: 40 pizzas, ate 80% \u2192 32 eaten, 8 left.\nTotal left: 6 + 8 = 14.\n\nAnswer: 14"
+  },
+  {
+   "i": 1069,
+   "ref": "300",
+   "pred": "300",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "</think>20 trucks \u00d7 20 tons = 400 tons total. A quarter failed: 5 trucks, delivering 5 \u00d7 20 = 100 tons... wait, those failed, so delivered = 15 \u00d7 20 = 300 tons.\n\nAnswer: 300"
+  },
+  {
+   "i": 1070,
+   "ref": "18",
+   "pred": "18",
+   "ok": true,
+   "completion_tokens": 37,
+   "text": "</think>He buys 6 pounds: 3 at full price ($4 each = $12) and 3 at half price ($2 each = $6).\n\nAnswer: 18"
+  },
+  {
+   "i": 1071,
+   "ref": "251",
+   "pred": "251",
+   "ok": true,
+   "completion_tokens": 95,
+   "text": "25+7+13=45, minus 4 =41. Extra =21, cost 125+126=251.</think>Invited: 25 + 7 + 13 = 45. Attending: 45 \u2212 4 = 41. Extra guests: 41 \u2212 20 = 21, costing 21 \u00d7 $6 = $126. Total: $125 + $126 = $251.\n\nAnswer: 251"
+  },
+  {
+   "i": 1082,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 63,
+   "text": "2+2+4=8 miles, 2 hours.</think>He walked 2 miles to the halfway point, 2 miles back, then 4 miles to the store: 8 miles total. At 4 mph, that takes 8/4 = 2 hours.\n\nAnswer: 2"
+  },
+  {
+   "i": 1083,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "</think>10 bunches \u00d7 4 bananas = 40 bananas, costing 40 \u00d7 0.80 = $32 individually. Bunches cost 10 \u00d7 3 = $30. Savings: 32 \u2212 30 = 2.\n\nAnswer: 2"
+  },
+  {
+   "i": 1087,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 46,
+   "text": "</think>The farmer makes 5 \u00d7 6 = 30 bales. The truck picks up 3 \u00d7 6 = 18 bales. Left: 30 \u2212 18 = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 1088,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 99,
+   "text": "8 classes \u00d740=320 min/day \u00d75=1600. 1/16=100 each weekend day \u21921800 min=30 hours.</think>John has 8 classes/day \u00d7 40 min = 320 min/day. Weekly: 320 \u00d7 5 = 1600 min. 1/16 of 1600 = 100 min each weekend day, so 1600 + 200 = 1800 min = 30 hours.\n\nAnswer: 30"
+  },
+  {
+   "i": 1089,
+   "ref": "32",
+   "pred": "32",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "72 \u00d7 2/3 \u00d7 2/3 = 32.</think>Starting height: 3 \u00d7 24 = 72 feet.\nFirst bounce: 72 \u00d7 2/3 = 48 feet.\nSecond bounce: 48 \u00d7 2/3 = 32 feet.\n\nAnswer: 32"
+  },
+  {
+   "i": 1093,
+   "ref": "144",
+   "pred": "144",
+   "ok": true,
+   "completion_tokens": 80,
+   "text": "Area = 2*80+2*40=240; 12 gallons; $144.</think>Area: 2(10\u00d78) + 2(5\u00d78) = 160 + 80 = 240 sq ft.\nGallons: 240 \u00f7 20 = 12.\nCost: 12 \u00d7 $12 = $144.\n\nAnswer: 144"
+  },
+  {
+   "i": 1096,
+   "ref": "240",
+   "pred": "240",
+   "ok": true,
+   "completion_tokens": 98,
+   "text": "Days: 31+19=50, off 10, work 40, 6/day \u2192 240.</think>Billy works 6 people per day (2/hour \u00d7 3 hours). Days from March 1 to April 19: 31 + 19 = 50 days. Days off: 20% of 50 = 10, so he works 40 days. People helped: 40 \u00d7 6 = 240.\n\nAnswer: 240"
+  },
+  {
+   "i": 1097,
+   "ref": "480",
+   "pred": "480",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>12 buses \u00d7 35 = 420, 20 cars \u00d7 3 = 60, total = 480.\n\nAnswer: 480"
+  },
+  {
+   "i": 1100,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "30+30=60 min/day \u2192 5 hours.</think>Bobby takes 30 + 15 + 15 = 60 minutes per day. Over 5 days: 60 \u00d7 5 = 300 minutes = 5 hours.\n\nAnswer: 5"
+  },
+  {
+   "i": 1101,
+   "ref": "16",
+   "pred": "16",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>Micah: 3.5 \u00d7 8 = 28. Ahito: 52 \u2212 8 \u2212 28 = 16.\n\nAnswer: 16"
+  },
+  {
+   "i": 1102,
+   "ref": "113",
+   "pred": "113",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "85-15=70; pan 16; towels 27; total 113.</think>85 \u2212 15 = 70. Frying pan: 20% off $20 = $16. Towels: 10% off $30 = $27. New balance: 70 + 16 + 27 = 113.\n\nAnswer: 113"
+  },
+  {
+   "i": 1104,
+   "ref": "24",
+   "pred": "24",
+   "ok": true,
+   "completion_tokens": 28,
+   "text": "</think>Ben = 2 \u00d7 4 = 8. Caroline = 3 \u00d7 8 = 24.\n\nAnswer: 24"
+  },
+  {
+   "i": 1105,
+   "ref": "40",
+   "pred": "40",
+   "ok": true,
+   "completion_tokens": 87,
+   "text": "Retirement needs 40% of 100k = 40k/year \u00d720 = 800k. Saves 20k/year \u2192 40 years.</think>She needs $40,000/year \u00d7 20 years = $800,000. Saving 20% of $100,000 = $20,000/year, so $800,000 \u00f7 $20,000 = 40 years.\n\nAnswer: 40"
+  },
+  {
+   "i": 1108,
+   "ref": "38",
+   "pred": "38",
+   "ok": true,
+   "completion_tokens": 23,
+   "text": "</think>19 + 26 = 45; 45 \u2212 7 = 38.\n\nAnswer: 38"
+  },
+  {
+   "i": 1110,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 79,
+   "text": "9300/30=310; 2\u00d7125=250; 60.</think>June has 30 days, so she needs 9,300 \u00f7 30 = 310 miles per day. Walking twice a day at 125 miles each gives 250 miles per day. She needs 310 \u2212 250 = 60 more miles per day.\n\nAnswer: 60"
+  },
+  {
+   "i": 1115,
+   "ref": "5",
+   "pred": "5",
+   "ok": true,
+   "completion_tokens": 48,
+   "text": "16-4-2=10, /2=5</think>Budget spent on books: 16 \u2212 4 \u2212 2 = 10. Each book: 10 \u00f7 2 = 5.\n\nAnswer: 5"
+  },
+  {
+   "i": 1116,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 16,
+   "text": "</think>50 \u00d7 1.20 = 60\n\nAnswer: 60"
+  },
+  {
+   "i": 1117,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 52,
+   "text": "255/5=51 per min; 459/51=9.</think>Rate: 255 \u00f7 5 = 51 blinks per minute.\nTime: 459 \u00f7 51 = 9 minutes.\n\nAnswer: 9"
+  },
+  {
+   "i": 1119,
+   "ref": "18",
+   "pred": "18",
+   "ok": true,
+   "completion_tokens": 70,
+   "text": "Megan 6, Dior 4+4=8, total 18.</think>Amalia: 4 hours. Megan: 4 + 2 = 6 hours. Dior: 4 + 4 = 8 hours. Total: 4 + 6 + 8 = 18.\n\nAnswer: 18"
+  },
+  {
+   "i": 1122,
+   "ref": "18",
+   "pred": "18",
+   "ok": true,
+   "completion_tokens": 111,
+   "text": "400-20=380 produced. Four workers: 2\u00b76\u00b710+2\u00b74\u00b710=120+80=200. Fifth: 180/10=18.</think>Total needed minus remaining: 400 \u2212 20 = 380 toys produced.\n\nFour workers: 2\u00d76\u00d710 + 2\u00d74\u00d710 = 120 + 80 = 200 toys.\n\nFifth worker: 380 \u2212 200 = 180 toys over 10 hours \u2192 18 toys/hour.\n\nAnswer: 18"
+  },
+  {
+   "i": 1126,
+   "ref": "50",
+   "pred": "50",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>Half of 40,000 = 20,000 km. 20,000 \u00f7 400 = 50 days.\n\nAnswer: 50"
+  },
+  {
+   "i": 1127,
+   "ref": "750",
+   "pred": "750",
+   "ok": true,
+   "completion_tokens": 55,
+   "text": "120*5=600, *1.25=750</think>Average car: 120 mph. 2nd fastest: 120 \u00d7 5 = 600 mph. Fastest: 600 \u00d7 1.25 = 750 mph.\n\nAnswer: 750"
+  },
+  {
+   "i": 1130,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 56,
+   "text": "200/8=25 boxes, weight 200+25*8=400 oz =25 lb.</think>200 crayons = 200 oz; 25 boxes \u00d7 8 oz = 200 oz; total 400 oz = 25 lb.\n\nAnswer: 25"
+  },
+  {
+   "i": 1132,
+   "ref": "45000",
+   "pred": "45000",
+   "ok": true,
+   "completion_tokens": 89,
+   "text": "Brother 10000, combined 15000, mother 30000, total 45000.</think>Valerie earns $5000; her brother earns 2 \u00d7 5000 = $10,000. Combined = $15,000. Mother earns 2 \u00d7 15,000 = $30,000. Total = 15,000 + 30,000 = $45,000.\n\nAnswer: 45000"
+  },
+  {
+   "i": 1135,
+   "ref": "32",
+   "pred": "32",
+   "ok": true,
+   "completion_tokens": 35,
+   "text": "</think>3\u00d77 = 21, 2\u00d74 = 8, plus 3 \u2192 21+8+3 = 32\n\nAnswer: 32"
+  },
+  {
+   "i": 1137,
+   "ref": "68",
+   "pred": "68",
+   "ok": true,
+   "completion_tokens": 75,
+   "text": "Mix: (33\u00b74 + x)/5 \u2265 40 \u2192 132 + x \u2265 200 \u2192 x \u2265 68.</think>Mixing 4 oz at 33\u00b0 with 1 oz at x\u00b0: (33\u00d74 + x)/5 \u2265 40 \u2192 132 + x \u2265 200 \u2192 x \u2265 68.\n\nAnswer: 68"
+  },
+  {
+   "i": 1140,
+   "ref": "27",
+   "pred": "27",
+   "ok": true,
+   "completion_tokens": 91,
+   "text": "23-5=18 scoops; 6-3=3 potatoes per 3-1=2 scoops \u2192 1.5 potatoes/scoop \u2192 27.</think>Scoops: 23 \u2212 5 = 18. Potatoes per scoop: (6 \u2212 3)/(3 \u2212 1) = 3/2. Potatoes: 18 \u00d7 1.5 = 27.\n\nAnswer: 27"
+  },
+  {
+   "i": 1142,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>Green: 17, red: 34, total 51. Blue = 60 \u2212 51 = 9.\n\nAnswer: 9"
+  },
+  {
+   "i": 1144,
+   "ref": "34",
+   "pred": "34",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "84/14=6, women=54, minus 20=34.</think>Women = 9/14 \u00d7 84 = 54. After 20 alight: 54 \u2212 20 = 34.\n\nAnswer: 34"
+  },
+  {
+   "i": 1149,
+   "ref": "93",
+   "pred": "93",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "3\u00d731=93</think>May has 31 days. Each day she spends $1 per fish \u00d7 3 fish = $3. Total: 3 \u00d7 31 = 93.\n\nAnswer: 93"
+  },
+  {
+   "i": 1150,
+   "ref": "21",
+   "pred": "21",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "30-24+15=21</think>30 \u2212 24 = 6, then 6 + 15 = 21.\n\nAnswer: 21"
+  },
+  {
+   "i": 1155,
+   "ref": "13",
+   "pred": "13",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "Second: 8, total 13.</think>Second song: 5 \u00d7 1.6 = 8 minutes. Total: 5 + 8 = 13 minutes.\n\nAnswer: 13"
+  },
+  {
+   "i": 1160,
+   "ref": "1125",
+   "pred": "1125",
+   "ok": true,
+   "completion_tokens": 23,
+   "text": "</think>5168 \u2212 1907 \u2212 2136 = 1125\n\nAnswer: 1125"
+  },
+  {
+   "i": 1161,
+   "ref": "170",
+   "pred": "140",
+   "ok": false,
+   "completion_tokens": 114,
+   "text": "80/2=40 sold, 1/4 of 80=20, remaining 20 \u00d73=60. Total 50+30+60=140.</think>Half of 80 = 40 sq m sold for $50. Then 1/4 of 80 = 20 sq m sold for $30. Remaining: 80 \u2212 40 \u2212 20 = 20 sq m, sold at $3/sq m = $60.\n\nTotal: 50 + 30 + 60 = 140\n\nAnswer: 140"
+  },
+  {
+   "i": 1164,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 50,
+   "text": "36 - (5+10+8+4)=9</think>36 total. Lamar 5, Stacy 10, Charlie 8, Mei 4 \u2192 27 found. 36 \u2212 27 = 9.\n\nAnswer: 9"
+  },
+  {
+   "i": 1165,
+   "ref": "1248",
+   "pred": "1248",
+   "ok": true,
+   "completion_tokens": 61,
+   "text": "</think>First two: 200\u00d72=400. Last: 400\u00d71.6=640. Total 1040 apartments. Collections: 1040\u00d73=3120. Pay: 3120\u00d70.40=1248.\n\nAnswer: 1248"
+  },
+  {
+   "i": 1167,
+   "ref": "120",
+   "pred": "120",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>Sophia gave Jack 1/5 of $100 = $20. Jack now has 100 + 20 = $120.\n\nAnswer: 120"
+  },
+  {
+   "i": 1169,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 78,
+   "text": "Rissa: 15, gave 3, left 12. Ronnie: 5-3=2.</think>Rissa has 3\u00d75 = 15. She's left with 4/5 \u00d7 15 = 12, so she gave away 3. Ronnie also gave 3, leaving 5 \u2212 3 = 2.\n\nAnswer: 2"
+  },
+  {
+   "i": 1170,
+   "ref": "2",
+   "pred": "2",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "</think>Half the mural is yellow: 6 pints. The remaining 6 pints split equally among red, white, purple: 6/3 = 2 pints each.\n\nAnswer: 2"
+  },
+  {
+   "i": 1171,
+   "ref": "3160",
+   "pred": "3160",
+   "ok": true,
+   "completion_tokens": 58,
+   "text": "</think>Bedroom: 20\u00d712 = 240 sq ft. 4 bedrooms = 960. Living room = 5\u00d7240 = 1200. Total: 960+1200+1000 = 3160.\n\nAnswer: 3160"
+  },
+  {
+   "i": 1172,
+   "ref": "93",
+   "pred": "93",
+   "ok": true,
+   "completion_tokens": 34,
+   "text": "3+6+12+24+48=93</think>3 + 6 + 12 + 24 + 48 = 93\n\nAnswer: 93"
+  },
+  {
+   "i": 1173,
+   "ref": "10",
+   "pred": "10",
+   "ok": true,
+   "completion_tokens": 59,
+   "text": "120 pods/$12 = 10 per dollar.</think>The special box has 100 \u00d7 1.2 = 120 pods for $12, so $1 buys 12/12 = 1 dollar's worth = 120/12 = 10 pods.\n\nAnswer: 10"
+  },
+  {
+   "i": 1182,
+   "ref": "1800",
+   "pred": "1800",
+   "ok": true,
+   "completion_tokens": 71,
+   "text": "27000/500=54\u00d7100=5400; /3=1800.</think>$27,000 \u00f7 $500 = 54 sets of 100 books \u2192 5,400 books total. Divided by 3 schools: 5,400 \u00f7 3 = 1,800.\n\nAnswer: 1800"
+  },
+  {
+   "i": 1183,
+   "ref": "11",
+   "pred": "11",
+   "ok": true,
+   "completion_tokens": 74,
+   "text": "2 apples: pocket 1, throw 1 \u2192 5 fall. Pick 5, pocket 4, throw 1 \u2192 6 fall. Pocket 6. Total 1+4+6=11.</think>Newton pockets 1, then 4, then 6: 1+4+6 = 11.\n\nAnswer: 11"
+  },
+  {
+   "i": 1184,
+   "ref": "306",
+   "pred": "306",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>850 \u00f7 50 = 17 bags, 17 \u00d7 $18 = $306.\n\nAnswer: 306"
+  },
+  {
+   "i": 1186,
+   "ref": "19",
+   "pred": "19",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>3\u00d73 + 5\u00d72 = 9 + 10 = 19\n\nAnswer: 19"
+  },
+  {
+   "i": 1189,
+   "ref": "6",
+   "pred": "6",
+   "ok": true,
+   "completion_tokens": 44,
+   "text": "1+2+3=6</think>Doxa ate 1, her sister ate 2, her brother ate 3: 1 + 2 + 3 = 6.\n\nAnswer: 6"
+  },
+  {
+   "i": 1193,
+   "ref": "9",
+   "pred": "9",
+   "ok": true,
+   "completion_tokens": 119,
+   "text": "6\u00d70.5=3, laundry 3, trash 1.5, room 1.5 \u2192 9.</think>Dishwasher: 6 \u00d7 $0.50 = $3.00\nLaundry: 1 \u00d7 $3.00 = $3.00\nTrash: 2 \u00d7 $0.75 = $1.50\nRoom: 1 \u00d7 $1.50 = $1.50\n\nTotal: $3 + $3 + $1.50 + $1.50 = $9.00\n\nAnswer: 9"
+  },
+  {
+   "i": 1195,
+   "ref": "320",
+   "pred": "320",
+   "ok": true,
+   "completion_tokens": 45,
+   "text": "50+40+80+150=320</think>50 + 40 + 2\u00d740 + 3\u00d750 = 50 + 40 + 80 + 150 = 320\n\nAnswer: 320"
+  },
+  {
+   "i": 1196,
+   "ref": "75",
+   "pred": "75",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "</think>Red: 5 packs \u00d7 5 = 25 pens. Black: 2 \u00d7 25 = 50 pens. Total: 25 + 50 = 75.\n\nAnswer: 75"
+  },
+  {
+   "i": 1197,
+   "ref": "2400",
+   "pred": "2400",
+   "ok": true,
+   "completion_tokens": 75,
+   "text": "Scotch $60/bottle; cognac 20 bottles at $90 = 1800; total 2400.</think>Scotch: $600. Per bottle: $60. Cognac: 20 bottles at $90 = $1,800. Total: $600 + $1,800 = $2,400.\n\nAnswer: 2400"
+  },
+  {
+   "i": 1204,
+   "ref": "168",
+   "pred": "168",
+   "ok": true,
+   "completion_tokens": 53,
+   "text": "</think>Alphas: 40% of 700 = 280. Remaining: 420. The finders: 60% of 420 = 252. Gogetters: 420 \u2212 252 = 168.\n\nAnswer: 168"
+  },
+  {
+   "i": 1208,
+   "ref": "27",
+   "pred": "27",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>Selling price = 11/8 \u00d7 72 = 99. Profit = 99 \u2212 72 = 27.\n\nAnswer: 27"
+  },
+  {
+   "i": 1210,
+   "ref": "288",
+   "pred": "288",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>10 \u00d7 30 = 300 balloons; 300 \u2212 12 = 288 thrown.\n\nAnswer: 288"
+  },
+  {
+   "i": 1211,
+   "ref": "448",
+   "pred": "448",
+   "ok": true,
+   "completion_tokens": 47,
+   "text": "14+42=56, \u00d78=448</think>One dose: 14 + 3\u00d714 = 56 mL. Eight doses: 56 \u00d7 8 = 448 mL.\n\nAnswer: 448"
+  },
+  {
+   "i": 1216,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 66,
+   "text": "20+40=60, +30=90, \u00d72=180, remaining 20.</think>Start: 20. First stop: +40 \u2192 60. Second: +30 \u2192 90. Third: doubled \u2192 180. Remaining: 200 \u2212 180 = 20.\n\nAnswer: 20"
+  },
+  {
+   "i": 1218,
+   "ref": "225",
+   "pred": "225",
+   "ok": true,
+   "completion_tokens": 60,
+   "text": "10 students per grade \u00d74 grades =40 students; groups of 8 \u21925 groups \u00d745=225.</think>40 students total (10 per grade \u00d7 4 grades). Groups of 8 \u2192 5 groups. 5 \u00d7 45 = 225 minutes.\n\nAnswer: 225"
+  },
+  {
+   "i": 1219,
+   "ref": "100",
+   "pred": "100",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>4\u00d720 + 2\u00d710 = 80 + 20 = 100\n\nAnswer: 100"
+  },
+  {
+   "i": 1220,
+   "ref": "32",
+   "pred": "32",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>x + 4x = 40 \u2192 x = 8, longer = 32.\n\nAnswer: 32"
+  },
+  {
+   "i": 1226,
+   "ref": "90",
+   "pred": "90",
+   "ok": true,
+   "completion_tokens": 96,
+   "text": "35+40=75, 20% off \u2192 60. Nail art: 10 fingers \u00d73=30. Total 90.</think>Manicure + pedicure = $35 + $40 = $75. With 20% off: $75 \u00d7 0.80 = $60. Nail art on 10 fingers: 10 \u00d7 $3 = $30. Total: $60 + $30 = $90.\n\nAnswer: 90"
+  },
+  {
+   "i": 1228,
+   "ref": "31",
+   "pred": "31",
+   "ok": true,
+   "completion_tokens": 42,
+   "text": "Shelley = 39, Kim = 31.</think>Shelley = 27 + 12 = 39. Kim = 39 \u2212 8 = 31.\n\nAnswer: 31"
+  },
+  {
+   "i": 1229,
+   "ref": "36",
+   "pred": "36",
+   "ok": true,
+   "completion_tokens": 27,
+   "text": "</think>40 \u00d7 1.8 = 72; 72 \u00d7 0.5 = 36\n\nAnswer: 36"
+  },
+  {
+   "i": 1234,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>9 = (3/4) \u00d7 this year \u2192 this year = 9 \u00d7 4/3 = 12\n\nAnswer: 12"
+  },
+  {
+   "i": 1236,
+   "ref": "84",
+   "pred": "84",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "6+30+48=84</think>Madeline: 6. Brother: 5\u00d76=30. Pies: 4\u00d712=48. Total: 6+30+48=84.\n\nAnswer: 84"
+  },
+  {
+   "i": 1237,
+   "ref": "78",
+   "pred": "78",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>82 \u2212 13 = 69 regular teachers, plus 9 substitutes = 78.\n\nAnswer: 78"
+  },
+  {
+   "i": 1238,
+   "ref": "520",
+   "pred": "520",
+   "ok": true,
+   "completion_tokens": 47,
+   "text": "1+3+6=10/week \u00d752=520.</think>Weekly cost: $1 + $3 + $6 = $10. Yearly: $10 \u00d7 52 = $520.\n\nAnswer: 520"
+  },
+  {
+   "i": 1242,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>Red: 50, remaining 50, blue: 30, white: 20.\n\nAnswer: 20"
+  },
+  {
+   "i": 1245,
+   "ref": "96",
+   "pred": "96",
+   "ok": true,
+   "completion_tokens": 64,
+   "text": "s + 5s-4=116 \u2192 s=20, blueberry=96</think>s + (5s \u2212 4) = 116 \u2192 6s = 120 \u2192 s = 20, blueberry = 5(20) \u2212 4 = 96.\n\nAnswer: 96"
+  },
+  {
+   "i": 1250,
+   "ref": "22",
+   "pred": "22",
+   "ok": true,
+   "completion_tokens": 15,
+   "text": "</think>110 \u00f7 5 = 22\n\nAnswer: 22"
+  },
+  {
+   "i": 1255,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 78,
+   "text": "4\u00d70.5=2, 8\u00d71=8, 8\u00d70.25=2 \u2192 12.</think>4 \u00d7 \u00bd = 2 cups; 8 \u00d7 1 = 8 cups; remaining 8 plants \u00d7 \u00bc = 2 cups. Total: 2 + 8 + 2 = 12.\n\nAnswer: 12"
+  },
+  {
+   "i": 1257,
+   "ref": "14",
+   "pred": "14",
+   "ok": true,
+   "completion_tokens": 24,
+   "text": "</think>56 \u00f7 8 = 7 boxes, at $2 each = $14.\n\nAnswer: 14"
+  },
+  {
+   "i": 1258,
+   "ref": "60",
+   "pred": "70",
+   "ok": false,
+   "completion_tokens": 31,
+   "text": "</think>Additional phones cost $20/2 = $10 each. Total: 20 + 5\u00d710 = 70.\n\nAnswer: 70"
+  },
+  {
+   "i": 1262,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "</think>Speed: 150 \u00d7 2.5 = 375 WPM. Total words: 10 \u00d7 450 = 4500. Time: 4500 / 375 = 12 minutes.\n\nAnswer: 12"
+  },
+  {
+   "i": 1263,
+   "ref": "500",
+   "pred": "500",
+   "ok": true,
+   "completion_tokens": 87,
+   "text": "Day1 50, day2 70, day3 140, rest 4 days \u00d760=240. Total 500.</think>Day 1: 50; Day 2: 70; Day 3: 140; Days 4\u20137: 4 \u00d7 60 = 240.\n\nTotal: 50 + 70 + 140 + 240 = 500\n\nAnswer: 500"
+  },
+  {
+   "i": 1265,
+   "ref": "36",
+   "pred": "36",
+   "ok": true,
+   "completion_tokens": 65,
+   "text": "4 gallons \u00d76 =24, extra gallon twice tart =2 cups=12 lemons. Total 36.</think>4 gallons need 4 cups = 24 lemons. The extra tart gallon needs 2 cups = 12 lemons. Total 24 + 12 = 36.\n\nAnswer: 36"
+  },
+  {
+   "i": 1272,
+   "ref": "296",
+   "pred": "296",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "</think>Hotel: 3 \u00d7 $80 = $240. Bus: $8 per trip \u00d7 7 = $56. Total: $240 + $56 = $296.\n\nAnswer: 296"
+  },
+  {
+   "i": 1274,
+   "ref": "38",
+   "pred": "38",
+   "ok": true,
+   "completion_tokens": 45,
+   "text": "</think>2 adult tickets: 2\u00d712 = 24; child: 8; popcorn: 2\u00d73 = 6. Total = 24+8+6 = 38.\n\nAnswer: 38"
+  },
+  {
+   "i": 1278,
+   "ref": "665",
+   "pred": "665",
+   "ok": true,
+   "completion_tokens": 31,
+   "text": "</think>214 + 432 + 86 = 732; 732 \u2212 67 = 665.\n\nAnswer: 665"
+  },
+  {
+   "i": 1281,
+   "ref": "20",
+   "pred": "20",
+   "ok": true,
+   "completion_tokens": 75,
+   "text": "5*4*2=40/day, 7 days=280, left 20.</think>Each pig eats 4 \u00d7 2 = 8 pounds per day. Five pigs eat 40 pounds per day, so a week uses 40 \u00d7 7 = 280 pounds. Leftover: 300 \u2212 280 = 20.\n\nAnswer: 20"
+  },
+  {
+   "i": 1282,
+   "ref": "12",
+   "pred": "12",
+   "ok": true,
+   "completion_tokens": 68,
+   "text": "20 guests \u00d72=40, minus 4=36, 6 packs \u00d7$2=$12.</think>20 guests \u00d7 2 = 40 hot dogs needed. He has 4, so needs 36 more. 36 \u00f7 6 = 6 packs \u00d7 $2 = $12.\n\nAnswer: 12"
+  },
+  {
+   "i": 1283,
+   "ref": "60",
+   "pred": "60",
+   "ok": true,
+   "completion_tokens": 59,
+   "text": "</think>Cupcakes: 20 \u00d7 $2 = $40. Cookies: 40 \u00d7 $1 = $40. Total earned: $80. Trays: 5 \u00d7 $4 = $20. Left: $80 \u2212 $20 = $60.\n\nAnswer: 60"
+  },
+  {
+   "i": 1284,
+   "ref": "25",
+   "pred": "25",
+   "ok": true,
+   "completion_tokens": 95,
+   "text": "5 \u2192 second street: 10 \u2192 third: each joined by 2 \u2192 30 \u2192 minus 5 = 25.</think>- End of first street: 5 children.\n- Second street: each joined by 1 \u2192 5 + 5 = 10.\n- Third street: each joined by 2 \u2192 10 + 20 = 30.\n- Original 5 leave: 30 \u2212 5 = 25.\n\nAnswer: 25"
+  },
+  {
+   "i": 1285,
+   "ref": "1218",
+   "pred": "1218",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>1360 \u2212 64 \u2212 30 \u2212 48 = 1360 \u2212 142 = 1218\n\nAnswer: 1218"
+  },
+  {
+   "i": 1286,
+   "ref": "105",
+   "pred": "105",
+   "ok": true,
+   "completion_tokens": 49,
+   "text": "25+10+70=105</think>Quarter = 25\u00a2, two nickels = 10\u00a2, seven dimes = 70\u00a2. Total: 25 + 10 + 70 = 105.\n\nAnswer: 105"
+  },
+  {
+   "i": 1288,
+   "ref": "34",
+   "pred": "34",
+   "ok": true,
+   "completion_tokens": 85,
+   "text": "Meditation: 30 min/day \u00d728 = 840 min =14h. Yoga: 5\u00d74=20h. Total 34.</think>Meditation: 30 min/day \u00d7 28 days = 840 min = 14 hours. Yoga: 1 hr \u00d7 5 days \u00d7 4 weeks = 20 hours. Total = 34 hours.\n\nAnswer: 34"
+  },
+  {
+   "i": 1289,
+   "ref": "101",
+   "pred": "101",
+   "ok": true,
+   "completion_tokens": 32,
+   "text": "</think>11\u00d73 + 8\u00d74 + 6\u00d76 = 33 + 32 + 36 = 101\n\nAnswer: 101"
+  },
+  {
+   "i": 1292,
+   "ref": "67",
+   "pred": "67",
+   "ok": true,
+   "completion_tokens": 53,
+   "text": "Anne=72, Jackie=70, before=67.</think>Anne = 2 \u00d7 36 = 72\". Jackie now = 72 \u2212 2 = 70\". Before summer: 70 \u2212 3 = 67\".\n\nAnswer: 67"
+  },
+  {
+   "i": 1293,
+   "ref": "140000",
+   "pred": "140000",
+   "ok": true,
+   "completion_tokens": 51,
+   "text": "5000\u00d72\u00d714=140000</think>Daily revenue: 5000 \u00d7 $2 = $10,000. Two weeks = 14 days: 10,000 \u00d7 14 = $140,000.\n\nAnswer: 140000"
+  },
+  {
+   "i": 1298,
+   "ref": "31",
+   "pred": "31",
+   "ok": true,
+   "completion_tokens": 133,
+   "text": "32*0.25=8, 95*0.10=9.5, 120*0.05=6, 750*0.01=7.5 \u2192 31.</think>Quarters: 32 \u00d7 $0.25 = $8.00\nDimes: 95 \u00d7 $0.10 = $9.50\nNickels: 120 \u00d7 $0.05 = $6.00\nPennies: 750 \u00d7 $0.01 = $7.50\n\nTotal: 8 + 9.5 + 6 + 7.5 = 31\n\nAnswer: 31"
+  },
+  {
+   "i": 1299,
+   "ref": "13",
+   "pred": "13",
+   "ok": true,
+   "completion_tokens": 30,
+   "text": "</think>3.50 + 15 + 8.50 = 27. 40 \u2212 27 = 13.\n\nAnswer: 13"
+  },
+  {
+   "i": 1301,
+   "ref": "23",
+   "pred": "23",
+   "ok": true,
+   "completion_tokens": 85,
+   "text": "9+4+5=18; -3=15; -2=13; -2=11; +12=23.</think>Start: 9+4+5 = 18. After eating 3: 15. After 2 oatmeal: 13. After giving 2 sugar: 11. Bakes 12: 11+12 = 23.\n\nAnswer: 23"
+  },
+  {
+   "i": 1302,
+   "ref": "72",
+   "pred": "72",
+   "ok": true,
+   "completion_tokens": 43,
+   "text": "</think>Half of 12 is 6 toys at $5 = $30, and 6 toys at $7 = $42. Total: 30 + 42 = 72.\n\nAnswer: 72"
+  },
+  {
+   "i": 1303,
+   "ref": "4",
+   "pred": "4",
+   "ok": true,
+   "completion_tokens": 60,
+   "text": "84 holes; net 3/day \u2192 28 days = 4 weeks.</think>Dog digs 6\u00d714 = 84 holes. Net fill rate: 9\u22126 = 3 per day \u2192 84/3 = 28 days = 4 weeks.\n\nAnswer: 4"
+  },
+  {
+   "i": 1305,
+   "ref": "2325",
+   "pred": "2325",
+   "ok": true,
+   "completion_tokens": 25,
+   "text": "</think>7995 \u2212 2595 \u2212 3075 = 2325\n\nAnswer: 2325"
+  },
+  {
+   "i": 1307,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 37,
+   "text": "</think>4 tables \u00d7 4 legs = 16 legs; 16 \u00d7 2 = 32 screws needed. 40 \u2212 32 = 8.\n\nAnswer: 8"
+  },
+  {
+   "i": 1308,
+   "ref": "30",
+   "pred": "30",
+   "ok": true,
+   "completion_tokens": 29,
+   "text": "</think>Second basket: 2 \u00d7 10 = 20. Total: 10 + 20 = 30.\n\nAnswer: 30"
+  },
+  {
+   "i": 1309,
+   "ref": "2280",
+   "pred": "2180",
+   "ok": false,
+   "completion_tokens": 52,
+   "text": "</think>Alexandra: 430, Kim: 430+320=750, Sarah: 300, Maryam: 300+400=700.\nTotal: 430+750+300+700 = 2180\n\nAnswer: 2180"
+  },
+  {
+   "i": 1311,
+   "ref": "594",
+   "pred": "594",
+   "ok": true,
+   "completion_tokens": 33,
+   "text": "</think>3 \u00d7 200 = 600 feet needed; he has 6, so 600 \u2212 6 = 594.\n\nAnswer: 594"
+  },
+  {
+   "i": 1312,
+   "ref": "180",
+   "pred": "180",
+   "ok": true,
+   "completion_tokens": 70,
+   "text": "6 reservations \u00d7 (2\u00d75+5=15) = 90/night \u00d72 = 180.</think>Each reservation: 2 meals \u00d7 $5 + $5 wine = $15. Per night: 6 \u00d7 $15 = $90. Per week: 2 \u00d7 $90 = $180.\n\nAnswer: 180"
+  },
+  {
+   "i": 1314,
+   "ref": "8",
+   "pred": "8",
+   "ok": true,
+   "completion_tokens": 96,
+   "text": "Dora is 9, James 18, John 19+18=37 now, youngest born when John 32 \u2192 5, in 3 years \u2192 8.</think>Dora is 9 now, so James is 18. John is 19 + 18 = 37 now. The youngest son was born when John was 32, so he's 5 now, and will be 8 in 3 years.\n\nAnswer: 8"
+  }
+ ]
+}

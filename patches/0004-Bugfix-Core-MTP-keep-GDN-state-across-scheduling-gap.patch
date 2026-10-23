@@ -1,0 +1,416 @@
+From 39405d7dc6640fdde3b35f2cd81230973c6950ac Mon Sep 17 00:00:00 2001
+From: Lihao Ran <30372757+Lumosis@users.noreply.github.com>
+Date: Mon, 12 Oct 2026 15:38:30 -0700
+Subject: [PATCH 4/5] [Bugfix][Core] MTP: keep GDN state across scheduling gaps
+ (#1811)
+
+* fix(mtp): preserve GDN checkpoints across scheduling gaps
+
+Keep the last written unified checkpoint column and compact state slot
+while a request still owns its KV state, including batches where it is
+not scheduled. Release stale slot ownership on finish, preemption, and
+resume before recomputation. This prevents wrong checkpoint reads and
+cross-request recurrent-state reuse after a scheduling gap.
+
+Reject resumable input sessions at the standard input frontend when a
+compact Mamba pool cannot retain their state within its running-request
+capacity. Ordinary requests and streaming output remain supported.
+
+Validation: 125 focused CPU tests; 544 unified cases and 16 compact
+configurations; 17 async contract tests on each of 8 TPU ranks; 40 GDN
+kernel comparisons with exact output equality; 8192 alternating-request
+raw-pool steps without invalid reads or nonfinite outputs.
+
+Ruff and applicable non-type pre-commit checks pass. Pyrefly retains the
+same 12 minimal-environment / 17 full-runtime baseline errors, with no
+new diagnostics. An unrelated idle-DP test fixture failure reproduces
+on the base source. Full model-service acceptance-rate load testing was
+not performed.
+
+Signed-off-by: yanzecheng.yzc <yanzecheng.yzc@alibaba-inc.com>
+(cherry picked from commit f38957a984fb2bc8e47e13752a7f62d05c22d03b)
+Signed-off-by: Lihao Ran <imlihao.ran@gmail.com>
+
+* test(runner): give the read-offset migration fixture live requests
+
+The seed-copy collector now keeps a request's last written checkpoint
+column while the request is in `self.requests`, not only while it is in
+the persistent batch. TestUnifiedReadOffsetMigration builds its runner
+from MagicMock(spec=TPUModelRunner), which has no `requests` attribute,
+so all four of its tests raised AttributeError after the previous
+commit. Populate `requests` with the batch's request IDs, as the other
+fixtures touched by that commit do.
+
+Signed-off-by: Lihao Ran <imlihao.ran@gmail.com>
+
+---------
+
+Signed-off-by: yanzecheng.yzc <yanzecheng.yzc@alibaba-inc.com>
+Signed-off-by: Lihao Ran <imlihao.ran@gmail.com>
+Co-authored-by: yanzecheng.yzc <yanzecheng.yzc@alibaba-inc.com>
+(cherry picked from commit 84e3425af90fe8450e5a8acc998e6bed0fca0300)
+---
+ src/vllm_torchtpu/__init__.py                | 38 ++++++++++++++++
+ src/vllm_torchtpu/patch_registry.py          |  1 +
+ src/vllm_torchtpu/runner/tpu_runner.py       | 25 ++++++----
+ tests/platforms/test_tpu_platform.py         | 48 ++++++++++++++++++++
+ tests/runner/test_mamba_state_seed_copies.py | 37 ++++++++++++++-
+ tests/runner/test_mtp_async_contracts.py     |  4 +-
+ tests/runner/test_tpu_runner.py              | 18 ++++++++
+ tests/runner/test_tpu_runner_preemption.py   |  8 ++++
+ 8 files changed, 167 insertions(+), 12 deletions(-)
+
+diff --git a/src/vllm_torchtpu/__init__.py b/src/vllm_torchtpu/__init__.py
+index 175d8feff..647026782 100644
+--- a/src/vllm_torchtpu/__init__.py
++++ b/src/vllm_torchtpu/__init__.py
+@@ -8,6 +8,44 @@ from vllm_torchtpu.logger import init_logger
+ logger = init_logger(__name__)
+ 
+ 
++def _patch_vllm_compact_mamba_streaming_input() -> None:
++    """Reject input sessions whose retained state can exceed the compact pool."""
++    import inspect
++    from functools import wraps
++
++    from vllm.v1.engine.input_processor import InputProcessor
++
++    from vllm_torchtpu.platforms.tpu_block_size_utils import unified_kv_layout_enabled
++
++    original = InputProcessor.process_inputs
++    marker = "_tpu_compact_mamba_input_patch"
++    if original.__dict__.get(marker, False):
++        return
++    signature = inspect.signature(original)
++
++    @wraps(original)
++    def process_inputs(self, *args, **kwargs):
++        config = self.vllm_config
++        transfer = config.kv_transfer_config
++        uses_slots = transfer is None or transfer.kv_connector == "DecodeBenchConnector"
++        if (
++            uses_slots
++            and config.model_config.is_hybrid
++            and not unified_kv_layout_enabled(config)
++            and signature.bind(self, *args, **kwargs).arguments.get("resumable", False)
++        ):
++            raise ValueError(
++                "resumable input is unsupported with the compact Mamba state pool: "
++                "waiting sessions retain state beyond the running-request limit. "
++                "Use the unified KV pool on a supported architecture, or submit "
++                "complete inputs. Streaming output remains supported."
++            )
++        return original(self, *args, **kwargs)
++
++    process_inputs.__dict__[marker] = True
++    InputProcessor.process_inputs = process_inputs
++
++
+ def _patch_vllm_hybrid_kv_load_failure_recovery() -> None:
+     """Backport hybrid KV cache load failure recovery from vLLM #50388.
+ 
+diff --git a/src/vllm_torchtpu/patch_registry.py b/src/vllm_torchtpu/patch_registry.py
+index c3ef5b737..27f6b2a7d 100644
+--- a/src/vllm_torchtpu/patch_registry.py
++++ b/src/vllm_torchtpu/patch_registry.py
+@@ -70,6 +70,7 @@ PATCHES = (
+     Patch("vllm_torchtpu:_patch_expert_map_host_lookup", _ACTIVE),
+     Patch("vllm_torchtpu:_patch_moe_explicit_pcp_collectives", _ACTIVE),
+     # KV cache, scheduling, and offloading.
++    Patch("vllm_torchtpu:_patch_vllm_compact_mamba_streaming_input", _ACTIVE),
+     Patch(
+         "vllm_torchtpu:_patch_vllm_hybrid_pcp_block_sizes",
+         _ENGINE,
+diff --git a/src/vllm_torchtpu/runner/tpu_runner.py b/src/vllm_torchtpu/runner/tpu_runner.py
+index b343b4f98..c9d45bfab 100644
+--- a/src/vllm_torchtpu/runner/tpu_runner.py
++++ b/src/vllm_torchtpu/runner/tpu_runner.py
+@@ -656,8 +656,8 @@ class TPUModelRunner(GPUModelRunner):
+         # attention share the uniform `num_blocks` as before.
+         self._mamba_num_blocks: int | None = None
+         # req_id -> physical mamba slot id, plus the free-slot pool. Slots are
+-        # allocated when a request first appears and returned when it leaves
+-        # the persistent batch. Keying on req_id (rather than persistent-batch
++        # allocated when a request first appears and retained until its KV
++        # ownership ends. Keying on req_id (rather than persistent-batch
+         # position) makes the mapping immune to condense/swap reordering in
+         # upstream vLLM's InputBatch, which we do not subclass.
+         self._mamba_slot_by_req_id: dict[str, int] = {}
+@@ -1614,8 +1614,8 @@ class TPUModelRunner(GPUModelRunner):
+     ) -> torch.Tensor:
+         """Build the device `mamba_state_indices` for the current chunk.
+ 
+-        Reconciles the req_id->slot map against the live persistent batch:
+-          * frees slots whose req_id is no longer present (request finished),
++        Reconciles the req_id->slot map against the live requests:
++          * frees slots whose request has finished,
+           * allocates a fresh unique slot for any new req_id.
+         Returns an int32 device tensor of length `target_num_reqs`: positions
+         `[0, num_reqs)` hold the slot for `req_ids[start_index + i]`; the
+@@ -1635,8 +1635,9 @@ class TPUModelRunner(GPUModelRunner):
+         condense/swap reordering automatically because the map is keyed on the
+         stable req_id, not the moving persistent-batch position.
+         """
+-        live_req_ids = set(self.input_batch.req_id_to_index.keys())
+-        # Free slots for requests that left the batch.
++        # A scheduling gap does not release the request's recurrent state.
++        # Preemption/resume invalidation is handled by _update_states.
++        live_req_ids = self.requests.keys()
+         for req_id in list(self._mamba_slot_by_req_id.keys()):
+             if req_id not in live_req_ids:
+                 self._free_mamba_slots.append(self._mamba_slot_by_req_id.pop(req_id))
+@@ -1651,9 +1652,8 @@ class TPUModelRunner(GPUModelRunner):
+             assert req_id is not None
+             slot = self._mamba_slot_by_req_id.get(req_id)
+             if slot is None:
+-                # New request: take a fresh unique slot. The pool is sized to
+-                # max_num_reqs + 1, so it can never be exhausted while the
+-                # batch holds at most max_num_reqs requests.
++                # The scheduler bounds running requests by max_num_reqs;
++                # preempted owners release their slots in _update_states.
+                 slot = self._free_mamba_slots.pop()
+                 self._mamba_slot_by_req_id[req_id] = slot
+             indices[i] = slot
+@@ -1749,7 +1749,9 @@ class TPUModelRunner(GPUModelRunner):
+         """
+         if not self._mamba_copy_plan:
+             return
+-        live_req_ids = set(self.input_batch.req_id_to_index.keys())
++        # The last written column can be ahead of the committed token count
++        # after draft rejection. Retain it while the request still owns KV.
++        live_req_ids = self.requests.keys()
+         for req_id in list(self._mamba_state_pos.keys()):
+             if req_id not in live_req_ids:
+                 del self._mamba_state_pos[req_id]
+@@ -2416,6 +2418,9 @@ class TPUModelRunner(GPUModelRunner):
+         )
+         for req_id in invalidated_req_ids:
+             self._mamba_state_pos.pop(req_id, None)
++            slot = self._mamba_slot_by_req_id.pop(req_id, None)
++            if slot is not None:
++                self._free_mamba_slots.append(slot)
+         self._mamba_offset_seeded.difference_update(invalidated_req_ids)
+         if self._pre_async_results is not None and invalidated_req_ids:
+             # These results belong to freed KV state, including a finished ID
+diff --git a/tests/platforms/test_tpu_platform.py b/tests/platforms/test_tpu_platform.py
+index 874030b6f..0ca2a8ef8 100644
+--- a/tests/platforms/test_tpu_platform.py
++++ b/tests/platforms/test_tpu_platform.py
+@@ -33,6 +33,7 @@ from vllm.config.compilation import DynamicShapesType
+ from vllm.model_executor.layers.attention import Attention
+ from vllm.v1.core.sched.scheduler import Scheduler
+ from vllm.v1.engine.core import EngineCoreProc
++from vllm.v1.engine.input_processor import InputProcessor
+ 
+ import vllm_torchtpu as plugin
+ import vllm_torchtpu.platforms.tpu_platform as tpu_platform
+@@ -48,6 +49,53 @@ from vllm_torchtpu.platforms.tpu_platform import (
+ )
+ 
+ 
++@pytest.mark.parametrize(
++    "hybrid,unified,resumable,blocked",
++    [
++        (True, False, True, True),
++        (True, False, False, False),
++        (True, True, True, False),
++        (False, False, True, False),
++    ],
++)
++@pytest.mark.parametrize("positional", [False, True])
++@pytest.mark.parametrize("connector", [None, "DecodeBenchConnector", "RaidenConnector"])
++def test_compact_mamba_rejects_resumable_input_before_admission(
++    monkeypatch, hybrid, unified, resumable, blocked, positional, connector
++):
++    calls = []
++
++    def process_inputs(self, request_id, resumable=False):
++        calls.append(request_id)
++        return request_id
++
++    monkeypatch.setattr(InputProcessor, "process_inputs", process_inputs)
++    monkeypatch.setattr(
++        "vllm_torchtpu.platforms.tpu_block_size_utils.unified_kv_layout_enabled",
++        lambda config: unified,
++    )
++    plugin._patch_vllm_compact_mamba_streaming_input()
++    wrapped = InputProcessor.process_inputs
++    plugin._patch_vllm_compact_mamba_streaming_input()
++    assert InputProcessor.process_inputs is wrapped
++    processor = object.__new__(InputProcessor)
++    processor.vllm_config = SimpleNamespace(
++        model_config=SimpleNamespace(is_hybrid=hybrid),
++        kv_transfer_config=(
++            SimpleNamespace(kv_connector=connector) if connector is not None else None
++        ),
++    )
++    args = ("request", resumable) if positional else ("request",)
++    kwargs = {} if positional else {"resumable": resumable}
++    if blocked and connector != "RaidenConnector":
++        with pytest.raises(ValueError, match="resumable.*compact Mamba"):
++            processor.process_inputs(*args, **kwargs)
++        assert calls == []
++    else:
++        assert processor.process_inputs(*args, **kwargs) == "request"
++        assert calls == ["request"]
++
++
+ def test_grouped_topk_dynamic_compile_wrapper_is_unwrapped(monkeypatch):
+     target = "vllm.model_executor.layers.fused_moe.router.grouped_topk_router"
+ 
+diff --git a/tests/runner/test_mamba_state_seed_copies.py b/tests/runner/test_mamba_state_seed_copies.py
+index 9880d239e..3f90dc304 100644
+--- a/tests/runner/test_mamba_state_seed_copies.py
++++ b/tests/runner/test_mamba_state_seed_copies.py
+@@ -78,6 +78,7 @@ def _make_self(
+     ]
+     plan = [(gid + 1, [raws[gid]]) for gid in range(len(group_block_rows))]
+     ns = SimpleNamespace(
++        requests={rid: object() for rid in req_ids},
+         _mamba_copy_plan=plan,
+         _mamba_state_pos=dict(state_pos or {}),
+         _mamba_offset_seeded=set(req_ids),
+@@ -289,7 +290,7 @@ def test_decode_boundary_crossing_copies():
+ 
+ 
+ def test_stale_request_positions_are_forgotten():
+-    # A req_id no longer in the batch is dropped from _mamba_state_pos.
++    # Finished requests no longer own KV state.
+     fake, _ = _make_self(
+         ["live"], [2 * BLOCK_SIZE], [[[5, 6, 7, 8]]], state_pos={"live": 1, "gone": 3}
+     )
+@@ -298,6 +299,40 @@ def test_stale_request_positions_are_forgotten():
+     assert "live" in fake._mamba_state_pos
+ 
+ 
++@pytest.mark.parametrize("scheduled", [1, 4])
++@pytest.mark.parametrize("offset", [0, 1])
++def test_unscheduled_request_resumes_last_written_checkpoint(scheduled, offset):
++    """Rejection can leave the committed position before the written state column."""
++    offsets = torch.zeros(NUM_BLOCKS, dtype=torch.int32)
++    offsets[6] = offset
++    fake, raws = _make_self(
++        ["a"],
++        [BLOCK_SIZE - 1],
++        [[[5, 6, 7, 8, 9]]],
++        state_pos={"a": 1},
++        ckpt_window=4,
++        read_offsets=offsets,
++    )
++    # Each offset corresponds to a legal four-token window ending in column 1
++    # and accepting offset + 1 inputs, leaving computed == BLOCK_SIZE - 1.
++    raw = raws[0]
++    raw[5].fill_(float("nan"))
++    raw[6:10] = torch.arange(4).unsqueeze(1).expand(4, STATE_DIM) + 100
++    batch_a = fake.input_batch
++    batch_b, _ = _make_self(["b"], [10], [[[15, 16, 17, 18]]])
++    fake.requests["b"] = object()
++    fake.input_batch = batch_b.input_batch
++    _collect(fake, _sched({"b": 1}))
++    fake.input_batch = batch_a
++    _collect(fake, _sched({"a": scheduled}))
++    for buffers, src, dst in fake._pending_mamba_state_copies:
++        buffers[0][dst.long()] = buffers[0][src.long()].clone()
++    column = (BLOCK_SIZE - 1 + scheduled - 1) // BLOCK_SIZE
++    base = 5 + column
++    actual = raw[base + int(offsets[base])]
++    torch.testing.assert_close(actual, torch.full_like(actual, 100 + offset))
++
++
+ def test_start_index_window_skips_other_rows():
+     # num_reqs covers only a sub-window; rows outside it are untouched.
+     fake, _ = _make_self(
+diff --git a/tests/runner/test_mtp_async_contracts.py b/tests/runner/test_mtp_async_contracts.py
+index 0caf59c20..73b5665d3 100644
+--- a/tests/runner/test_mtp_async_contracts.py
++++ b/tests/runner/test_mtp_async_contracts.py
+@@ -138,6 +138,8 @@ def cached_step(runner, req_ids, *, num_scheduled=4):
+         ("unified", "new_owner", 2, 0),
+         ("unified", "reuse_id", 2, 0),
+         ("compact", "continue", 2, 2),
++        ("compact", "pause", 0, 0),
++        ("compact", "pause", 2, 2),
+         ("compact", "new_owner", 2, 0),
+         ("compact", "reuse_id", 2, 0),
+     ],
+@@ -145,7 +147,7 @@ def cached_step(runner, req_ids, *, num_scheduled=4):
+ def test_mamba_read_offset_follows_storage_owner(
+     device, monkeypatch, transition, offset, expected, layout
+ ):
+-    """Check offset ownership; compact pause needs separate state restoration."""
++    """A scheduling gap retains state ownership until KV is invalidated."""
+     runner = make_runner(device, monkeypatch, 3)
+     a = request_state("A", 5, [100, 101, 102])
+     b = request_state("B", 9, [200])
+diff --git a/tests/runner/test_tpu_runner.py b/tests/runner/test_tpu_runner.py
+index 771d349f2..1aa586383 100644
+--- a/tests/runner/test_tpu_runner.py
++++ b/tests/runner/test_tpu_runner.py
+@@ -1165,6 +1165,7 @@ class TestCompactMambaSlotPool:
+ 
+     def _set_batch(self, runner, req_ids):
+         """Set the persistent batch to the given ordered req_ids."""
++        runner.requests = {rid: object() for rid in req_ids}
+         runner.input_batch.req_ids = list(req_ids)
+         runner.input_batch.req_id_to_index = {r: i for i, r in enumerate(req_ids)}
+ 
+@@ -1244,6 +1245,22 @@ class TestCompactMambaSlotPool:
+         idx1 = runner._build_mamba_state_indices(0, 1, 4).cpu()
+         assert 1 <= int(idx1[0]) <= 4
+ 
++    @pytest.mark.parametrize("stride", [1, 4])
++    def test_unscheduled_request_keeps_state_at_full_capacity(self, stride):
++        runner = self._make_runner(max_num_reqs=2, slot_stride=stride)
++        runner._init_mamba_slot_pool(1 + 2 * stride)
++        owners = {rid: object() for rid in ("a", "b")}
++        state = torch.zeros(1 + 2 * stride)
++        for step, (rid, value) in enumerate([("a", 11), ("b", 22), ("a", 11)]):
++            self._set_batch(runner, [rid])
++            runner.requests = owners
++            slot = int(runner._build_mamba_state_indices(0, 1, 2)[0])
++            if step == 2:
++                assert state[slot] == value
++            state[slot] = value
++        assert len(runner._mamba_slot_by_req_id) == 2
++        assert runner._free_mamba_slots == []
++
+     def test_chunked_build_allocates_all(self):
+         """Two chunks in one step: each chunk allocates its own requests; all
+         get distinct slots."""
+@@ -1808,6 +1825,7 @@ class TestUnifiedReadOffsetMigration:
+         runner._mamba_copy_plan = [(0, [raw])]
+         runner.input_batch = MagicMock()
+         req_ids = [f"r{i}" for i in range(len(computed))]
++        runner.requests = {rid: object() for rid in req_ids}
+         runner._mamba_offset_seeded = set(req_ids)
+         runner.input_batch.req_ids = req_ids
+         runner.input_batch.req_id_to_index = {rid: i for i, rid in enumerate(req_ids)}
+diff --git a/tests/runner/test_tpu_runner_preemption.py b/tests/runner/test_tpu_runner_preemption.py
+index 295a94f48..27656b04d 100644
+--- a/tests/runner/test_tpu_runner_preemption.py
++++ b/tests/runner/test_tpu_runner_preemption.py
+@@ -53,6 +53,8 @@ def test_async_results_do_not_overwrite_recomputed_request(transition, num_draft
+     runner._install_spec_token_room_guard = lambda: None
+     runner._mamba_state_pos = {"resumed": 9, "continuing": 12}
+     runner._mamba_offset_seeded = {"resumed", "continuing"}
++    runner._mamba_slot_by_req_id = {"resumed": 1, "continuing": 1 + stride}
++    runner._free_mamba_slots = []
+     output = SchedulerOutput.make_empty()
+     output.finished_req_ids = {"resumed"} if transition == "finish" else set()
+     output.preempted_req_ids = {"resumed"} if transition == "preempt" else None
+@@ -90,6 +92,12 @@ def test_async_results_do_not_overwrite_recomputed_request(transition, num_draft
+     assert runner._mamba_offset_seeded == (
+         {"continuing"} if invalid else {"resumed", "continuing"}
+     )
++    assert runner._mamba_slot_by_req_id == (
++        {"continuing": 1 + stride}
++        if invalid
++        else {"resumed": 1, "continuing": 1 + stride}
++    )
++    assert runner._free_mamba_slots == ([1] if invalid else [])
+     # Preserve source row indices and rejection correction for the other request.
+     assert previous.req_id_to_index_copy["continuing"] == 1
+     assert previous.spec_decode_num_rejected_tokens is (
+-- 
+2.43.0
+

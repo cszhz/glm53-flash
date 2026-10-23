@@ -1,0 +1,17 @@
+# conc_bench.py --filler 900 --out 700 (~20K in / 700 out), 200K production config,
+# max-num-seqs 8, compile sizes 1,4,8,128,...; second run of each (prefix cache warm on both).
+# .183 no spec, .184 MTP K=3. Output tokens from usage (one SSE event can carry several under spec).
+
+== no spec (.183)
+conc  TTFT p50 s  TPOT p50 ms  out tok/s  tok/s/chip
+   1       0.159         8.53      114.3        28.6
+   2       0.184         9.03      215.3        53.8
+   4       0.417         9.56      394.3        98.6
+   8       0.566        11.86      631.4       157.9
+
+== MTP K=3 (.184)
+conc  TTFT p50 s  TPOT p50 ms  out tok/s  tok/s/chip
+   1       0.224         3.69      249.7        62.4
+   2       0.221         4.45      410.8       102.7
+   4       0.313         7.40      490.9       122.7
+   8       0.395         9.76      689.7       172.4

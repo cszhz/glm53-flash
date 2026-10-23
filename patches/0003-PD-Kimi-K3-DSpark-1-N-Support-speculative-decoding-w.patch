@@ -1,0 +1,624 @@
+From 331e67c5de9e9c38ea3495a863fdd0a6a0b06070 Mon Sep 17 00:00:00 2001
+From: linhaifeng <522025320099@smail.nju.edu.cn>
+Date: Tue, 13 Oct 2026 08:28:43 +0800
+Subject: [PATCH 3/5] [PD][Kimi-K3][DSpark][1/N] Support speculative decoding
+ with pooled KDA state (#1711)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+* feat(kimi-k3): support pooled speculative KDA checkpoints
+
+outline:
+- PR role — behavior: enable DSpark verification with pooled KDA state.
+
+modify:
+- Gather checkpoint blocks into a dense window and scatter all updated states back.
+- Forward speculative metadata and cover BF16 and FP8 checkpoint rollback.
+- Remove window-only activation rounding; leave existing dispatch guards unchanged.
+
+reason:
+- Problem: pooled KDA previously rejected speculative decoding.
+- Design: reuse the dense kernel while preserving checkpoint addressing and untouched tails.
+
+Signed-off-by: linhaifeng-nju <230823146+linhaifeng-nju@users.noreply.github.com>
+
+* test(kda): cover invalid pooled speculative metadata
+
+outline:
+- PR role — verification: cover the pooled verify metadata rejection contract.
+
+modify:
+- Add seven CPU-eligible cases for missing offsets or checkpoints and invalid checkpoint request, window, or rank shapes.
+- Assert the specific ValueError before pool access and kernel dispatch.
+- Scope boundary: production code and numerical tolerances remain unchanged.
+
+reason:
+- Problem: successful checkpoint tests did not exercise existing metadata guards.
+- Design: parameterized negative cases protect early failure without requiring TPU execution.
+
+Signed-off-by: linhaifeng-nju <230823146+linhaifeng-nju@users.noreply.github.com>
+
+---------
+
+Signed-off-by: linhaifeng-nju <230823146+linhaifeng-nju@users.noreply.github.com>
+Co-authored-by: linhaifeng-nju <230823146+linhaifeng-nju@users.noreply.github.com>
+(cherry picked from commit e62c66963d19105ccabc0014a982545545e073ac)
+---
+ .../kernels/gdn/v3/compute_kda.py             |   6 -
+ src/vllm_torchtpu/kernels/gdn/v3/wrapper.py   |   7 -
+ .../adapter/custom_ops/kda_attention_op.py    |  46 +++-
+ .../models/vllm/kimi_k3/attention.py          |  17 +-
+ tests/kernels/test_kimi_pooled_kda.py         | 215 +++++++++++++++++-
+ tests/models/vllm/test_kimi_k3.py             |  70 +++++-
+ 6 files changed, 330 insertions(+), 31 deletions(-)
+
+diff --git a/src/vllm_torchtpu/kernels/gdn/v3/compute_kda.py b/src/vllm_torchtpu/kernels/gdn/v3/compute_kda.py
+index 5df831f12..81d1015dd 100644
+--- a/src/vllm_torchtpu/kernels/gdn/v3/compute_kda.py
++++ b/src/vllm_torchtpu/kernels/gdn/v3/compute_kda.py
+@@ -449,12 +449,6 @@ def recurrent_kda(
+ 
+     # Delta rule step-size beta in [0, 1]
+     beta = jnp.where(mask, jax.nn.sigmoid(b_compact.astype(jnp.float32)), 0.0)
+-    if cfg.window_size > 1:
+-        # Match `_activate_beta` feeding the one-token K3 decode kernel: its
+-        # sigmoid result is rounded to the model activation dtype before the
+-        # recurrent update. Return to fp32 here so the fused scan itself keeps
+-        # its existing compute dtype and layout.
+-        beta = beta.astype(cfg.dtypes.act_out).astype(jnp.float32)
+     beta = compute_gdn.fused_transpose_broadcast(beta, src_dim=4, dst_dim=1)
+     beta = beta[:, : cfg.num_v_heads, :, 0, :]
+ 
+diff --git a/src/vllm_torchtpu/kernels/gdn/v3/wrapper.py b/src/vllm_torchtpu/kernels/gdn/v3/wrapper.py
+index c869c5f70..8d45d1991 100644
+--- a/src/vllm_torchtpu/kernels/gdn/v3/wrapper.py
++++ b/src/vllm_torchtpu/kernels/gdn/v3/wrapper.py
+@@ -142,13 +142,6 @@ def inner_kernel(
+ 
+     # Apply activation function.
+     qkv_out_compact = jax.nn.silu(qkv_out_compact)
+-    if cfg.is_kda and cfg.window_size > 1:
+-        # The one-token K3 decode kernel stores the post-SiLU activation in
+-        # the model activation dtype before promoting it for the recurrent
+-        # math. Preserve that numerical contract for a fused verify window;
+-        # otherwise its target logits can drift solely because the KDA window
+-        # keeps this intermediate in fp32.
+-        qkv_out_compact = qkv_out_compact.astype(cfg.dtypes.act_out).astype(jnp.float32)
+ 
+     # Step 2: GDN.
+ 
+diff --git a/src/vllm_torchtpu/layers/adapter/custom_ops/kda_attention_op.py b/src/vllm_torchtpu/layers/adapter/custom_ops/kda_attention_op.py
+index 930f7510d..54cab6461 100644
+--- a/src/vllm_torchtpu/layers/adapter/custom_ops/kda_attention_op.py
++++ b/src/vllm_torchtpu/layers/adapter/custom_ops/kda_attention_op.py
+@@ -532,14 +532,39 @@ def _pooled_kda_core(
+     state_indices: jax.Array,
+     seq_lens: jax.Array,
+     distribution: jax.Array,
++    window_distribution: jax.Array | None = None,
++    slot_read_offsets: jax.Array | None = None,
++    ckpt_indices: jax.Array | None = None,
+     *,
+     lower_bound: float | None,
+     eps: float,
+     pool_block_tokens: int,
+     conv_shard_heads: int | None = None,
++    num_spec_tokens: int = 0,
+     pool_tokens_per_row: int | None = None,
+ ) -> tuple[jax.Array, jax.Array]:
+     num_reqs = state_indices.shape[0]
++    window = num_spec_tokens + 1
++    dense_offsets = None
++    identity = 1 + jnp.arange(num_reqs, dtype=jnp.int32) * window
++    if num_spec_tokens:
++        if slot_read_offsets is None or ckpt_indices is None:
++            raise ValueError(
++                "Pooled KDA verify requires read offsets and checkpoint indices"
++            )
++        if ckpt_indices.shape != (num_reqs, window):
++            raise ValueError(
++                "Pooled KDA checkpoint indices must match the verify window"
++            )
++        # Manager blocks need not be contiguous. Keep every checkpoint in a
++        # contiguous scratch window, including untouched ragged/prefill tails.
++        # TODO: follow #889's is_shared=True path and access the unified pool
++        # directly via ckpt_indices[s, offset], avoiding per-step gather/scatter
++        # and dense checkpoint temporaries.
++        num_reqs *= window
++        dense_offsets = jnp.zeros(num_reqs + 1, dtype=jnp.int32)
++        dense_offsets = dense_offsets.at[identity].set(slot_read_offsets[state_indices])
++        state_indices = ckpt_indices.reshape(-1)
+     num_heads = a_log.shape[0]
+     head_dim = norm_weight.shape[0]
+     kernel_size = conv_weight.shape[0]
+@@ -644,7 +669,6 @@ def _pooled_kda_core(
+     # Dense slot 0 is scratch for the kernel's idempotent null-block writes.
+     conv_buf = jnp.concatenate([jnp.zeros_like(conv_local[:1]), conv_local], axis=0)
+     ssm_buf = jnp.concatenate([jnp.zeros_like(ssm_local[:1]), ssm_local], axis=0)
+-    identity = jnp.arange(1, num_reqs + 1, dtype=jnp.int32)
+ 
+     # The fused conv1d + GDN v3 kernel takes the conv state flat
+     # [slots, K - 1, 3*H*D]; the buffers here lay their channels out as
+@@ -652,7 +676,7 @@ def _pooled_kda_core(
+     # and zero-length sequences are safe under identity indices because the
+     # kernel gates their state DMAs to zero size rather than redirecting them
+     # to the null slot.
+-    fused_core = _build_fused_core(lower_bound, eps)
++    fused_core = _build_fused_core(lower_bound, eps, num_spec_tokens)
+     output, new_conv_buf, new_ssm_buf = fused_core(
+         mixed_qkv,
+         raw_gate,
+@@ -668,6 +692,8 @@ def _pooled_kda_core(
+         identity,
+         seq_lens,
+         distribution,
++        window_distribution,
++        dense_offsets,
+     )
+     new_conv_buf = new_conv_buf.reshape(
+         num_reqs + 1, kernel_size - 1, 3, num_heads, head_dim
+@@ -710,6 +736,7 @@ def build_kimi_pooled_kda_op(
+     lower_bound: float | None,
+     eps: float,
+     vllm_config: VllmConfig,
++    num_spec_tokens: int = 0,
+     pool_tokens_per_row: int | None = None,
+ ):
+     """Build the KDA op that reads and writes its state through the pool.
+@@ -761,6 +788,9 @@ def build_kimi_pooled_kda_op(
+         state_indices: jax.Array,
+         seq_lens: jax.Array,
+         distribution: jax.Array,
++        window_distribution: jax.Array | None = None,
++        slot_read_offsets: jax.Array | None = None,
++        ckpt_indices: jax.Array | None = None,
+     ) -> tuple[jax.Array, jax.Array]:
+         # Explicit annotated signature: pallas.jax_op's _verify_signature
+         # rejects unannotated *args.
+@@ -778,10 +808,14 @@ def build_kimi_pooled_kda_op(
+             state_indices,
+             seq_lens,
+             distribution,
++            window_distribution,
++            slot_read_offsets,
++            ckpt_indices,
+             lower_bound=lower_bound,
+             eps=eps,
+             pool_block_tokens=vllm_config.cache_config.block_size,
+             conv_shard_heads=conv_shard_heads,
++            num_spec_tokens=num_spec_tokens,
+             pool_tokens_per_row=pool_tokens_per_row,
+         )
+ 
+@@ -791,6 +825,8 @@ def build_kimi_pooled_kda_op(
+     # era would otherwise be served stale.
+     op_name = f"pallas::kimi_pooled_kda_fused_{prefix.replace('.', '_')}"
+     op_name += f"_conv_{DEFAULT_POOLED_GDN_CONV_STATE_DTYPE.removeprefix('torch.')}"
++    if num_spec_tokens:
++        op_name += f"_window{num_spec_tokens + 1}"
+     if conv_shard_heads is not None:
+         # Stored state order is part of the compiled program, including for
+         # decode-local requests and prefix-cache seeds, not just PD loads.
+@@ -837,6 +873,9 @@ def build_kimi_pooled_kda_op(
+         state_indices: torch.Tensor,
+         seq_lens: torch.Tensor,
+         distribution: torch.Tensor,
++        window_distribution: torch.Tensor | None = None,
++        slot_read_offsets: torch.Tensor | None = None,
++        ckpt_indices: torch.Tensor | None = None,
+     ) -> torch.Tensor:
+         output, new_pool = pooled_op(
+             mixed_qkv,
+@@ -852,6 +891,9 @@ def build_kimi_pooled_kda_op(
+             state_indices,
+             seq_lens,
+             distribution,
++            window_distribution,
++            slot_read_offsets,
++            ckpt_indices,
+         )
+         pool.copy_(new_pool)
+         return output
+diff --git a/src/vllm_torchtpu/models/vllm/kimi_k3/attention.py b/src/vllm_torchtpu/models/vllm/kimi_k3/attention.py
+index cbe468b32..2d0ac9bf0 100644
+--- a/src/vllm_torchtpu/models/vllm/kimi_k3/attention.py
++++ b/src/vllm_torchtpu/models/vllm/kimi_k3/attention.py
+@@ -590,6 +590,7 @@ class KimiDeltaAttention(nn.Module, MambaBase):
+             lower_bound=self.gate_lower_bound,
+             eps=config.rms_norm_eps,
+             vllm_config=vllm_config,
++            num_spec_tokens=self.num_spec_tokens,
+             pool_tokens_per_row=pool_tokens_per_row,
+         )
+ 
+@@ -803,17 +804,18 @@ class KimiDeltaAttention(nn.Module, MambaBase):
+             raise NotImplementedError(
+                 "KDA does not support PCP streaming prefill with the unified KV pool"
+             )
+-        if metadata.mamba_slot_read_offsets is not None:
+-            # Speculative verify needs per-window state checkpoints; the
+-            # pooled gather/scatter path keeps a single state per block.
+-            raise NotImplementedError(
+-                "Speculative decoding is not supported with pooled KDA"
+-            )
+         state_indices = metadata.mamba_state_indices
+         if state_indices is None:
+             raise RuntimeError(
+                 "Pooled KDA requires mamba_state_indices in the attention metadata"
+             )
++        # AttentionMetadata also describes the JAX-side representation. The
++        # builder supplies Torch tensors here, before the Torch-to-JAX bridge.
++        window_distribution = cast(
++            torch.Tensor | None, metadata.mamba_request_distribution
++        )
++        slot_read_offsets = cast(torch.Tensor | None, metadata.mamba_slot_read_offsets)
++        ckpt_indices = cast(torch.Tensor | None, metadata.mamba_ckpt_indices)
+         return self.pooled_kda_op(
+             mixed_qkv,
+             raw_gate,
+@@ -828,4 +830,7 @@ class KimiDeltaAttention(nn.Module, MambaBase):
+             cast(torch.Tensor, state_indices),
+             cast(torch.Tensor, metadata.seq_lens),
+             cast(torch.Tensor, metadata.request_distribution),
++            window_distribution,
++            slot_read_offsets,
++            ckpt_indices,
+         )
+diff --git a/tests/kernels/test_kimi_pooled_kda.py b/tests/kernels/test_kimi_pooled_kda.py
+index 6ce78b71b..9209d84e3 100644
+--- a/tests/kernels/test_kimi_pooled_kda.py
++++ b/tests/kernels/test_kimi_pooled_kda.py
+@@ -97,15 +97,21 @@ def _raw(pool):
+ 
+ 
+ def _pack_pool(
+-    conv_init, ssm_init, block_ids, conv_shard_heads=None, pool_dtype=jnp.bfloat16
++    conv_init,
++    ssm_init,
++    block_ids,
++    conv_shard_heads=None,
++    pool_dtype=jnp.bfloat16,
++    num_blocks=NUM_BLOCKS,
+ ):
+     """Write the given states into the pool's state regions; the rest of the
+     pool (including block 0 and the attention rows of every block) keeps its
+     sentinel bytes."""
+     rng = np.random.default_rng(99)
++    # Keep the byte capacity fixed; typed scatter packs BF16/FP32 state.
+     pool = jnp.asarray(
+         rng.standard_normal(
+-            (NUM_BLOCKS, BLOCK_SIZE, _pool_pack(pool_dtype), LANES)
++            (num_blocks, BLOCK_SIZE, _pool_pack(pool_dtype), LANES)
+         ).astype(np.float32),
+         dtype=pool_dtype,
+     )
+@@ -330,6 +336,82 @@ def _check_pooled_matches_dense(
+         )
+ 
+ 
++@pytest.mark.parametrize(
++    ("has_offsets", "checkpoint_shape", "message"),
++    [
++        pytest.param(
++            False,
++            (2, 6),
++            "requires read offsets and checkpoint indices",
++            id="missing-offsets",
++        ),
++        pytest.param(
++            True,
++            None,
++            "requires read offsets and checkpoint indices",
++            id="missing-checkpoints",
++        ),
++        pytest.param(
++            False,
++            None,
++            "requires read offsets and checkpoint indices",
++            id="missing-both",
++        ),
++        pytest.param(
++            True,
++            (1, 6),
++            "checkpoint indices must match the verify window",
++            id="wrong-request-count",
++        ),
++        pytest.param(
++            True,
++            (2, 5),
++            "checkpoint indices must match the verify window",
++            id="short-window",
++        ),
++        pytest.param(
++            True,
++            (2, 7),
++            "checkpoint indices must match the verify window",
++            id="long-window",
++        ),
++        pytest.param(
++            True,
++            (12,),
++            "checkpoint indices must match the verify window",
++            id="wrong-rank",
++        ),
++    ],
++)
++def test_pooled_kda_rejects_invalid_speculative_metadata(
++    has_offsets, checkpoint_shape, message
++):
++    """Reject invalid verify metadata before pool access or TPU kernel dispatch."""
++    inputs = _inputs(np.random.default_rng(0), [6, 6], [6, 6])
++    pool = jnp.zeros((13, BLOCK_SIZE, PACK, LANES), dtype=jnp.bfloat16)
++    offsets = jnp.zeros(13, dtype=jnp.int32) if has_offsets else None
++    checkpoints = (
++        jnp.ones(checkpoint_shape, dtype=jnp.int32)
++        if checkpoint_shape is not None
++        else None
++    )
++    distribution = jnp.asarray([2, 2, 2], dtype=jnp.int32)
++    with pytest.raises(ValueError, match=message):
++        _pooled_kda_core(
++            **inputs,
++            pool=pool,
++            state_indices=jnp.asarray([1, 7], dtype=jnp.int32),
++            distribution=distribution,
++            window_distribution=distribution,
++            slot_read_offsets=offsets,
++            ckpt_indices=checkpoints,
++            lower_bound=LOWER_BOUND,
++            eps=EPS,
++            pool_block_tokens=BLOCK_SIZE * PACK,
++            num_spec_tokens=5,
++        )
++
++
+ def test_pooled_kda_rejects_oversized_state():
+     inputs = _inputs(np.random.default_rng(0), [2], [2])
+     layout = derive_pooled_gdn_state_layout(
+@@ -470,3 +552,132 @@ def test_pooled_kda_multistep_state_evolution():
+         rtol=1e-2,
+         atol=5e-4,
+     )
++
++
++@pytest.mark.tpu_test
++@pytest.mark.parametrize("split", [1, BLOCK_SIZE])
++@pytest.mark.parametrize("seed", [0, 17])
++@pytest.mark.parametrize(
++    "pool_dtype", [jnp.bfloat16, jnp.float8_e4m3fn], ids=["bf16", "fp8"]
++)
++def test_pooled_kda_speculative_checkpoints(split, seed, pool_dtype):
++    """Noncontiguous blocks, ragged windows, rollback and padded requests.
++
++    The dense window is the oracle; compare every checkpoint, not just the
++    final output, while repeatedly selecting a different accepted prefix.
++    """
++    rng = np.random.default_rng(seed)
++    window, num_reqs = 6, 3
++    live_states = 2 * window
++    num_blocks = live_states + 2
++    physical = rng.permutation(np.arange(1, live_states + 1)).reshape(2, window)
++    ckpts = jnp.asarray(np.vstack([physical, np.zeros(window, np.int32)]), jnp.int32)
++    state_ids = ckpts[:, 0]
++    conv, ssm = _initial_states(rng, live_states + 1)
++    conv = conv.at[-1].set(0)
++    ssm = ssm.at[-1].set(0)
++    pool = _pack_pool(
++        conv,
++        ssm,
++        [*physical.reshape(-1), 0],
++        num_blocks=num_blocks,
++        pool_dtype=pool_dtype,
++    )
++    pack = pool.shape[2]
++    sentinel = np.asarray(pool[-1].view(jnp.uint8)).copy()
++    pool = pool.reshape(num_blocks * split, BLOCK_SIZE // split, pack, LANES)
++    conv_buf = jnp.concatenate(
++        [conv[-1:], conv[:-1], jnp.repeat(conv[-1:], window, axis=0)]
++    )
++    ssm_buf = jnp.concatenate(
++        [ssm[-1:], ssm[:-1], jnp.repeat(ssm[-1:], window, axis=0)]
++    )
++    identity = 1 + jnp.arange(num_reqs, dtype=jnp.int32) * window
++    steps = [
++        # Pure prefill must only seed checkpoint zero.
++        ([8, 7, 0], [8, 7, 0], 0, [0, 0, 0]),
++        ([6, 3, 0], [14, 10, 0], 2, [0, 0, 0]),
++        # Resume independently from last and intermediate checkpoints.
++        ([6, 1, 0], [20, 9, 0], 2, [5, 1, 0]),
++        ([1, 6, 0], [16, 14, 0], 2, [0, 0, 0]),
++        # Mixed verify + continuation prefill.
++        ([6, 9, 0], [22, 23, 0], 1, [0, 4, 0]),
++    ]
++    for lengths, seq_lens, window_end, offsets in steps:
++        inputs = _inputs(rng, lengths, seq_lens)
++        distribution = jnp.asarray([window_end, 2, 2], jnp.int32)
++        pool_offsets = (
++            jnp.zeros(num_blocks, jnp.int32).at[state_ids].set(jnp.asarray(offsets))
++        )
++        dense_offsets = (
++            jnp.zeros(num_reqs * window + 1, jnp.int32)
++            .at[identity]
++            .set(jnp.asarray(offsets))
++        )
++        out_ref, conv_buf, ssm_buf = _build_fused_core(-5.0, EPS, window - 1)(
++            inputs["mixed_qkv"],
++            inputs["raw_gate"],
++            inputs["beta"],
++            inputs["output_gate"],
++            conv_buf.reshape(num_reqs * window + 1, KERNEL_SIZE - 1, -1),
++            ssm_buf,
++            inputs["conv_weight"],
++            inputs["a_log"],
++            inputs["dt_bias"],
++            inputs["norm_weight"],
++            inputs["query_start_loc"],
++            identity,
++            inputs["seq_lens"],
++            distribution,
++            distribution,
++            dense_offsets,
++        )
++        out, pool = _pooled_kda_core(
++            inputs["mixed_qkv"],
++            inputs["raw_gate"],
++            inputs["beta"],
++            inputs["output_gate"],
++            pool,
++            inputs["conv_weight"],
++            inputs["a_log"],
++            inputs["dt_bias"],
++            inputs["norm_weight"],
++            inputs["query_start_loc"],
++            state_ids,
++            inputs["seq_lens"],
++            distribution,
++            distribution,
++            pool_offsets,
++            ckpts,
++            lower_bound=-5.0,
++            eps=EPS,
++            pool_block_tokens=BLOCK_SIZE * pack,
++            num_spec_tokens=window - 1,
++        )
++        np.testing.assert_allclose(
++            np.asarray(out, np.float32),
++            np.asarray(out_ref, np.float32),
++            rtol=5e-2,
++            atol=4e-3,
++        )
++        actual_conv, actual_ssm = _unpack_pool(
++            pool, list(physical.reshape(-1)), split=split
++        )
++        np.testing.assert_array_equal(
++            np.asarray(actual_conv.view(jnp.uint16)),
++            np.asarray(
++                conv_buf[1 : live_states + 1]
++                .reshape(actual_conv.shape)
++                .view(jnp.uint16)
++            ),
++        )
++        np.testing.assert_allclose(
++            np.asarray(actual_ssm),
++            np.asarray(ssm_buf[1 : live_states + 1]),
++            rtol=1e-2,
++            atol=5e-4,
++        )
++        restored = pool.reshape(num_blocks, BLOCK_SIZE, pack, LANES)
++        np.testing.assert_array_equal(
++            np.asarray(restored[-1].view(jnp.uint8)), sentinel
++        )
+diff --git a/tests/models/vllm/test_kimi_k3.py b/tests/models/vllm/test_kimi_k3.py
+index e6c12d1aa..8670b57fe 100644
+--- a/tests/models/vllm/test_kimi_k3.py
++++ b/tests/models/vllm/test_kimi_k3.py
+@@ -881,7 +881,10 @@ def test_kda_forward_dispatches_to_both_custom_ops(monkeypatch) -> None:
+     )
+ 
+ 
+-def test_kda_forward_dispatches_to_pooled_op_on_singleton_cache(monkeypatch) -> None:
++@pytest.mark.parametrize("speculative", [False, True])
++def test_kda_forward_dispatches_to_pooled_op_on_singleton_cache(
++    monkeypatch, speculative
++) -> None:
+     """A one-tensor kv_cache means the unified pool: the layer must take the
+     pooled op and never the dense dispatched op."""
+     layer = KimiDeltaAttention.__new__(KimiDeltaAttention)
+@@ -913,7 +916,13 @@ def test_kda_forward_dispatches_to_pooled_op_on_singleton_cache(monkeypatch) ->
+         seq_lens=torch.tensor([2], dtype=torch.int32),
+         request_distribution=torch.tensor([0, 0, 1], dtype=torch.int32),
+         mamba_slot_read_offsets=None,
++        mamba_request_distribution=None,
++        mamba_ckpt_indices=None,
+     )
++    if speculative:
++        metadata.mamba_slot_read_offsets = torch.tensor([0, 1], dtype=torch.int32)
++        metadata.mamba_request_distribution = torch.tensor([1, 1, 1], dtype=torch.int32)
++        metadata.mamba_ckpt_indices = torch.tensor([[1, 3]], dtype=torch.int32)
+     layer._metadata = lambda: metadata
+ 
+     calls: list[str] = []
+@@ -921,6 +930,9 @@ def test_kda_forward_dispatches_to_pooled_op_on_singleton_cache(monkeypatch) ->
+     def pooled_kda_op(mixed_qkv, *args):
+         calls.append("pooled")
+         assert args[3] is pool
++        assert args[-3] is metadata.mamba_request_distribution
++        assert args[-2] is metadata.mamba_slot_read_offsets
++        assert args[-1] is metadata.mamba_ckpt_indices
+         return mixed_qkv[:, :4].view(-1, 2, 2)
+ 
+     def unexpected(name):
+@@ -1363,20 +1375,62 @@ def test_core_attention_pooled_rejects_pcp_streaming(
+         layer._core_attention_pooled(None, None, None, None, None, metadata)
+ 
+ 
+-def test_core_attention_pooled_rejects_speculative_verify(
++def test_core_attention_pooled_forwards_speculative_verify_metadata(
+     monkeypatch: pytest.MonkeyPatch,
+ ) -> None:
+-    """`mamba_slot_read_offsets` is only set for speculative-decode verify
+-    steps, which the pooled path cannot handle (it keeps one state per block,
+-    not the per-window checkpoints verify needs)."""
++    """Pooled verify forwards accepted-state offsets and noncontiguous checkpoints."""
+     layer = _make_bare_kda_layer()
+     monkeypatch.setattr(
+         kimi_attention, "is_pcp_streaming_attention_metadata", lambda md: False
+     )
+-    metadata = SimpleNamespace(mamba_slot_read_offsets=torch.zeros(1))
++    metadata = SimpleNamespace(
++        query_start_loc=torch.tensor([0, 6], dtype=torch.int32),
++        mamba_state_indices=torch.tensor([1], dtype=torch.int32),
++        seq_lens=torch.tensor([12], dtype=torch.int32),
++        request_distribution=torch.tensor([0, 0, 1], dtype=torch.int32),
++        mamba_request_distribution=torch.tensor([1, 1, 1], dtype=torch.int32),
++        mamba_slot_read_offsets=torch.tensor([0, 2], dtype=torch.int32),
++        mamba_ckpt_indices=torch.tensor([[1, 3, 5, 7, 9, 11]], dtype=torch.int32),
++    )
++    mixed_qkv = torch.zeros(6, 12)
++    raw_gate = torch.zeros(6, 4)
++    beta = torch.zeros(6, 2)
++    output_gate = torch.zeros(6, 4)
++    pool = torch.empty(12, 1, 1, 1)
++    expected_output = torch.ones(6, 2, 2)
++    calls = []
+ 
+-    with pytest.raises(NotImplementedError, match="Speculative decoding"):
+-        layer._core_attention_pooled(None, None, None, None, None, metadata)
++    def pooled_kda_op(*args):
++        calls.append(args)
++        return expected_output
++
++    layer.pooled_kda_op = pooled_kda_op
++    output = layer._core_attention_pooled(
++        mixed_qkv, raw_gate, beta, output_gate, pool, metadata
++    )
++
++    assert output is expected_output
++    assert len(calls) == 1
++    expected_args = (
++        mixed_qkv,
++        raw_gate,
++        beta,
++        output_gate,
++        pool,
++        layer.conv_weight_fused,
++        layer.A_log,
++        layer.dt_bias,
++        layer.o_norm.weight,
++        metadata.query_start_loc,
++        metadata.mamba_state_indices,
++        metadata.seq_lens,
++        metadata.request_distribution,
++        metadata.mamba_request_distribution,
++        metadata.mamba_slot_read_offsets,
++        metadata.mamba_ckpt_indices,
++    )
++    assert len(calls[0]) == len(expected_args)
++    assert all(actual is expected for actual, expected in zip(calls[0], expected_args))
+ 
+ 
+ def test_core_attention_pooled_requires_state_indices(
+-- 
+2.43.0
+
