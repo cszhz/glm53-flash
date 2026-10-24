@@ -8,7 +8,7 @@ guide/
 ├── Readme.md
 ├── scripts/   vllm_install.sh  vllm_env.sh  vllm_serve.sh  restart_serve.sh  router.sh  gcs_prefetch.sh
 ├── tools/     功能 / 性能测试、profile、对拍脚本（含 ctx200k_bench.py、dp_router.py、prefix_hit_ab.py）
-├── patches/   vllm-torchtpu 上的改动：prefix cache（0001–0002，3.6 节）、MTP 投机解码（0003–0005，3.7 节）
+├── patches/   vllm-torchtpu 上的改动：prefix cache（0001–0002，3.6 节）、MTP 投机解码（0003–0006，3.7 节）
 └── results/   5.1 节、3.6 节压测和精度的原始数据
 ```
 
@@ -24,7 +24,7 @@ venv（`.venv`）、代码（`vllm-torchtpu/`）、日志（`logs/`）仍在项�
 | 模型     | GLM-5.3-Flash FP8（`GLM-5.3-Flash`，`model_type: glm5_next`），纯文本（视觉塔不加载；MTP 层可选加载做投机解码，见 3.7 节） |
 | 硬件     | tpu7x-32 slice 中的两台：10.128.0.89（worker 2）、10.128.0.38（worker 3），每台 4 chip / 8 device |
 | 部署拓扑 | **DP2 × TP8**：每台一个独立的 TP8 实例，prefill 叠加序列并行（SP）；本机 :8080 路由按最少在途请求分发 |
-| 代码     | `vllm-torchtpu/` 的 `glm53-port` 分支，`19f6a3239`（= 上游 PR 的内容 + prefix cache + 调度器修正 + MTP 投机解码，见 3.6、3.7 节；五个 patch 在 `guide/patches/`） |
+| 代码     | `vllm-torchtpu/` 的 `glm53-port` 分支，`8ec4158ec`（= 上游 PR 的内容 + prefix cache + 调度器修正 + MTP 投机解码，见 3.6、3.7 节；六个 patch 在 `guide/patches/`） |
 | Prefix cache | 支持：`TPU_VLLM_ENABLE_UNIFIED_BLOCK_POOL=1 --enable-prefix-caching`，命中粒度 2048 token，见 3.6 节 |
 | 投机解码 | MTP（`--speculative-config '{"method":"mtp","num_speculative_tokens":3}'`），需要 unified pool；单流 decode 1.8–2.3×，见 3.7 节 |
 | 上游 PR  | [vllm-project/vllm-torchtpu#1859](https://github.com/vllm-project/vllm-torchtpu/pull/1859)（branch `cszhz/glm53-flash`，rebase 到 `72deb3860`；该基线的 `pyproject.toml` 钉的是 libtpu 0.0.50，本指南统一用 0.0.47，换法见第 2 节） |
@@ -221,7 +221,7 @@ curl -s localhost:8000/v1/completions -H 'Content-Type: application/json' \
 
 `num_speculative_tokens`（K）是每步草稿模型猜的 token 数；目标模型一次验证 K+1 个位置，猜对几个就多出几个。
 
-**做法**（`guide/patches/0003`–`0005`；0003、0004 是上游的 #1711、#1811，pooled KDA 的逐位置状态检查点）：
+**做法**（`guide/patches/0003`–`0006`；0003、0004 是上游的 #1711、#1811，pooled KDA 的逐位置状态检查点）：
 - `glm5_next/mtp.py`：checkpoint 第 45 层就是 MTP 层。`enorm`/`hnorm` 后拼接 `[embed, hidden]` 过 `eh_proj`，再过一层
   sparse MLA + MoE，最后 `shared_head.norm`；embed 和 lm_head 与主模型共用。
 - indexer 的 member 状态（未凑满一组 4 个的 token）改成 `kpool + K` 行的环：一次验证可能凑满一组，组里的成员最远
@@ -229,6 +229,10 @@ curl -s localhost:8000/v1/completions -H 'Content-Type: application/json' \
 - 草稿模型对所有 token 桶只 trace 一次，所以：草稿里的 MLA 不走全头 SP 路径（会把 trace 特化到 token 数）；
   草稿不在 1 个 token 上编译或调用（size-1 的 guard 会把其他桶特化掉），最小补到 2。
 - 调度器：一条 decode 占 `1 + K` 个 token 的预算。
+- 草稿的输出在 `forward` 里就过 `shared_head.norm`，而且这个归一化后的隐状态也串给下一步草稿。这和 vLLM 的
+  DeepSeek MTP、上游 `82f82c089` 不同（它们只在算 logits 时归一化，串下去的是归一化前的）。两台同配置 A/B
+  （K=3，GSM8K 600 seed 1）：本实现各位置接受率 0.90 / **0.75 / 0.57**、每步 3.21 个 token，上游写法
+  0.90 / 0.71 / 0.43、3.05 个，单流和 c1 也慢 10–15%（`results/gsm8k600s1_mtp3_*`）。K=1 两者相同。
 
 **验证**（TP8；16K 上下文和 200K 线上配置）：
 
@@ -253,8 +257,10 @@ curl -s localhost:8000/v1/completions -H 'Content-Type: application/json' \
 | 200K 进 / 128 出，TTFT p50 s，c1 | 7.49 | 7.86 |
 
 - **并发越高收益越小**：K=3 每条请求每步验证 4 个 token。c1–c2 时 decode 卡在读权重，多算几个 token 几乎不花时间；
-  c4 以上 16/32 个 token 被补到 128 的编译桶（线上桶是 1,4,8,128,…），验证的计算量也随并发涨，收益基本抵消，
-  200K c8 反而慢。补 16/32/64 的桶、或并发高时改 K=1 是下一步要测的。
+  c4 以上验证的 token 数（16、32、…）让每步的计算量随并发涨，收益基本抵消，200K c8 反而慢。
+- **`max-num-seqs` 32**（编译桶补 16/32/64，`results/conc-20k-seq32-20261023.txt`）：不开投机时 c16 / c32 每卡输出
+  217.6 / **302.8** tok/s（上限 8 时 c8 是 157.9）；K=3 只有 133.8 / 171.2，首字时间涨到 8–13 s。要总吞吐就不开投机、
+  调大 `max-num-seqs`。上限从 8 调到 32 后 c1 也变慢（不开 8.5 → 9.5 ms，K=3 3.7 → 6.5 ms），原因未查。
 - prefill 多跑一遍草稿，TTFT 慢 5–10%；200K 压测（99.9% 是 prefill）总吞吐低 2–9%。
 
 **注意**：

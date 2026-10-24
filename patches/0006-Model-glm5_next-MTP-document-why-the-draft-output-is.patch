@@ -1,0 +1,38 @@
+From 8ec4158ec96242b2794c0c77762a2d896b0915db Mon Sep 17 00:00:00 2001
+From: zzl <zzl@google.com>
+Date: Sat, 24 Oct 2026 03:54:23 +0000
+Subject: [PATCH] [Model] glm5_next MTP: document why the draft output is
+ normed
+
+The draft returns shared_head.norm(hidden), and the proposer chains that
+same tensor into the next draft step. vLLM's DeepSeek MTP (and upstream
+82f82c089) instead carry the pre-norm hidden and norm only for the logits.
+A/B on GSM8K 600 at K=3, same config on two hosts: normed carry 0.90 /
+0.75 / 0.57 per-position acceptance (3.21 tokens per step), pre-norm carry
+0.90 / 0.71 / 0.43 (3.05). Keep the normed carry and say why, so it is not
+"fixed" back.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/vllm_torchtpu/models/vllm/glm5_next/mtp.py | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/vllm_torchtpu/models/vllm/glm5_next/mtp.py b/src/vllm_torchtpu/models/vllm/glm5_next/mtp.py
+index 5db8da811..b26a88d1e 100644
+--- a/src/vllm_torchtpu/models/vllm/glm5_next/mtp.py
++++ b/src/vllm_torchtpu/models/vllm/glm5_next/mtp.py
+@@ -194,6 +194,11 @@ class Glm5NextMultiTokenPredictor(nn.Module):
+             inputs_embeds = self.embed_input_ids(input_ids)
+         layer = self._layer(spec_step_idx)
+         hidden_states = layer(positions, previous_hidden_states, inputs_embeds)
++        # Normed here, not in `compute_logits`: the proposer chains this output
++        # into the next draft step as well, and the first step's input is the
++        # target's final-normed hidden. Carrying the pre-norm hidden instead
++        # (vLLM's DeepSeek MTP, and upstream's 82f82c089) measured worse on
++        # GSM8K at K=3: per-position acceptance 0.90/0.71/0.43 vs 0.90/0.75/0.57.
+         return layer.shared_head_norm(hidden_states)
+ 
+ 
+-- 
+2.43.0
+
